@@ -8,7 +8,7 @@
     "dev": "nodemon -L index.js",
     "build": "node index.js"
   },
-  "author": "",
+  "author": "fhanred",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.25.0",
