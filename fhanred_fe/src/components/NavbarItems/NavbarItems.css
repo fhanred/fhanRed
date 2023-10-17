@@ -1,0 +1,45 @@
+.NavbarItems {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #121144e5;
+    padding: 20px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Para alinear los elementos a la izquierda */
+  }
+
+
+.NavbarItems ul {
+  list-style: none; /* Quita las viñetas de la lista */
+  padding: 0;
+}
+
+.NavbarItems li {
+  margin-bottom: 10px; /* Espacio entre los elementos de la lista */
+  display: flex; /* Usar display flex para alinear elementos en fila */
+  align-items: center; /* Centra verticalmente los elementos en el ítem de la lista */
+}
+
+.NavbarItems a {
+  text-decoration: none; /* Quita el subrayado de los enlaces */
+  color: #fff; /* Color del texto de los enlaces */
+  display: flex; /* Usar display flex para alinear elementos en fila */
+  align-items: center; /* Centra verticalmente los elementos en el enlace */
+}
+
+.NavbarItems h3 {
+  margin-left: 10px; /* Espacio entre el ícono y el nombre del enlace */
+}
+
+/* Estilo para los enlaces al pasar el ratón */
+.NavbarItems a:hover {
+  text-decoration: underline;
+  color: #af060ffb;
+}
