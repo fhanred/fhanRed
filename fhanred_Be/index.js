@@ -5,7 +5,7 @@ const helpers = require("./src/helpers")
 
 
 // Syncing all the models at once.
-conn.sync({force: true }).then(async () => {
+conn.sync({alter: true }).then(async () => {
   app.listen(PORT, () => {
 
     console.log(`🚀 listening on port: ${PORT} 🚀`)
