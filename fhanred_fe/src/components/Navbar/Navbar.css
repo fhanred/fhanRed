@@ -1,0 +1,50 @@
+/* Estilos para el Navbar */
+.navbar {
+    background-color: #121144e5; /* color de fondo  */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: space-between;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    font-size: 20px; /* Separa el logo y los enlaces */
+    position: fixed; /* Fija la posición en la parte superior de la página */
+    top: 0; /* Fija el Navbar en la parte superior */
+    width: 100%; /* Toma todo el ancho de la ventana */
+    height: 150px; /* Ajusta la altura del Navbar  */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  }
+  
+  /* Estilos para el logo */
+  .navbar-logo {
+    height: 100%; /* El logo ocupa la altura completa del Navbar */
+    
+  }
+  
+ 
+  
+  /* Estilo para el logo de la compañía */
+  .logo-image {
+    height: 100%; /* El logo ocupa la altura completa del Navbar */
+  }
+  
+  
+  /* Estilos para la información del usuario, avatar y icono de cierre de sesión */
+.user-info {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos */
+  margin-left: auto; 
+}
+
+.user-avatar {
+  margin-left: 60px; /* Agrega un espacio entre el icono de usuario y el nombre de usuario */
+}
+
+.logout-icon {
+  margin-left: 60px; /* Agrega un espacio entre el nombre de usuario y el icono de cierre de sesión */
+  margin-right: 40px; /* Agrega un margen derecho para separar el icono del borde derecho de la página */
+  cursor: pointer;
+}
+
+  
