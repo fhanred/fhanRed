@@ -1,0 +1,134 @@
+/* Estilos generales */
+.clients-container {
+  text-align: center;
+  background-color: #ebecf0;
+  font-family: Arial, sans-serif;
+  margin-top: 200px; /* Añade margen en la parte superior para separar de la Navbar superior */
+}
+
+.table-container {
+    margin-top: 150px; /* Añade margen en la parte superior para separar de los elementos anteriores */
+   /* Añade margen en la parte superior para separar de los elementos anteriores */
+    width: 100%; /* Establece el ancho del contenedor de la tabla al 100% */
+    overflow-x: auto; /* Agrega una barra de desplazamiento horizontal si la tabla es más ancha que la pantalla */
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-bottom: 10px;
+    padding-inline: 10px;
+  }
+
+/* Estilos para la entrada de búsqueda */
+input[type='text'] {
+  width: 250px;
+  padding: 5px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilos para los botones de búsqueda y restauración */
+button {
+  background-color: #121144e5;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color:#121144e5;
+}
+
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  
+}
+
+th {
+  background-color:  #ebecf0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  padding: 8px;
+}
+
+th:hover {
+  background-color: #ddd;
+}
+
+th:active {
+  background-color:  #ebecf0;;
+}
+
+th:focus {
+  outline: none;
+}
+
+th:focus:not(:focus-visible) {
+  outline: none;
+}
+
+tr {
+  border: 1px solid #ccc;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+/* Estilos para la celda de ordenamiento activa */
+th[aria-sort]::before {
+  content: attr(aria-sort);
+  padding-left: 5px;
+}
+
+/* Estilos para el resaltado de búsqueda */
+tr.highlight {
+  background-color: #f4eb4d;
+}
+
+/* Estilos para el efecto de botón en hover */
+.client-item:hover {
+  background-color: #0056a5;
+  color: white;
+  transform: scale(1.03);
+}
+
+.client-item:hover td {
+  color: white;
+}
+
+/* Estilos para el efecto de botón en click */
+.client-item:active {
+  background-color: #003e7e;
+}
+
+.client-item:active td {
+  color: white;
+}
+
+/* Estilos para el encabezado de columna en orden ascendente */
+th[aria-sort='ascending'] {
+  background-color: #0074d9;
+  color: white;
+}
+
+th[aria-sort='ascending']:hover {
+  background-color: #0056a5;
+}
+
+/* Estilos para el encabezado de columna en orden descendente */
+th[aria-sort='descending'] {
+  background-color: #ff6f61;
+  color: white;
+}
+
+th[aria-sort='descending']:hover {
+  background-color: #d94536;
+}
