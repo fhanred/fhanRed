@@ -10,12 +10,12 @@ import CustomersData from './components/CustomersData/CustomersData';
 
 function App() {
   const userInfo = useSelector((state) => state.userInfo);
- // const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
+  const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
   return (
     <BrowserRouter>
       <div>
         <Navbar />
-        <NavbarItems />
+        {isAuthenticated && <NavbarItems />}
         <Switch>
           <Route exact path="/" ><SignIn /></Route>
           <Route path="/admin/home" ><Home /></Route>
@@ -29,4 +29,3 @@ function App() {
 
 export default App;
 
-// {isAuthenticated && <NavbarItems />}
