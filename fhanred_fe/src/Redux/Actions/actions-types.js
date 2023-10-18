@@ -1,2 +1,3 @@
 export const SIGNIN_USER = 'SIGNIN_USER';
 export const CLEAN_DETAIL = 'CLEAN_DETAIL';
+export const CREATE_INVOICE = 'CREATE_INVOICE';
