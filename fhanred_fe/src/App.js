@@ -6,6 +6,7 @@ import NavbarItems from './components/NavbarItems/NavbarItems';
 import { useSelector } from 'react-redux';
 import Customers from './Views/Admin/Customers/Customers';
 import CustomersData from './components/CustomersData/CustomersData';
+import Invoice from './components/Invoice/Invoice';
 
 
 function App() {
@@ -15,12 +16,13 @@ function App() {
     <BrowserRouter>
       <div>
         <Navbar />
-        {isAuthenticated && <NavbarItems />}
+        {/* {isAuthenticated && <NavbarItems />} */}
         <Switch>
           <Route exact path="/" ><SignIn /></Route>
-          <Route path="/admin/home" ><Home /></Route>
-          <Route path="/admin/clientes"><Customers/></Route>
-          <Route path="/admin/datosClientes"><CustomersData/></Route>
+          <Route path="/admin/home" ><Home /><NavbarItems /></Route>
+          <Route path="/admin/clientes"><Customers/><NavbarItems /></Route>
+          <Route path="/admin/datosClientes"><CustomersData/><NavbarItems /></Route>
+          <Route path="/admin/clientesContratos"><Invoice/><NavbarItems /></Route>
         </Switch>
       </div>
     </BrowserRouter>
