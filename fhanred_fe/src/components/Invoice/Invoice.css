@@ -21,7 +21,7 @@
 }
 
 .error-message {
-  color: #ff0000;
+  color: #cf151f;
   margin-top: 5px;
 }
 
@@ -43,10 +43,8 @@
 .phone-label {
   display: block;
   margin: 10px 0;
-  font-weight: bold;
   font-size: 16px;
   color: #333;
-  text-transform: uppercase;
 }
 
 .phone-input {
@@ -85,7 +83,7 @@
 }
 
 .previous-button {
-  background-color: #121144e5;
+  background-color: #1f2852;
 }
 
 /* Estilos para el mensaje de éxito */
@@ -99,7 +97,7 @@
 
 /* Estilos para el mensaje de error */
 .error-message {
-  background-color: #f44336; /* Color de fondo rojo */
+  background-color: #cf151f; /* Color de fondo rojo */
   color: white; /* Texto en color blanco */
   padding: 10px; /* Espaciado interno */
   margin-bottom: 10px; /* Espacio en la parte inferior */

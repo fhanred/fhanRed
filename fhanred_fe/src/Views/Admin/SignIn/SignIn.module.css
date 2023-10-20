@@ -86,7 +86,7 @@
       &.red {
         display: block;
         width: 100%;
-        color:#af060ffb;
+        color:#cf151f;
       }
   }
   
@@ -105,13 +105,13 @@
   /* Estilos para el enlace dentro de la etiqueta label */
 label a {
     text-decoration: none; /* Elimina el subrayado */
-    color: #121144e5; /* Cambia el color del enlace a negro */
+    color: #1f2852; /* Cambia el color del enlace a negro */
   }
   
   /* estilo específico cuando se coloca el cursor sobre el enlace */
   label a:hover {
     text-decoration: underline; /* Agrega subrayado al pasar el cursor por encima del enlace */
-    color: #af060ffb; /* Cambia el color del enlace al pasar el cursor por encima */
+    color: #cf151f; /* Cambia el color del enlace al pasar el cursor por encima */
   }
 
  
