@@ -1,0 +1,106 @@
+/* your-form-styles.css */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 160px;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.2px;
+  font-size: 16px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.formSection {
+  margin: 20px 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: #cf151f;
+  margin-top: 5px;
+}
+
+.label {
+  display: block;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+.phone-label {
+  display: block;
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.phone-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.previous-button,
+.next-button,
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.previous-button {
+  background-color: #1f2852;
+}
+
+/* Estilos para el mensaje de éxito */
+.success-message {
+  background-color: #4CAF50; /* Color de fondo verde */
+  color: white; /* Texto en color blanco */
+  padding: 10px; /* Espaciado interno */
+  margin-bottom: 10px; /* Espacio en la parte inferior */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Estilos para el mensaje de error */
+.error-message {
+  background-color: #cf151f; /* Color de fondo rojo */
+  color: white; /* Texto en color blanco */
+  padding: 10px; /* Espaciado interno */
+  margin-bottom: 10px; /* Espacio en la parte inferior */
+  border-radius: 4px; /* Bordes redondeados */
+}
+

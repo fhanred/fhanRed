@@ -10,7 +10,7 @@ export const userInfo = (input) => async (dispatch) => {
 
 export const createInvoice = (input) => async (dispatch) => {
   try {
-    const { data } = await axios.post('http://localhost:3001/user/...', input);
+    const { data } = await axios.post('http://localhost:3001/...', input);
     return dispatch({ type: CREATE_INVOICE, payload: data });
   } catch (error) {}
 };

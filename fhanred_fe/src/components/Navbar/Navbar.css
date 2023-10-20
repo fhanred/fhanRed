@@ -1,6 +1,6 @@
 /* Estilos para el Navbar */
 .navbar {
-    background-color: #121144e5; /* color de fondo  */
+    background-color: #1f2852; /* color de fondo  */
     display: flex;
     align-items: center; /* Centra verticalmente el contenido */
     justify-content: space-between;
