@@ -11,7 +11,9 @@ function Customers() {
         return (
           <div key={index} className="client-item">
             <NavLink to={path} onClick={() => setShowMenu(!showMenu)}>
-              {icon}
+            <span className="icon">
+                {icon}
+              </span>
               <h3>{name}</h3>
             </NavLink>
           </div>

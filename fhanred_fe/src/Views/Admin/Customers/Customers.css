@@ -1,15 +1,19 @@
 .clients-container {
-  background-color: #ebecf0;
+  
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 30px;
+  grid-gap: 5px;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
 }
 
+.icon {
+  font-size: 200px; /* Tamaño del icono en píxeles */
+}
+
 .client-item {
-  border: 1px solid #ccc;
+  border: 1px solid #f0f0f0;
   border-radius: 8px;
   padding: 10px;
   display: flex;
@@ -33,11 +37,44 @@
   color: #1f2852;
 }
 
-.client-icon {
-  width: 10px; /* Ajusta el tamaño según tus preferencias */
-}
+
 
 .client-name {
   
   margin-top: 10px;
 }
+
+/* Estilos para pantallas medianas (tabletas) */
+/* Estilos para pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 90%; /* Reduzca el ancho máximo del contenedor en pantallas medianas */
+    margin-top: 120px; /* Ajuste el margen superior en pantallas medianas */
+    margin-right: 20px; 
+  }
+
+  .clients-container {
+    grid-template-columns: repeat(2, 1fr); /* Cambia a una sola columna en pantallas pequeñas */
+  }
+
+  
+}
+
+
+/* Estilos para pantallas pequeñas (teléfonos móviles) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%; /* Reduzca el ancho máximo del contenedor en pantallas pequeñas */
+    margin-top: 100px; /* Ajuste el margen superior en pantallas pequeñas */
+  }
+
+  .client-item {
+    margin-right: 50px; /* Agrega un margen derecho en pantallas medianas */
+    font-size: 12px;
+  }
+
+  .clients-container {
+    grid-template-columns: 1fr; /* Cambia a una sola columna en pantallas pequeñas */
+  }
+}
+

@@ -5,14 +5,20 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import 'react-datepicker/dist/react-datepicker.css';
 import { createInvoice } from '../../Redux/Actions/actions';
 import './Invoice.css';
+import CameraCapture from '../CameraCapture/CameraCapture';
 
 function Invoice() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [step, setStep] = useState(1);
   const [submissionResult, setSubmissionResult] = useState(null);
-  const nextStep = () => setStep(step + 1);
-  const previousStep = () => setStep(step - 1);
+  const nextStep = () => {
+    setStep(step + 1);
+  };
+
+  const previousStep = () => {
+    setStep(step - 1);
+  };
   return (
     <div className="container">
       {submissionResult === 'success' && (
@@ -28,6 +34,7 @@ function Invoice() {
           gender: 'none',
           typeId: 'none' /*tipo documento identificacion*/, //ok
           doc_user: 0,
+          doc_user_image: null,
           typePerson: 'none', //ok
           email: '', //ok
           Order_date: '', //0k
@@ -41,6 +48,7 @@ function Invoice() {
           idStratus: 'none', //ok
           idZone: 'none', //ok
           idTypeHouse: 'none', // ok
+          country: '',
           municipality: 'none', // ok
           district: '',
           address: '', //ok
@@ -50,113 +58,239 @@ function Invoice() {
           cutoffDate: '', //ok
           LastPayment: '', //ok
           salesman: '', //ok
-          trademarkONU: '',
+          trademarkONU: '', //ok
           boxNAP: '',
           MacONU: '',
           idStateInvoice: 'none',
         }}
         validate={(values) => {
           let errors = {};
-          if (!values.name) {
-            errors.name = 'Por favor ingrese un nombre';
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
-            errors.name = 'El nombre solo puede contener letras y espacios';
-          }
-          if (!values.lastName) {
-            errors.lastName = 'Por favor ingrese su apellido';
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.lastName)) {
-            errors.lastName = 'El nombre solo puede contener letras y espacios';
-          }
-          if (values.typeId === 'none') {
-            errors.typeId = 'Dato Requerido';
-          }
-          if (!values.doc_user) {
-            errors.doc_user = 'Dato Requerido';
-          }
-          if (values.typePerson === 'none') {
-            errors.typePerson = 'Dato Requerido';
-          }
-          if (!values.email) {
-            errors.email = 'Por favor ingrese un correo electronico';
-          } else if (
-            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-              values.email
-            )
-          ) {
-            errors.email = 'El correo no es valido';
-          }
 
-          if (values.Order_date) {
-            const datePattern = /^(\d{2}\/\d{2}\/\d{4})$/;
-            if (!datePattern.test(values.Order_date)) {
+          if (step === 1) {
+            if (values.Order_date) {
+              const datePattern = /^(\d{2}\/\d{2}\/\d{4})$/;
+              if (!datePattern.test(values.Order_date)) {
+                errors.Order_date =
+                  'Fecha no válida. El formato debe ser dd/MM/yyyy.';
+              } else {
+                const [day, month, year] =
+                  values.Order_date.split('/').map(Number);
+                if (
+                  day <= 0 ||
+                  day > 31 || // Día válido entre 1 y 31
+                  month <= 0 ||
+                  month > 12 // Mes válido entre 1 y 12
+                ) {
+                  errors.Order_date = 'Fecha no válida. Verifique día y mes.';
+                }
+              }
+            } else {
               errors.Order_date =
-                'Fecha no válida. El formato debe ser dd/MM/yyyy.';
+                'Este campo es obligatorio. Por favor, ingrese una fecha.';
             }
-          }
-          if (!values.birthDate) {
-            errors.birthDate = 'formato de fecha no valido';
-          }
-          if (values.typePerson === 'Jurídica' && !values.CompanyName) {
-            errors.CompanyName = 'Dato Requerido';
-          }
-          if (!values.phone1) {
-            errors.phone1 = 'Por favor ingrese un número de celular';
-          } else if (!/^[0-9]{10}$/.test(values.phone1)) {
-            errors.phone1 = 'Por favor ingrese un número valido';
-          }
-          if (!values.phone2) {
-            errors.phone2 = 'Por favor ingrese un número de celular';
-          } else if (!/^[0-9]{10}$/.test(values.phone2)) {
-            errors.phone2 = 'Por favor ingrese un número valido';
-          }
-          if (!values.phone3) {
-            errors.phone3 = 'Por favor ingrese un número de celular';
-          } else if (!/^[0-9]{10}$/.test(values.phone3)) {
-            errors.phone3 = 'Por favor ingrese un número valido';
-          }
-          if (values.Product_name === 'none') {
-            errors.Product_name = 'Dato requerido';
-          }
-          if (!values.n_contrato) {
-            errors.n_contrato = 'Dato requerido';
-          }
-          if (values.idStratus === 'none') {
-            errors.idStratus = 'Dato requerido';
-          }
-          if (values.idZone === 'none') {
-            errors.idZone = 'Dato requerido';
-          }
-          if (values.idTypeHouse === 'none') {
-            errors.idTypeHouse = 'Dato requerido';
-          }
-          if (!values.district) {
-            errors.district = 'Dato requerido';
-          }
-          if (values.municipality === 'none') {
-            errors.municipality = 'Dato requerido';
-          }
-          if (!values.reportCentralCredit) {
-            errors.reportCentralCredit = 'Dato requerido';
+
+            if (!values.name) {
+              errors.name = 'Por favor ingrese un nombre';
+            } else {
+              const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+              if (!nameRegex.test(values.name)) {
+                errors.name = 'El nombre solo puede contener letras y espacios';
+              }
+            }
+
+            if (!values.lastName) {
+              errors.lastName = 'Por favor ingrese su apellido';
+            } else {
+              const lastNameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+              if (!lastNameRegex.test(values.lastName)) {
+                errors.lastName =
+                  'El apellido solo puede contener letras y espacios';
+              }
+            }
+
+            errors.gender =
+              values.gender === 'none' ? 'Dato Requerido' : undefined;
+            errors.typeId =
+              values.typeId === 'none' ? 'Dato Requerido' : undefined;
+            errors.doc_user = !values.doc_user ? 'Dato Requerido' : undefined;
+            errors.typePerson =
+              values.typePerson === 'none' ? 'Dato Requerido' : undefined;
+
+            if (!values.email) {
+              errors.email = 'Por favor ingrese un correo electrónico';
+            } else {
+              const emailRegex =
+                /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+              if (!emailRegex.test(values.email)) {
+                errors.email = 'El correo no es válido';
+              }
+            }
+
+            if (values.birthDate) {
+              const datePattern = /^(\d{2}\/\d{2}\/\d{4})$/;
+              if (!datePattern.test(values.birthDate)) {
+                errors.birthDate =
+                  'Fecha no válida. El formato debe ser dd/MM/yyyy.';
+              } else {
+                const [day, month, year] = values.birthDate
+                  .split('/')
+                  .map(Number);
+                if (
+                  day <= 0 ||
+                  day > 31 || // Día válido entre 1 y 31
+                  month <= 0 ||
+                  month > 12 // Mes válido entre 1 y 12
+                ) {
+                  errors.birthDate = 'Fecha no válida. Verifique día y mes.';
+                }
+              }
+            } else {
+              errors.birthDate =
+                'Este campo es obligatorio. Por favor, ingrese una fecha.';
+            }
+
+            errors.CompanyName =
+              values.typePerson === 'Jurídica' && !values.CompanyName
+                ? 'Dato Requerido'
+                : undefined;
+
+            if (!values.phone1) {
+              errors.phone1 = 'Por favor ingrese un número de celular';
+            } else {
+              const phoneRegex = /^[0-9]{10}$/;
+              const isValidPhone = phoneRegex.test(values.phone1);
+
+              if (!isValidPhone) {
+                errors.phone1 = 'Por favor ingrese un número válido';
+              }
+            }
+
+            if (!values.phone2) {
+              errors.phone2 = 'Por favor ingrese un número de celular';
+            } else {
+              const phoneRegex = /^[0-9]{10}$/;
+              const isValidPhone = phoneRegex.test(values.phone2);
+
+              if (!isValidPhone) {
+                errors.phone2 = 'Por favor ingrese un número válido';
+              }
+            }
+
+            if (!values.phone3) {
+              errors.phone3 = 'Por favor ingrese un número de celular';
+            } else {
+              const phoneRegex = /^[0-9]{10}$/;
+              const isValidPhone = phoneRegex.test(values.phone3);
+
+              if (!isValidPhone) {
+                errors.phone3 = 'Por favor ingrese un número válido';
+              }
+            }
+          } else if (step === 2) {
+            errors.Product_name =
+              values.Product_name === 'none' ? 'Dato Requerido' : undefined;
+            errors.n_contrato = !values.n_contrato
+              ? 'Dato requerido'
+              : undefined;
+            errors.idStratus =
+              values.idStratus === 'none' ? 'Dato requerido' : undefined;
+            errors.idZone =
+              values.idZone === 'none' ? 'Dato requerido' : undefined;
+            errors.idTypeHouse =
+              values.idTypeHouse === 'none' ? 'Dato requerido' : undefined;
+            errors.country = !values.country ? 'Dato requerido' : undefined;
+            errors.departament = !values.departament
+              ? 'Dato requerido'
+              : undefined;
+            errors.district = !values.district ? 'Dato requerido' : undefined;
+            errors.address = !values.address ? 'Dato requerido' : undefined;
+            errors.municipality =
+              values.municipality === 'none' ? 'Dato requerido' : undefined;
+            errors.reportCentralCredit =
+              values.reportCentralCredit === 'none'
+                ? 'Dato Requerido'
+                : undefined;
+            errors.fact_email =
+              values.fact_email === 'none' ? 'Dato requerido' : undefined;
+
+            if (values.startDate) {
+              const datePattern = /^(\d{2}\/\d{2}\/\d{4})$/;
+              if (!datePattern.test(values.startDate)) {
+                errors.startDate =
+                  'Fecha no válida. El formato debe ser dd/MM/yyyy.';
+              } else {
+                const [day, month, year] = values.startDate
+                  .split('/')
+                  .map(Number);
+                if (
+                  day <= 0 ||
+                  day > 31 || // Día válido entre 1 y 31
+                  month <= 0 ||
+                  month > 12 // Mes válido entre 1 y 12
+                ) {
+                  errors.startDate = 'Fecha no válida. Verifique día y mes.';
+                }
+              }
+            } else {
+              errors.startDate =
+                'Este campo es obligatorio. Por favor, ingrese una fecha.';
+            }
+
+            if (values.cutoffDate) {
+              const datePattern = /^(\d{2}\/\d{2}\/\d{4})$/;
+              if (!datePattern.test(values.cutoffDate)) {
+                errors.cutoffDate =
+                  'Fecha no válida. El formato debe ser dd/MM/yyyy.';
+              } else {
+                const [day, month, year] = values.cutoffDate
+                  .split('/')
+                  .map(Number);
+                if (
+                  day <= 0 ||
+                  day > 31 || // Día válido entre 1 y 31
+                  month <= 0 ||
+                  month > 12 // Mes válido entre 1 y 12
+                ) {
+                  errors.cutoffDate = 'Fecha no válida. Verifique día y mes.';
+                }
+              }
+            } else {
+              errors.cutoffDate =
+                'Este campo es obligatorio. Por favor, ingrese una fecha.';
+            }
+
+            if (values.LastPayment) {
+              const datePattern = /^(\d{2}\/\d{2}\/\d{4})$/;
+              if (!datePattern.test(values.LastPayment)) {
+                errors.LastPayment =
+                  'Fecha no válida. El formato debe ser dd/MM/yyyy.';
+              } else {
+                const [day, month, year] =
+                  values.LastPayment.split('/').map(Number);
+                if (
+                  day <= 0 ||
+                  day > 31 || // Día válido entre 1 y 31
+                  month <= 0 ||
+                  month > 12 // Mes válido entre 1 y 12
+                ) {
+                  errors.LastPayment = 'Fecha no válida. Verifique día y mes.';
+                }
+              }
+            } else {
+              errors.LastPayment =
+                'Este campo es obligatorio. Por favor, ingrese una fecha.';
+            }
+          } else if (step === 3) {
+            errors.salesman = !values.salesman ? 'Dato requerido' : undefined;
+            errors.trademarkONU = !values.trademarkONU
+              ? 'Dato requerido'
+              : undefined;
+            errors.boxNAP = !values.boxNAP ? 'Dato requerido' : undefined;
+            errors.MacONU = !values.MacONU ? 'Dato requerido' : undefined;
+            errors.idStateInvoice =
+              values.idStateInvoice === 'none' ? 'Dato Requerido' : undefined;
           }
 
-          if (!values.startDate) {
-            errors.startDate = 'Dato requerido';
-          }
-          if (!values.cutoffDate) {
-            errors.cutoffDate = 'Dato requerido';
-          }
-          if (!values.LastPayment) {
-            errors.LastPayment = 'Dato requerido';
-          }
-          if (!values.salesman) {
-            errors.salesman = 'Dato requerido';
-          }
-          if (values.fact_email === 'none') {
-            errors.idStatusByEmail = 'Dato requerido';
-          }
-          if (values.idStateInvoice === 0) {
-            errors.idStateInvoice = 'Dato requerido';
-          }
           return errors;
         }}
         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -186,11 +320,11 @@ function Invoice() {
 
         /*SE UTILIZA CUANDO NO ESTOY CONECTADO A SERVIDOR Y QUIERO VER COMO ENVIA INFORMACION*/
         // onSubmit={(values, { setSubmitting, resetForm }) => {
-          
+
         //   setTimeout(() => {
         //     const success = Math.random() < 0.5;
         //     setSubmissionResult(success ? 'success' : 'error');
-          
+
         //     if (step === 3) {
         //       dispatch(createInvoice(values));
         //       setSubmitting(false);
@@ -203,12 +337,13 @@ function Invoice() {
         //   }, 3000); // 3000 ms = 3 segundos
         // }}
       >
-        {({ isSubmitting, values, errors }) => (
+        {({ isSubmitting, touchedFields, values, errors }) => (
           <div>
             <Form>
               {step === 1 && (
                 <div className="formSection">
                   <h2>Datos personales</h2>
+
                   <div className="form-group">
                     <label htmlFor="Order_date">Fecha:</label>
                     <Field
@@ -219,8 +354,9 @@ function Invoice() {
                     />
                     <ErrorMessage
                       name="Order_date"
-                      component="div"
-                      className="error-message"
+                      component={() => (
+                        <div className="error-message">{errors.Order_date}</div>
+                      )}
                     />
                   </div>
 
@@ -234,6 +370,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="lastName">Apellidos:</label>
                     <Field
@@ -249,6 +386,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="gender">Genero:</label>
                     <Field id="gender" name="gender" as="select">
@@ -262,12 +400,13 @@ function Invoice() {
                       <option value={'Otro'}>Otro</option>
                     </Field>
                     <ErrorMessage
-                      name="typePerson"
+                      name="gender"
                       component={() => (
                         <div className="error-message">{errors.gender}</div>
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="typeId">Tipo de documento:</label>
                     <Field id="typeId" name="typeId" as="select">
@@ -283,21 +422,47 @@ function Invoice() {
                         <div className="error-message">{errors.typeId}</div>
                       )}
                     />
-                    <div className="form-group">
-                      <label htmlFor="doc_user">Número de documento:</label>
-                      <Field
-                        type="number" // Esto hace que el campo sea de tipo número
-                        id="doc_user"
-                        name="doc_user"
-                        className="form-control"
-                      />
-                      <ErrorMessage
-                        name="doc_user"
-                        component="div"
-                        className="error-message"
-                      />
-                    </div>
                   </div>
+
+                  <div className="form-group">
+                    <label htmlFor="doc_user">Número de documento:</label>
+                    <Field
+                      type="number" // Esto hace que el campo sea de tipo número
+                      id="doc_user"
+                      name="doc_user"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="doc_user"
+                      component={() => (
+                        <div className="error-message">{errors.doc_user}</div>
+                      )}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="doc_user_image">
+                      Archivo de su documento de identificación por ambas caras:
+                    </label>
+                    <Field
+                      type="file"
+                      id="doc_user_image"
+                      name="doc_user_image"
+                      accept=".pdf, image/*" // Permite archivos PDF e imágenes
+                      className="form-control"
+                    />
+                    <small className="form-text text-muted">
+                      Puede cargar un archivo en PDF o tomar una imagen.
+                    </small>
+                    <CameraCapture />
+                    <ErrorMessage
+                      name="doc_user_image"
+                      component={() => (
+                        <div className="error-message">{errors.doc_user}</div>
+                      )}
+                    />
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="typePerson">Tipo de persona:</label>
                     <Field id="typePerson" name="typePerson" as="select">
@@ -312,6 +477,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="email">Correo electrónico:</label>
                     <Field
@@ -327,6 +493,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="birthDate">Fecha de nacimiento:</label>
                     <Field
@@ -337,10 +504,12 @@ function Invoice() {
                     />
                     <ErrorMessage
                       name="birthDate"
-                      component="div"
-                      className="error-message"
+                      component={() => (
+                        <div className="error-message">{errors.birthDate}</div>
+                      )}
                     />
                   </div>
+
                   {values.typePerson === 'Jurídica' && (
                     <div className="form-group">
                       <label htmlFor="CompanyName">Razón social:</label>
@@ -361,6 +530,7 @@ function Invoice() {
                       />
                     </div>
                   )}
+
                   <div className="form-group">
                     <label htmlFor="phone1" className="phone-label">
                       Teléfono de Contacto 1:
@@ -379,6 +549,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="phone2" className="phone-label">
                       Teléfono de contacto 2:
@@ -397,6 +568,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="phone3" className="phone-label">
                       Teléfono de contacto 3:
@@ -415,11 +587,16 @@ function Invoice() {
                       )}
                     />
                   </div>
+                  <button type="button" onClick={nextStep}>
+                    Siguiente
+                  </button>
                 </div>
               )}
+
               {step === 2 && (
                 <div className="formSection">
                   <h2>Datos plan </h2>
+
                   <div className="form-group">
                     <label htmlFor="Product_name">Plan:</label>
                     <Field id="Product_name" name="Product_name" as="select">
@@ -442,7 +619,7 @@ function Invoice() {
                         PLAN PLATINO 20 MEGAS CON IVA
                       </option>
                       <option value={'30MG PLAN RUBI  SIN IVA'}>
-                        30MG PLAN RUBI SIN IVA
+                        30MG PLAN RUBI SIN IV
                       </option>
                       <option value={'50MG PLAN ZAFIRO SIN IVA'}>
                         50MG PLAN ZAFIRO SIN IVA
@@ -460,8 +637,9 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
-                    <label htmlFor="n_contrato">Contrato #:</label>
+                    <label htmlFor="n_contrato">Código:</label>
                     <Field
                       type="text"
                       id="n_contrato"
@@ -475,6 +653,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="idStratus">Estrato:</label>
                     <Field id="idStratus" name="idStratus" as="select">
@@ -493,6 +672,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="idZone">Zona:</label>
                     <Field id="idZone" name="idZone" as="select">
@@ -507,6 +687,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="idTypeHouse">Tipo de vivienda:</label>
                     <Field id="idTypeHouse" name="idTypeHouse" as="select">
@@ -518,6 +699,8 @@ function Invoice() {
                       <option value={'Instituciones'}>Instituciones</option>
                       <option value={'Edificio'}>Edificio</option>
                       <option value={'Hostal/Hotel'}>Hostal/Hotel</option>
+                      <option value={'Finca'}>Finca</option>
+                      <option value={'Cabaña'}>Cabaña</option>
                     </Field>
                     <ErrorMessage
                       name="idTypeHouse"
@@ -528,6 +711,41 @@ function Invoice() {
                       )}
                     />
                   </div>
+
+                  <div className="form-group">
+                    <label htmlFor="country">Pais:</label>
+                    <Field
+                      type="text"
+                      id="country"
+                      name="country"
+                      placeholder=""
+                    />
+                    <ErrorMessage
+                      name="country"
+                      component={() => (
+                        <div className="error-message">{errors.country}</div>
+                      )}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="departament">Departamento:</label>
+                    <Field
+                      type="text"
+                      id="departament"
+                      name="departament"
+                      placeholder=""
+                    />
+                    <ErrorMessage
+                      name="departament"
+                      component={() => (
+                        <div className="error-message">
+                          {errors.departament}
+                        </div>
+                      )}
+                    />
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="municipality">Municipio:</label>
                     <Field id="municipality" name="municipality" as="select">
@@ -535,7 +753,16 @@ function Invoice() {
                       <option value={'Restrepo'}>Restrepo</option>
                       <option value={'Cumaral'}>Cumaral</option>
                     </Field>
+                    <ErrorMessage
+                      name="municipality"
+                      component={() => (
+                        <div className="error-message">
+                          {errors.municipality}
+                        </div>
+                      )}
+                    />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="district">Barrio:</label>
                     <Field
@@ -544,16 +771,30 @@ function Invoice() {
                       name="district"
                       placeholder=""
                     />
+                    <ErrorMessage
+                      name="district"
+                      component={() => (
+                        <div className="error-message">{errors.district}</div>
+                      )}
+                    />
                   </div>
+
                   <div className="form-group">
-                    <label htmlFor="address">Dirección:</label>
+                    <label htmlFor="address">Dirección principal:</label>
                     <Field
                       type="text"
                       id="address"
                       name="address"
                       placeholder=""
                     />
+                    <ErrorMessage
+                      name="address"
+                      component={() => (
+                        <div className="error-message">{errors.address}</div>
+                      )}
+                    />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="reportCentralCredit">
                       Reporte central de riesgo:
@@ -586,6 +827,12 @@ function Invoice() {
                       <option value={'Si'}>Si</option>
                       <option value={'No'}>No</option>
                     </Field>
+                    <ErrorMessage
+                      name="fact_email"
+                      component={() => (
+                        <div className="error-message">{errors.fact_email}</div>
+                      )}
+                    />
                   </div>
 
                   <div className="form-group">
@@ -598,8 +845,9 @@ function Invoice() {
                     />
                     <ErrorMessage
                       name="startDate"
-                      component="div"
-                      className="error-message"
+                      component={() => (
+                        <div className="error-message">{errors.startDate}</div>
+                      )}
                     />
                   </div>
 
@@ -613,8 +861,9 @@ function Invoice() {
                     />
                     <ErrorMessage
                       name="cutoffDate"
-                      component="div"
-                      className="error-message"
+                      component={() => (
+                        <div className="error-message">{errors.cutoffDate}</div>
+                      )}
                     />
                   </div>
 
@@ -628,15 +877,26 @@ function Invoice() {
                     />
                     <ErrorMessage
                       name="LastPayment"
-                      component="div"
-                      className="error-message"
+                      component={() => (
+                        <div className="error-message">
+                          {errors.LastPayment}
+                        </div>
+                      )}
                     />
                   </div>
+                  <button type="button" onClick={previousStep}>
+                    Anterior
+                  </button>
+                  <button type="button" onClick={nextStep}>
+                    Siguiente
+                  </button>
                 </div>
               )}
+
               {step === 3 && (
                 <div className="formSection">
                   <h2>Datos de la instalacion</h2>
+
                   <div className="form-group">
                     <label htmlFor="trademarkONU">Marca de ONU:</label>
                     <Field
@@ -644,6 +904,14 @@ function Invoice() {
                       id="trademarkONU"
                       name="trademarkONU"
                       placeholder=""
+                    />
+                    <ErrorMessage
+                      name="trademarkONU"
+                      component={() => (
+                        <div className="error-message">
+                          {errors.trademarkONU}
+                        </div>
+                      )}
                     />
                   </div>
                   <div className="form-group">
@@ -654,7 +922,14 @@ function Invoice() {
                       name="boxNAP"
                       placeholder=""
                     />
+                    <ErrorMessage
+                      name="boxNAP"
+                      component={() => (
+                        <div className="error-message">{errors.boxNAP}</div>
+                      )}
+                    />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="MacONU">Mac de ONU:</label>
                     <Field
@@ -663,7 +938,14 @@ function Invoice() {
                       name="MacONU"
                       placeholder=""
                     />
+                    <ErrorMessage
+                      name="MacONU"
+                      component={() => (
+                        <div className="error-message">{errors.MacONU}</div>
+                      )}
+                    />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="idStateInvoice">Estado contrato:</label>
                     <Field
@@ -687,6 +969,7 @@ function Invoice() {
                       )}
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="salesman">Vendedor:</label>
                     <Field
@@ -702,36 +985,14 @@ function Invoice() {
                       )}
                     />
                   </div>
-                </div>
-              )}
-              <div className="form-buttons">
-                {step > 1 && (
-                  <button
-                    type="button"
-                    onClick={previousStep}
-                    className="previous-button"
-                  >
+                  <button type="button" onClick={previousStep}>
                     Anterior
                   </button>
-                )}
-                {step < 3 ? (
-                  <button
-                    type="button"
-                    onClick={nextStep}
-                    className="next-button"
-                  >
-                    Siguiente
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="submit-button"
-                  >
+                  <button type="submit" disabled={isSubmitting}>
                     Enviar
                   </button>
-                )}
-              </div>
+                </div>
+              )}
             </Form>
           </div>
         )}

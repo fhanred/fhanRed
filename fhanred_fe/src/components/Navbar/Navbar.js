@@ -23,7 +23,7 @@ function Navbar() {
       {userInfo ? ( // Si hay un usuario conectado, muestra la información del usuario
         <div className="navbar-user">
           <div className="user-avatar">
-            <FaUserCircle size={50} />
+            <FaUserCircle />
           </div>
           <div className="user-info">
             <span>Hola, {userInfo.name}</span>
@@ -32,7 +32,7 @@ function Navbar() {
               title="Cerrar Sesión"
               onClick={handleLogout}
             >
-              <TfiPowerOff size={24} />
+              <TfiPowerOff  />
             </div>
           </div>
         </div>
