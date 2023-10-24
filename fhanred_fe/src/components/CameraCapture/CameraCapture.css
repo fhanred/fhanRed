@@ -1,0 +1,29 @@
+/* Estilos generales para los botones */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 5px; /* Añade un pequeño margen entre los botones */
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
+/* Estilos para el botón "Iniciar cámara" */
+button:first-child {
+  background-color: #1f2852;
+  color: #fff;
+}
+
+/* Estilos para el botón "Capturar imagen" */
+button:nth-child(2) {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+/* Estilos para el botón "Detener cámara" */
+button:last-child {
+  background-color: #cf151f;
+  color: #fff;
+}

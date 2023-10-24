@@ -9,6 +9,7 @@ import CustomersData from './components/CustomersData/CustomersData';
 import Invoice from './components/Invoice/Invoice';
 
 
+
 function App() {
   const userInfo = useSelector((state) => state.userInfo);
   const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);

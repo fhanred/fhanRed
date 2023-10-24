@@ -1,4 +1,4 @@
-/* your-form-styles.css */
+/* Estilos base para el formulario */
 .container {
   max-width: 600px;
   margin: 0 auto;
@@ -20,6 +20,16 @@
   margin-bottom: 20px;
 }
 
+.form-text {
+  font-size: 14px;
+  color: #6c757d; /* Cambia el color de texto según tus preferencias */
+}
+
+.text-muted {
+  opacity: 0.6; /* Puedes ajustar la opacidad según tus preferencias */
+}
+
+
 .error-message {
   color: #cf151f;
   margin-top: 5px;
@@ -31,14 +41,13 @@
   font-weight: bold;
 }
 
-.input {
+.input, .phone-input, .select {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
 
 .phone-label {
   display: block;
@@ -47,60 +56,72 @@
   color: #333;
 }
 
-.phone-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.previous-button,
-.next-button,
-.submit-button {
-  padding: 10px 20px;
+/* Estilos generales para los botones */
+button {
+  padding: 10px 30px;
   border: none;
   border-radius: 5px;
-  color: #fff;
   font-size: 16px;
   cursor: pointer;
+  margin-right: 10px;
 }
 
-.previous-button {
+/* Estilos para el botón "Siguiente" */
+button.next-button {
   background-color: #1f2852;
+  color: #fff;
+}
+
+/* Estilos para el botón "Anterior" */
+button.previous-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* Estilos para el botón "Enviar" */
+button.submit-button {
+  background-color: #4CAF50;
+  color: #fff;
+  margin-right: 0;
+}
+
+/* Estilos para deshabilitar el botón cuando se envía el formulario */
+button[disabled] {
+  background-color: #ccc;
+  color: #333;
+  cursor: not-allowed;
 }
 
 /* Estilos para el mensaje de éxito */
 .success-message {
-  background-color: #4CAF50; /* Color de fondo verde */
-  color: white; /* Texto en color blanco */
-  padding: 10px; /* Espaciado interno */
-  margin-bottom: 10px; /* Espacio en la parte inferior */
-  border-radius: 4px; /* Bordes redondeados */
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
 }
 
 /* Estilos para el mensaje de error */
 .error-message {
-  background-color: #cf151f; /* Color de fondo rojo */
-  color: white; /* Texto en color blanco */
-  padding: 10px; /* Espaciado interno */
-  margin-bottom: 10px; /* Espacio en la parte inferior */
-  border-radius: 4px; /* Bordes redondeados */
+  background-color: #cf151f;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
 }
 
+/* Estilos para pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 80%; /* Reduzca el ancho máximo del contenedor en pantallas medianas */
+    margin-top: 120px; /* Ajuste el margen superior en pantallas medianas */
+  }
+}
+
+/* Estilos para pantallas pequeñas (teléfonos móviles) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%; /* Reduzca el ancho máximo del contenedor en pantallas pequeñas */
+    margin-top: 100px; /* Ajuste el margen superior en pantallas pequeñas */
+  }
+}
