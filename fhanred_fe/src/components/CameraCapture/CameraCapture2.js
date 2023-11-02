@@ -2,7 +2,7 @@ import { Card } from 'semantic-ui-react';
 import './CameraCapture.css';
 import { useRef, useState } from 'react';
 
-function CameraCapture({ setFieldValue }) {
+function CameraCapture2({ setFieldValue }) {
   const videoDiv = useRef();
   const fotoDiv = useRef();
   const [mediaStream, setMediaStream] = useState(null);
@@ -111,7 +111,7 @@ function CameraCapture({ setFieldValue }) {
     const imageURL = file.secure_url;
     console.log(imageURL);
     // Utiliza setFieldValue para actualizar el valor del campo 'image_ced1' en Formik
-    setFieldValue('image_ced1', imageURL);
+    setFieldValue('image_ced2', imageURL);
     setFotoGuardada(true);
     setCameraActiva(true);
     setLoading(false);
@@ -161,4 +161,4 @@ function CameraCapture({ setFieldValue }) {
   );
 }
 
-export default CameraCapture;
+export default CameraCapture2;

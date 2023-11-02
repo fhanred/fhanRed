@@ -1,0 +1,112 @@
+.containerRegister {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrado horizontal */
+    justify-content: center; /* Centrado vertical */
+    height: 100vh; /* Altura del 100% de la ventana */
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+    /* color: #121144e5; */
+  }
+.main {
+  display: inline-block;
+  width: 49%;
+  margin-top: 200px;
+}
+
+    .register {
+       border: none; 
+        
+        h3 {
+          border-bottom-color: #909090;
+        }
+    
+        .sep{
+          border-color: #909090;
+        }
+    }
+  
+
+.register {
+  	width: 500px;
+  	margin: 10px auto;
+  	padding: 10px;
+  	border: 7px solid;
+    border-color: #22C4CF;
+  	border-radius: 10px;
+  	
+	  color: #444;
+  	
+  	box-shadow: 0 0 20px 0 #22C4CF;
+
+  h2 {
+	  	margin: 0 15px 20px;
+	  	border-bottom: 2px solid ;
+	  	padding: 5px 10px 5px 0;
+	  	font-size: 1.1em;
+	}
+
+	div{
+		margin: 0 0 15px 0;
+	  	border : none;
+	}
+
+	label {
+	  	display: inline-block;
+	  	width: 25%;
+	  	text-align: right;
+	  	margin: 10px
+	}
+
+	input[type=text], input[type=password]{
+  		width: 65%; 
+  		
+  		padding: 5px;
+  		font-size: 0.9em;
+  		border-radius: 5px;
+  		background: rgba(0, 0, 0, 0.07);
+	}
+  
+  input[type=text]:focus, input[type=password]:focus{
+		background: #FFFFFF;
+	}
+
+	
+	
+	
+	
+
+	
+}
+
+
+
+
+.error-message {
+    background-color: #cf151f;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+
+  .passwordInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 16px;
+  }
+  
+  .passwordInput input {
+    flex: 1;
+    border: none;
+  }
+  
+  .passwordInput .eyeIcon {
+    cursor: pointer;
+    font-size: 20px;
+  }
