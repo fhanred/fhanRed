@@ -7,7 +7,9 @@ import { useSelector } from 'react-redux';
 import Customers from './Views/Admin/Customers/Customers';
 import CustomersData from './components/CustomersData/CustomersData';
 import Invoice from './components/Invoice/Invoice';
-
+import ForgotPassword from './components/Forgot/ForgotPassword';
+import Register from './components/Register/Register';
+import Treasury from './Views/Admin/Treasury/Treasury';
 
 
 function App() {
@@ -20,8 +22,11 @@ function App() {
         {/* {isAuthenticated && <NavbarItems />} */}
         <Switch>
           <Route exact path="/" ><SignIn /></Route>
+          <Route path="/forgotPassword" ><ForgotPassword /></Route>
+          <Route path="/signup" ><Register /></Route>
           <Route path="/admin/home" ><Home /><NavbarItems /></Route>
           <Route path="/admin/clientes"><Customers/><NavbarItems /></Route>
+          <Route path="/admin/tesoreria"><Treasury/><NavbarItems /></Route>
           <Route path="/admin/datosClientes"><CustomersData/><NavbarItems /></Route>
           <Route path="/admin/clientesContratos"><Invoice/><NavbarItems /></Route>
         </Switch>

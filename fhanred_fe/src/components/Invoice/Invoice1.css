@@ -1,0 +1,165 @@
+/* Estilos generales */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 160px;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Formulario */
+  .formSection {
+    margin: 20px 0;
+  }
+  
+  /* Grupos de formulario */
+  .form-group {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+    border-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .form-group-address-container {
+    display: flex;
+    grid-template-columns: repeat(3, 1fr); /* Divide en tres columnas */
+  gap: 10px; /* Espacio entre los elementos */
+  }
+  
+  .form-group-address {
+   
+    padding: 10px;
+    box-sizing: border-box; /* Evita que el relleno afecte el ancho */
+    display: flex;
+    flex-direction:column;
+    align-items: flex-start; /* Alinea los elementos a la izquierda */
+  }
+  
+  .form-group-address label {
+    margin-bottom: 5px;
+  }
+  
+  .form-group-address button {
+    
+    margin-top: 10px; /* Espacio entre la última etiqueta y el botón */
+  }
+  
+  
+
+  .form-group-firma {
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+    border-color: #000;
+    align-items: center;
+  }
+  
+  .button-container-firma {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Etiquetas */
+  .label {
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+    font-weight: bold;
+    margin-top: 30px;
+  }
+  
+  /* Campos de entrada */
+  .input,
+  .phone-input,
+  .email-input,
+  .select {
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .input-address {
+    width: 100%; /* Aumenta el ancho para que la dirección completa quepa en una línea */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Botones */
+  button {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  /* Botón "Siguiente" */
+  button.next-button {
+    background-color: #1f2852;
+    color: #fff;
+  }
+  
+  /* Botón "Anterior" */
+  button.previous-button {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  /* Botón "Enviar" */
+  button.submit-button {
+    background-color: #4CAF50;
+    color: #fff;
+    margin-right: 0;
+  }
+  
+  /* Botón deshabilitado */
+  button[disabled] {
+    background-color: #ccc;
+    color: #333;
+    cursor: not-allowed;
+  }
+  
+  /* Mensajes de éxito y error */
+  .success-message,
+  .error-message {
+    background-color: #fff;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  .error-message {
+    background-color: #cf151f;
+  }
+  
+  /* Estilos para pantallas medianas (tabletas) */
+  @media (max-width: 1024px) {
+    .container {
+      max-width: 80%;
+      margin-top: 120px;
+    }
+  }
+  
+  /* Estilos para pantallas pequeñas (teléfonos móviles) */
+  @media (max-width: 768px) {
+    .container {
+      max-width: 90%;
+      margin-top: 100px;
+    }
+  }
+  

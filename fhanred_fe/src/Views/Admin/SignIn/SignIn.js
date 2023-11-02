@@ -14,7 +14,7 @@ function SignIn() {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   function handleClick1() {
-    // history.push('/user/signup');
+    history.push('/signup');
   }
   const [input, setInput] = useState({
     email: '',
@@ -82,7 +82,7 @@ function SignIn() {
             </div>
           </label>
           <label>
-            <NavLink to="/user/signinforgot">
+            <NavLink to="/forgotPassword">
               <span>¿Has olvidado tu contraseña?</span>
             </NavLink>
           </label>

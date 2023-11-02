@@ -8,7 +8,12 @@ import {
   FaMoneyBillWave,
 } from 'react-icons/fa';
 import { IoStatsChart } from 'react-icons/io5';
-import { RiCake2Fill, RiContactsBookFill, RiCurrencyLine, RiFolder5Fill } from 'react-icons/ri';
+import {
+  RiCake2Fill,
+  RiContactsBookFill,
+  RiCurrencyLine,
+  RiFolder5Fill,
+} from 'react-icons/ri';
 
 export const links = [
   {
@@ -64,26 +69,31 @@ export const links = [
 export const clientsLinks = [
   {
     id: 1,
-    name: "Datos Clientes",
-    icon: <RiContactsBookFill />,
-    path: "/admin/datosClientes",
+    name: 'Datos Clientes',
+    icon: <RiContactsBookFill size={200} />,
+    path: '/admin/datosClientes',
   },
   {
     id: 2,
-    name: "Contratos",
-    icon: <RiFolder5Fill  />,
-    path: "/admin/clientesContratos",
+    name: 'Contratos',
+    icon: <RiFolder5Fill size={200} />,
+    path: '/admin/clientesContratos',
   },
+
   {
     id: 3,
-    name: "Cartera",
-    icon: <RiCurrencyLine />,
-    path: "/admin/carteraClientes",
+    name: 'Cumpleaños',
+    icon: <RiCake2Fill size={200} />,
+    path: '/admin/cumpleañosclientes',
   },
+];
+
+export const tesoreriaLinks = [
   {
-    id: 4,
-    name: "Cumpleaños",
-    icon: <RiCake2Fill />,
-    path: "/admin/cumpleañosclientes",
+    id: 1,
+    name: 'Cartera',
+    icon: <RiCurrencyLine size={200} />,
+    path: '/admin/carteraClientes',
   },
-]
+];
+
