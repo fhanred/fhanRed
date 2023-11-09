@@ -1,7 +1,13 @@
-import { SIGNIN_USER, CLEAN_DETAIL, CREATE_INVOICE } from '../Actions/actions-types';
+import {
+  SIGNIN_USER,
+  CLEAN_DETAIL,
+  CREATE_INVOICE,
+  INCREMENT_NUMBER_FACT,
+} from '../Actions/actions-types';
 
 const initialState = {
   userInfo: {},
+  numberFact: 1, // Inicializa el numero de la facturacion de Fhanred
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -11,10 +17,15 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
       };
-      case CREATE_INVOICE:
-        return {
-          ...state,
-        }
+    case CREATE_INVOICE:
+      return {
+        ...state,
+      };
+    case INCREMENT_NUMBER_FACT:
+      return {
+        ...state,
+        numberFact: state.numberFact + 1,
+      };
     case CLEAN_DETAIL:
       return {
         ...state,
@@ -25,4 +36,4 @@ const rootReducer = (state = initialState, action) => {
   }
 };
 
-export default rootReducer
+export default rootReducer;

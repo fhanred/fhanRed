@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SIGNIN_USER, CLEAN_DETAIL, CREATE_INVOICE } from './actions-types';
+import { SIGNIN_USER, CLEAN_DETAIL, CREATE_INVOICE, INCREMENT_NUMBER_FACT } from './actions-types';
 
 export const userInfo = (input) => async (dispatch) => {
   try {
@@ -14,6 +14,10 @@ export const createInvoice = (input) => async (dispatch) => {
     return dispatch({ type: CREATE_INVOICE, payload: data });
   } catch (error) {}
 };
+
+export const incrementNumberFact = () => ({
+  type: INCREMENT_NUMBER_FACT,
+});
 
 export const cleanDetail = () => {
   try {
