@@ -1,0 +1,73 @@
+.container-factura {
+    max-width: 1150px;
+    margin: 0 auto;
+    margin-top: 160px;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+     /* Agrega el margen izquierdo deseado */
+     margin-left: 350px;
+  }
+
+  .container-cabecera {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+  }
+
+  .container-cabecera label {
+    flex:auto; /* El label ocupará el espacio disponible */
+    margin-top: 17px;
+    margin-right: 10px; /* Agrega un espacio entre el label y el input si es necesario */
+    margin-left: 750px;
+  }
+  
+  .left {
+    flex: 1; /* Toma el espacio disponible a la izquierda */
+  }
+  
+  .right {
+    text-align: right; /* Alinea el contenido a la derecha */
+  }
+
+  .form-group-container-fact {
+    display: flex;
+    gap: 10px; /* Espacio entre los elementos */
+    border-style: double;
+    margin-bottom: 5px;
+    
+  }
+  
+  .form-group-fact {
+   
+    padding: 10px;
+    box-sizing: border-box; /* Evita que el relleno afecte el ancho */
+    display: flex;
+    flex-direction:column;
+    align-items: flex-start; /* Alinea los elementos a la izquierda */
+    margin-bottom: 5px;
+  }
+  
+  .form-group-fact label {
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para los botones */
+.form-group-fact button {
+  background-color: #ddd; /* Color de fondo gris */
+  color: #333; /* Color del texto */
+  border: none;
+  padding: 10px;
+  margin-top: 5px; /* Espacio entre el campo de entrada y el botón */
+  cursor: pointer;
+  width: 100%; /* Iguala el ancho del botón al del campo */
+}
+
+/* Estilos para los botones al pasar el cursor por encima */
+.form-group-fact button:hover {
+  background-color: #aaa; /* Cambia el color de fondo al pasar el cursor por encima */
+}
