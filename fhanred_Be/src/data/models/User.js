@@ -5,25 +5,24 @@ module.exports = (sequelize) => {
   sequelize.define(
     "User",
     {
-      idNum: {
+      n_documento: {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull:false,
       },
-      typeId: {
+      tipo_documento: {
         type: DataTypes.ENUM('CC','CE', 'NIT','PP'),
         allowNull: false
       },
-      name: {
+      tipo_persona: {
+        type:  DataTypes.ENUM('P.JURIDICA', 'P.NATURAL' ),
+      },
+      name_razonSocial: {
         type: DataTypes.STRING
       },
-      lastName: {
-        type: DataTypes.STRING,
-      },
-      CompanyName:  {
-        type: DataTypes.STRING,
-
-      },
+      sexo: {
+        type: DataTypes.STRING
+      },  
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -44,9 +43,8 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: true, 
       },
-      birthDate:{
+      fecha_cumple:{
         type: DataTypes.DATEONLY,
-        allowNull: false,
       },
       deletedAt: {
         type: DataTypes.DATE,
