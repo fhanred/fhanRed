@@ -1,15 +1,15 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Delivery",
+    'Delivery',
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
-        field: "id_Delivery",
+        field: 'id_Delivery',
       },
       municipio: {
         type: DataTypes.STRING,
@@ -18,10 +18,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       direccion: {
-        type: DataTypes.TEXT
-      },
-      tipo_vivienda: {
-        type: DataTypes.ENUM("ALQUILADA", "PROPIA", "FAMILIAR", "TIENDA", "INSTITUCIONES", "EDIFICIO", "HOSTAL_HOTEL","FINCA"),
+        type: DataTypes.TEXT,
       },
     },
     {
