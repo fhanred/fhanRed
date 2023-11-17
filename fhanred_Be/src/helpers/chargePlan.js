@@ -24,6 +24,31 @@ module.exports = async () => {
       name: "20 MB - PLATINO",
       costo: "126.000,00"
     },
+    {
+      id: 4,
+      name: "30 MB - RUBI",
+      costo: "185.000,00"
+    },
+    {
+      id: 5,
+      name: "50 MB - ZAFIRO",
+      costo: "350.000,00"
+    },
+    {
+      id: 6,
+      name: "100 MB - ESMERALDA",
+      costo: "620.000,00"
+    },
+    {
+      id: 7,
+      name: "200 MB - DIAMANTE",
+      costo: " 1.200.000,00"
+    },
+    {
+      id: 9,
+      name: "300 MB - CORONA",
+      costo: "1.800.000,00"
+    },
   ];
 
   if (planes.length <= 0) {

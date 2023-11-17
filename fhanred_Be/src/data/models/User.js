@@ -34,17 +34,13 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
       },
-      phone: {
-        type: DataTypes.STRING,
-        defaultValue: "0000000000",
+      fecha_cumple:{
+        type: DataTypes.DATEONLY,
       },
       active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true, 
-      },
-      fecha_cumple:{
-        type: DataTypes.DATEONLY,
       },
       deletedAt: {
         type: DataTypes.DATE,
