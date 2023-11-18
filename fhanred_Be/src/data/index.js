@@ -69,8 +69,8 @@ Contract.belongsTo(Inventory, { foreignKey: "id_inventory" });
 Inventory.hasOne(Contract, { foreignKey: "id_inventory" });
 
 // delivery ----> tipovivienda
-Delivery.belongsTo(Vivienda, { foreignKey: "tipo_vivienda", targetKey: "name_type"});
-Vivienda.hasMany(Delivery, { foreignKey: "tipo_vivienda", sourceKey: "name_type"});
+Delivery.belongsTo(Vivienda, { foreignKey: "id_vivienda"});
+Vivienda.hasMany(Delivery, { foreignKey: "id_vivienda"});
 //---------------------------------------------------------------------------------//
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

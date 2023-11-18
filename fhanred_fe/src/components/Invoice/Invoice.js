@@ -29,7 +29,6 @@ function Invoice() {
   const [combinedAddress, setCombinedAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [firmaGuardada, setFirmaGuardada] = useState(false);
-  const [mostrarMensajeError, setMostrarMensajeError] = useState(false);
 
   const nextStep = () => setStep(step + 1);
   const previousStep = () => setStep(step - 1);
@@ -67,8 +66,6 @@ function Invoice() {
       )}
       <Formik
         initialValues={{
-          name: '', //ok
-          lastName: '', //ok
           sexo: 'none',
           tipo_documento: 'none' /*tipo documento identificacion*/, //ok
           n_documento: '',
@@ -83,11 +80,11 @@ function Invoice() {
           tel1: '', //ok
           tel2: '', //ok
           tel3: '', //ok
-          Product_name: 'none' /*plan*/, //ok
+          id_plan: 'none' /*plan*/, //ok
           n_contrato: '' /*numero contrato*/, //ok
           idStratus: 'none', //ok
           idZone: 'none', //ok
-          tipo_vivienda: 'none', // ok
+          id_vivienda: 'none', // ok
           municipio: 'none', // ok
           barrio_vereda: '',
           direccion: '', //ok
@@ -104,23 +101,16 @@ function Invoice() {
         }}
         validate={(values) => {
           let errors = {};
-          if (!values.name) {
-            errors.name = 'Por favor ingrese un nombre';
+          if (values.tipo_persona === 'P.NATURAL' && !values.name_razonSocial) {
+            errors.name_razonSocial = 'Por favor ingrese un nombre y apellido';
           } else {
             const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
-            if (!nameRegex.test(values.name)) {
-              errors.name = 'El nombre solo puede contener letras y espacios';
+            if (!nameRegex.test(values.name_razonSocial)) {
+              errors.name_razonSocial =
+                'El nombre solo puede contener letras y espacios';
             }
           }
-          if (!values.lastName) {
-            errors.lastName = 'Por favor ingrese su apellido';
-          } else {
-            const lastNameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
-            if (!lastNameRegex.test(values.lastName)) {
-              errors.lastName =
-                'El apellido solo puede contener letras y espacios';
-            }
-          }
+
           if (values.sexo === 'none') {
             errors.sexo = 'Dato Requerido';
           }
@@ -207,8 +197,8 @@ function Invoice() {
           } else if (!/^[0-9]{10}$/.test(values.tel3)) {
             errors.tel3 = 'Por favor ingrese un número valido';
           }
-          if (values.Product_name === 'none') {
-            errors.Product_name = 'Dato requerido';
+          if (values.id_plan === 'none') {
+            errors.id_plan = 'Dato requerido';
           }
           if (!values.n_contrato) {
             errors.n_contrato = 'Dato requerido';
@@ -219,8 +209,8 @@ function Invoice() {
           if (values.idZone === 'none') {
             errors.idZone = 'Dato requerido';
           }
-          if (values.tipo_vivienda === 'none') {
-            errors.tipo_vivienda = 'Dato requerido';
+          if (values.id_vivienda === 'none') {
+            errors.id_vivienda = 'Dato requerido';
           }
           if (!values.barrio_vereda) {
             errors.barrio_vereda = 'Dato requerido';
@@ -324,57 +314,32 @@ function Invoice() {
           }
           return errors;
         }}
-        // onSubmit={(values, { setSubmitting, resetForm }) => {
-        //   if (step === 3) {
-        //     dispatch(createInvoice(values))
-        //       .then((response) => {
-        //         if (response.success) {
-        //           setSubmissionResult('success');
-        //           setSubmitting(false);
-        //           resetForm();
-        //           history.push('/admin/datosClientes');
-        //         } else {
-        //           setSubmissionResult('error');
-        //           console.error(response.message);
-        //           setSubmitting(false);
-        //         }
-        //       })
-        //       .catch((error) => {
-        //         setSubmissionResult('error');
-        //         console.error(error);
-        //         setSubmitting(false);
-        //       });
-        //   } else {
-        //     nextStep();
-        //   }
-        // }}
-
-        /*SE UTILIZA CUANDO NO ESTOY CONECTADO A SERVIDOR Y QUIERO VER COMO ENVIA INFORMACION*/
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          setTimeout(() => {
-            const success = Math.random() < 0.5;
-            setSubmissionResult(success ? 'success' : 'error');
-
-            if (step === 4 && isTermsAccepted) {
-              // Envía la acción createInvoice con los valores del formulario como carga útil.
-              dispatch(createInvoice(values));
-
-              // Reinicia el formulario.
-              setSubmitting(false);
-              resetForm();
-
-              // Navega a la página admin/datosClientes.
-              history.push('/admin/datosClientes');
-
-              // Imprime el objeto FormData en la consola.
-              console.log(values);
-            } else {
-              nextStep();
-              alert(
-                'Debes aceptar los términos y condiciones antes de enviar el formulario.'
-              );
-            }
-          }, 3000); // 3000 ms = 3 segundos
+          if (step === 4 && isTermsAccepted) {
+            dispatch(createInvoice(values))
+              .then((response) => {
+                if (response.success) {
+                  setSubmissionResult('success');
+                  setSubmitting(false);
+                  resetForm();
+                  history.push('/admin/datosClientes');
+                } else {
+                  setSubmissionResult('error');
+                  console.error(response.message);
+                  setSubmitting(false);
+                }
+              })
+              .catch((error) => {
+                setSubmissionResult('error');
+                console.error(error);
+                setSubmitting(false);
+              });
+          } else {
+            nextStep();
+            alert(
+              'Debes aceptar los términos y condiciones antes de enviar el formulario.'
+            );
+          }
         }}
       >
         {({ isSubmitting, values, errors, setFieldValue }) => (
@@ -402,31 +367,68 @@ function Invoice() {
                   </p>
 
                   <div className="form-group">
-                    <label htmlFor="name">Nombre:</label>
-                    <Field type="text" id="name" name="name" placeholder="" />
+                    <label htmlFor="tipo_persona">Tipo de persona:</label>
+                    <Field id="tipo_persona" name="tipo_persona" as="select">
+                      <option value={'none'}>Selecciona una opción</option>
+                      <option value={'P.JURIDICA'}>Jurídica</option>
+                      <option value={'P.NATURAL'}>Natural</option>
+                    </Field>
                   </div>
                   <p>
                     <ErrorMessage
-                      name="name"
+                      name="tipo_persona"
                       component={() => (
-                        <div className="error-message">{errors.name}</div>
+                        <div className="error-message">
+                          {errors.tipo_persona}
+                        </div>
                       )}
                     />
                   </p>
-                  <div className="form-group">
-                    <label htmlFor="lastName">Apellidos:</label>
-                    <Field
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      placeholder=""
-                    />
-                  </div>
+
+                  {values.tipo_persona === 'P.NATURAL' && (
+                    <div className="form-group">
+                      <label htmlFor="name_razonSocial">
+                        Nombres y Apellidos:
+                      </label>
+                      <Field
+                        type="text"
+                        id="name_razonSocial"
+                        name="name_razonSocial"
+                        placeholder=""
+                        disabled={values.tipo_persona === 'P.JURIDICA'}
+                      />
+                    </div>
+                  )}
                   <p>
                     <ErrorMessage
-                      name="lastName"
+                      name="name_razonSocial"
                       component={() => (
-                        <div className="error-message">{errors.lastName}</div>
+                        <div className="error-message">
+                          {errors.name_razonSocial}
+                        </div>
+                      )}
+                    />
+                  </p>
+
+                  {values.tipo_persona === 'P.JURIDICA' && (
+                    <div className="form-group">
+                      <label htmlFor="name_razonSocial">Razón social:</label>
+                      <Field
+                        type="text"
+                        id="name_razonSocial"
+                        name="name_razonSocial"
+                        placeholder=""
+                        disabled={values.tipo_persona === 'P.NATURAL'}
+                      />
+                    </div>
+                  )}
+                  <p>
+                    <ErrorMessage
+                      name="name_razonSocial"
+                      component={() => (
+                        <div className="error-message">
+                          {errors.name_razonSocial}
+                        </div>
                       )}
                     />
                   </p>
@@ -494,24 +496,6 @@ function Invoice() {
                   </p>
 
                   <div className="form-group">
-                    <label htmlFor="tipo_persona">Tipo de persona:</label>
-                    <Field id="tipo_persona" name="tipo_persona" as="select">
-                      <option value={'none'}>Selecciona una opción</option>
-                      <option value={'P.JURIDICA'}>Jurídica</option>
-                      <option value={'P.NATURAL'}>Natural</option>
-                    </Field>
-                  </div>
-                  <p>
-                    <ErrorMessage
-                      name="tipo_persona"
-                      component={() => (
-                        <div className="error-message">
-                          {errors.tipo_persona}
-                        </div>
-                      )}
-                    />
-                  </p>
-                  <div className="form-group">
                     <label htmlFor="email">Correo electrónico:</label>
                     <Field type="text" id="email" name="email" placeholder="" />
                   </div>
@@ -538,28 +522,6 @@ function Invoice() {
                       component={() => (
                         <div className="error-message">
                           {errors.fecha_cumple}
-                        </div>
-                      )}
-                    />
-                  </p>
-                  {values.tipo_persona === 'P.JURIDICA' && (
-                    <div className="form-group">
-                      <label htmlFor="name_razonSocial">Razón social:</label>
-                      <Field
-                        type="text"
-                        id="name_razonSocial"
-                        name="name_razonSocial"
-                        placeholder=""
-                        disabled={values.typePerson === 'P.NATURAL'}
-                      />
-                    </div>
-                  )}
-                  <p>
-                    <ErrorMessage
-                      name="name_razonSocial"
-                      component={() => (
-                        <div className="error-message">
-                          {errors.name_razonSocial}
                         </div>
                       )}
                     />
@@ -634,58 +596,37 @@ function Invoice() {
                 <div className="formSection">
                   <h2>Datos del plan </h2>
                   <div className="form-group">
-                    <label htmlFor="Product_name">Plan:</label>
-                    <Field id="Product_name" name="Product_name" as="select">
+                    <label htmlFor="id_plan">Plan:</label>
+                    <Field
+                      id="id_plan"
+                      name="id_plan"
+                      as="select"
+                      type="number"
+                    >
                       <option value={'none'}>Selecciona una opción</option>
-                      <option value={'PLAN BRONCE 5MG'}>PLAN BRONCE 5MG</option>
-                      <option value={'PLAN PLATA 7MG'}>PLAN PLATA 7MG</option>
-                      <option value={'PLAN ORO 10MG'}>PLAN ORO 10MG</option>
-                      <option value={'PLAN PLATINO 20MG'}>
-                        PLAN PLATINO 20MG
-                      </option>
-                      <option value={'PLAN RUBI 30MG'}>PLAN RUBI 30MG</option>
-                      <option value={'PLAN ZAFIRO 50MG '}>
-                        PLAN ZAFIRO 50MG
-                      </option>
-                      <option value={'PLAN ESMERALDA 100MG'}>
-                        PLAN ESMERALDA 100MG
-                      </option>
-                      <option value={'PLAN DIAMANTE 200MG'}>
-                        PLAN DIAMANTE 200MG
-                      </option>
-                      <option value={'PLAN CORONA 300MG'}>
-                        PLAN CORONA 300MG
-                      </option>
-                      <option value={'PLAN DEDICADO 20MG'}>
-                        PLAN DEDICADO 20MG
-                      </option>
-                      <option value={'PLAN DEDICADO 50MG'}>
-                        PLAN DEDICADO 50MG
-                      </option>
-                      <option value={'PLAN DEDICADO 100MG'}>
-                        PLAN DEDICADO 100MG
-                      </option>
-                      <option value={'PLAN DEDICADO 200MG'}>
-                        PLAN DEDICADO 200MG
-                      </option>
-                      <option value={'PLAN DEDICADO 300MG'}>
-                        PLAN DEDICADO 300MG
-                      </option>
-                      <option value={'PLAN DEDICADO 500MG'}>
-                        PLAN DEDICADO 500MG
-                      </option>
-                      <option value={'PLAN DEDICADO 1000MG'}>
-                        PLAN DEDICADO 1000MG
-                      </option>
+                      <option value={'1'}>PLAN BRONCE 5MG</option>
+                      <option value={'2'}>PLAN PLATA 7MG</option>
+                      <option value={'3'}>PLAN ORO 10MG</option>
+                      <option value={'4'}>PLAN PLATINO 20MG</option>
+                      <option value={'5'}>PLAN RUBI 30MG</option>
+                      <option value={'6'}>PLAN ZAFIRO 50MG</option>
+                      <option value={'7'}>PLAN ESMERALDA 100MG</option>
+                      <option value={'8'}>PLAN DIAMANTE 200MG</option>
+                      <option value={'9'}>PLAN CORONA 300MG</option>
+                      <option value={'10'}>PLAN DEDICADO 20MG</option>
+                      <option value={'11'}>PLAN DEDICADO 50MG</option>
+                      <option value={'12'}>PLAN DEDICADO 100MG</option>
+                      <option value={'13'}>PLAN DEDICADO 200MG</option>
+                      <option value={'14'}>PLAN DEDICADO 300MG</option>
+                      <option value={'15'}>PLAN DEDICADO 500MG</option>
+                      <option value={'16'}>PLAN DEDICADO 1000MG</option>
                     </Field>
                   </div>
                   <p>
                     <ErrorMessage
-                      name="Product_name"
+                      name="id_plan"
                       component={() => (
-                        <div className="error-message">
-                          {errors.Product_name}
-                        </div>
+                        <div className="error-message">{errors.id_plan}</div>
                       )}
                     />
                   </p>
@@ -710,12 +651,12 @@ function Invoice() {
                     <label htmlFor="idStratus">Estrato:</label>
                     <Field id="idStratus" name="idStratus" as="select">
                       <option value={'none'}>Selecciona una opción</option>
-                      <option value={1}>1</option>
-                      <option value={2}>2</option>
-                      <option value={3}>3</option>
-                      <option value={4}>4</option>
-                      <option value={3}>5</option>
-                      <option value={4}>6</option>
+                      <option value={'1'}>1</option>
+                      <option value={'2'}>2</option>
+                      <option value={'3'}>3</option>
+                      <option value={'4'}>4</option>
+                      <option value={'5'}>5</option>
+                      <option value={'6'}>6</option>
                     </Field>
                   </div>
                   <p>
@@ -743,26 +684,31 @@ function Invoice() {
                     />
                   </p>
                   <div className="form-group">
-                    <label htmlFor="tipo_vivienda">Tipo de vivienda:</label>
-                    <Field id="tipo_vivienda" name="tipo_vivienda" as="select">
+                    <label htmlFor="id_vivienda">Tipo de vivienda:</label>
+                    <Field
+                      id="id_vivienda"
+                      name="id_vivienda"
+                      as="select"
+                      type="number"
+                    >
                       <option value={'none'}>Selecciona una opción</option>
-                      <option value={'Alquilada'}>Alquilada</option>
-                      <option value={'Propia'}>Propia</option>
-                      <option value={'Familiar'}>Familiar</option>
-                      <option value={'Tienda'}>Tienda</option>
-                      <option value={'Instituciones'}>Instituciones</option>
-                      <option value={'Edificio'}>Edificio</option>
-                      <option value={'Hostal/Hotel'}>Hostal/Hotel</option>
-                      <option value={'Finca'}>Finca</option>
-                      <option value={'Cabaña'}>Cabaña</option>
+                      <option value={'1'}>Alquilada</option>
+                      <option value={'2'}>Propia</option>
+                      <option value={'3'}>Familiar</option>
+                      <option value={'4'}>Tienda</option>
+                      <option value={'5'}>Instituciones</option>
+                      <option value={'6'}>Edificio</option>
+                      <option value={'7'}>Hostal/Hotel</option>
+                      <option value={'8'}>Finca</option>
+                      <option value={'9'}>Cabaña</option>
                     </Field>
                   </div>
                   <p>
                     <ErrorMessage
-                      name="tipo_vivienda"
+                      name="id_vivienda"
                       component={() => (
                         <div className="error-message">
-                          {errors.tipo_vivienda}
+                          {errors.id_vivienda}
                         </div>
                       )}
                     />
