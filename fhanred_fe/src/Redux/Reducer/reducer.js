@@ -2,6 +2,7 @@ import {
   SIGNIN_USER,
   CLEAN_DETAIL,
   CREATE_INVOICE,
+  CREATE_USER,
   INCREMENT_NUMBER_FACT,
 } from '../Actions/actions-types';
 
@@ -18,6 +19,10 @@ const rootReducer = (state = initialState, action) => {
         userInfo: action.payload,
       };
     case CREATE_INVOICE:
+      return {
+        ...state,
+      };
+      case CREATE_USER:
       return {
         ...state,
       };
