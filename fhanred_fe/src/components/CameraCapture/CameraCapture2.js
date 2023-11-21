@@ -1,6 +1,7 @@
 import { Card } from 'semantic-ui-react';
 import './CameraCapture.css';
 import { useRef, useState } from 'react';
+import { BiCamera } from "react-icons/bi"
 
 function CameraCapture2({ setFieldValue }) {
   const videoDiv = useRef();
@@ -124,7 +125,7 @@ function CameraCapture2({ setFieldValue }) {
           <Card>
             <Card.Content>
               <button type="button" onClick={iniciarCamara} disabled={!cameraActiva || fotoGuardada}>
-                Iniciar camara
+              <BiCamera className='camera'/> Iniciar camara
               </button>
               <button type="button" onClick={stopCamara} disabled={cameraActiva || fotoGuardada}>
                 Detener camara

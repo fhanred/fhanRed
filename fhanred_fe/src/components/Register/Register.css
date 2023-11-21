@@ -64,16 +64,10 @@
 .verification-note {
   margin-top: 2px; /* Espacio entre el párrafo y el label-input */
   margin-left: 50px;
-  color: #cf151f;
+  color: #1f2852;
 }
 
-.error-message {
-  background-color: #cf151f;
-  color: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-}
+
 
 .passwordInput {
   display: flex;
@@ -95,19 +89,41 @@
 }
 
 /* Mensajes de éxito y error */
-.success-message,
 .error-message {
-  background-color: #fff;
-  color: #fff;
+  background-color: #cf151f;
+  color: white;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 4px;
 }
 
-.error-message {
-  background-color: #cf151f;
-}
-
 .success-message {
   background-color: #22c4cf;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
 }
+
+/* Estilos para el select */
+.select {
+  width: 200px; /* Ancho personalizado */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ebecf0;
+}
+
+/* Estilos para las opciones */
+.option {
+  background-color: #ebecf0;; /* Color de fondo */
+  color: #333; /* Color del texto */
+  padding: 8px;
+}
+
+/* Estilo para la opción seleccionada */
+.select option:checked {
+  background-color: #e0e0e0; /* Color de fondo cuando está seleccionado */
+  font-weight: bold; /* Cambiar el peso de la fuente */
+}
+
