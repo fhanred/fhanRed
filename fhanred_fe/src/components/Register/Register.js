@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { FaUser } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import './Register.css';
 import { createUser } from '../../Redux/Actions/actions';
@@ -55,14 +56,16 @@ function Register() {
           }
           // validacion de password
           if (!values.password) {
-            errors.password =
-              'La contraseña debe tener: Al menos 8 caracteres. Al menos una letra minúscula, Al menos una letra mayúscula, Al menos un número, Al menos un carácter especial.';
+            errors.password = 'La contraseña es requerida.';
           } else if (
             !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
               values.password
             )
           ) {
+            errors.password =
+              'La contraseña debe tener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un carácter especial.';
           }
+          
           if (
             values.tipo_persona === 'P.JURIDICA' &&
             !values.name_razonSocial
@@ -115,10 +118,10 @@ function Register() {
                   <label htmlFor="tipo_persona" className="label-reg">
                     Tipo de persona:
                   </label>
-                  <Field id="tipo_persona" name="tipo_persona" as="select">
-                    <option value={'none'}>Selecciona una opción</option>
-                    <option value={'P.JURIDICA'}>Jurídica</option>
-                    <option value={'P.NATURAL'}>Natural</option>
+                  <Field id="tipo_persona" name="tipo_persona" as="select" className="select">
+                    <option value={'none'} className="option">Selecciona una opción</option>
+                    <option value={'P.JURIDICA'} className="option">Jurídica</option>
+                    <option value={'P.NATURAL'} className="option">Natural</option>
                   </Field>
                 </div>
                 <p>
@@ -186,12 +189,13 @@ function Register() {
                       id="tipo_documento"
                       name="tipo_documento"
                       as="select"
+                      className="select"
                     >
-                      <option value={'none'}>Selecciona una opción</option>
-                      <option value={'CC'}>CC</option>
-                      <option value={'CE'}>CE</option>
-                      <option value={'NIT'}>NIT</option>
-                      <option value={'PP'}>PP</option>
+                      <option value={'none'} className="option">Selecciona una opción</option>
+                      <option value={'CC'} className="option">CC</option>
+                      <option value={'CE'} className="option">CE</option>
+                      <option value={'NIT'} className="option">NIT</option>
+                      <option value={'PP'} className="option">PP</option>
                     </Field>
                   </div>
                 ) : null}
@@ -299,15 +303,11 @@ function Register() {
 
                 <div>
                   <button type="submit" disabled={isSubmitting}>
-                    Registrar
+                  <FaUser  />  Crear cuenta
                   </button>
                 </div>
               </div>
-            </Form>
-          </div>
-        )}
-      </Formik>
-      {submissionResult === 'success' && (
+              {submissionResult === 'success' && (
         <div className="success-message">
           'Usuario registrado correctamente.'
         </div>
@@ -317,6 +317,12 @@ function Register() {
           'El registro NO fue exitoso. Inténtelo nuevamente.'
         </div>
       )}
+            </Form>
+          </div>
+        )}
+        
+      </Formik>
+      
     </div>
   );
 }

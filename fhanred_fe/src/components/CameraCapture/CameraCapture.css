@@ -1,1 +1,5 @@
-
+.camera{
+    line-height: 40px; /* Ajusta este valor según sea necesario */
+  vertical-align: middle;
+  font-size: 20px
+}

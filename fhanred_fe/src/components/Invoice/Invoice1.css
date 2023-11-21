@@ -1,165 +1,227 @@
 /* Estilos generales */
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    margin-top: 160px;
-    padding: 20px;
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: -0.2px;
-    
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+  max-width: 620px;
+  margin: 0 auto;
+  margin-top: 160px;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.2px;
+  font-size: 16px;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Formulario */
+
+/* Grupos de formulario */
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-right: 90px;
+}
+
+.form-group-img {
+  display: flex;
   
-  /* Formulario */
-  .formSection {
-    margin: 20px 0;
-  }
+}
+
+.form-group-cont {
+  display: flex;
+  align-items: center;
+  margin-right: 90px;
+  margin-bottom: 10px;
+}
+
+.form-group-button {
+  display: flex;
   
-  /* Grupos de formulario */
-  .form-group {
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border-style: double;
-    border-width: 3px;
-    border-color: #000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .form-group-address-container {
-    display: flex;
-    grid-template-columns: repeat(3, 1fr); /* Divide en tres columnas */
+  margin-right: 90px;
+}
+
+.form-group-address-container {
+  display: flex;
+  grid-template-columns: repeat(3, 1fr); /* Divide en tres columnas */
   gap: 10px; /* Espacio entre los elementos */
-  }
-  
-  .form-group-address {
-   
-    padding: 10px;
-    box-sizing: border-box; /* Evita que el relleno afecte el ancho */
-    display: flex;
-    flex-direction:column;
-    align-items: flex-start; /* Alinea los elementos a la izquierda */
-  }
-  
-  .form-group-address label {
-    margin-bottom: 5px;
-  }
-  
-  .form-group-address button {
-    
-    margin-top: 10px; /* Espacio entre la última etiqueta y el botón */
-  }
-  
-  
+}
 
-  .form-group-firma {
-    margin-bottom: 20px;
-    border-style: double;
-    border-width: 3px;
-    border-color: #000;
-    align-items: center;
-  }
-  
-  .button-container-firma {
-    display: flex;
-    gap: 10px;
-  }
-  
-  /* Etiquetas */
-  .label {
-    display: inline-block;
-    width: 25%;
-    text-align: right;
-    font-weight: bold;
-    margin-top: 30px;
-  }
-  
-  /* Campos de entrada */
-  .input,
-  .phone-input,
-  .email-input,
-  .select {
-    width: 100%;
-    font-size: 16px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+.form-group-address {
+  padding: 10px;
+  box-sizing: border-box; /* Evita que el relleno afecte el ancho */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea los elementos a la izquierda */
+}
 
-  .input-address {
-    width: 100%; /* Aumenta el ancho para que la dirección completa quepa en una línea */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.form-group-address label {
+  margin-bottom: 5px;
+}
+
+.form-group-address button {
+  margin-top: 10px; /* Espacio entre la última etiqueta y el botón */
+}
+
+.form-group-firma {
+  margin-bottom: 20px;
+  border-style: double;
+  border-width: 3px;
+  border-color: #000;
+  align-items: center;
+  display: flex;
+  margin-left: 50px;
+  margin-right: 90px;
+}
+
+.button-container-firma {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.tittle {
+  background-color: #22c4cf;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 50px;
+  border-radius: 4px;
+  font-size: 19px;
+}
+
+.label-invoice {
+  display: flex;
+  margin-top: 30px;
+  margin-left: 80px;
+  font-weight: bold;
+}
+
+.label-invoice-firma {
+  display: flex;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+/* Estilos para el select */
+.select {
+  width: 200px; /* Ancho personalizado */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ebecf0;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* Estilos para las opciones */
+.option {
+  background-color: #fff; /* Color de fondo */
+  color: #333; /* Color del texto */
+  padding: 8px;
+}
+
+/* Estilo para la opción seleccionada */
+.select option:checked {
+  background-color: #e0e0e0; /* Color de fondo cuando está seleccionado */
+  font-weight: bold; /* Cambiar el peso de la fuente */
+}
+
+.calendar {
+  font-size: 80px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  color:#22c4cf
+}
+
+.phone {
+  font-size: 50px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  color:#22c4cf
+}
+
+.email {
+  font-size: 60px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  color:#22c4cf
+}
+
+.address{
+  margin-right: 90px;
+}
+/* Botones */
+button {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+  background-color: #22c4cf;
+}
+
+/* Botón "Siguiente" */
+button.next-button {
+  background-color: #22c4cf;
+  color: #fff;
+}
+
+.arrow {
+  line-height: 40px; /* Ajusta este valor según sea necesario */
+  vertical-align: middle;
+}
+
+/* Botón "Anterior" */
+button.previous-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* Botón "Enviar" */
+button.submit-button {
+  background-color: #22c4cf;
+  color: #fff;
+  margin-right: 0;
+}
+
+/* Botón deshabilitado */
+button[disabled] {
+  background-color: #ccc;
+  color: #333;
+  cursor: not-allowed;
+}
+
+/* Mensajes de éxito y error */
+
+.error-message {
+  background-color: #cf151f;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.success-message {
+  background-color: #22c4cf;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+/* Estilos para pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 80%;
+    margin-top: 120px;
   }
-  
-  /* Botones */
-  button {
-    padding: 10px 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-right: 10px;
+}
+
+/* Estilos para pantallas pequeñas (teléfonos móviles) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+    margin-top: 100px;
   }
-  
-  /* Botón "Siguiente" */
-  button.next-button {
-    background-color: #1f2852;
-    color: #fff;
-  }
-  
-  /* Botón "Anterior" */
-  button.previous-button {
-    background-color: #ccc;
-    color: #333;
-  }
-  
-  /* Botón "Enviar" */
-  button.submit-button {
-    background-color: #4CAF50;
-    color: #fff;
-    margin-right: 0;
-  }
-  
-  /* Botón deshabilitado */
-  button[disabled] {
-    background-color: #ccc;
-    color: #333;
-    cursor: not-allowed;
-  }
-  
-  /* Mensajes de éxito y error */
-  .success-message,
-  .error-message {
-    background-color: #fff;
-    color: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-  }
-  
-  .error-message {
-    background-color: #cf151f;
-  }
-  
-  /* Estilos para pantallas medianas (tabletas) */
-  @media (max-width: 1024px) {
-    .container {
-      max-width: 80%;
-      margin-top: 120px;
-    }
-  }
-  
-  /* Estilos para pantallas pequeñas (teléfonos móviles) */
-  @media (max-width: 768px) {
-    .container {
-      max-width: 90%;
-      margin-top: 100px;
-    }
-  }
-  
+}
