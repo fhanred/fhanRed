@@ -14,4 +14,5 @@ conn.sync({force: true }).then(async () => {
   await helpers.chargePlan();
   await helpers.chargeVivienda();
   await helpers.chargeUsers();
+  await helpers.chargeVivienda();
 });

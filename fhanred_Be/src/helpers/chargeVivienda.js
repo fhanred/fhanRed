@@ -1,17 +1,17 @@
-const { Vivienda } = require("../data");
+const { Vivienda } = require('../data');
 
 module.exports = async () => {
   const viviendas = await Vivienda.findAll();
   const list = [
-    { name_type: "Alquilada" },
-    { name_type: "Propia" },
-    { name_type: "Familiar" },
-    { name_type: "Tienda" },
-    { name_type: "Instituciones" },
-    { name_type: "Edificio" },
-    { name_type: "Hostal/Hotel" },
-    { name_type: "Finca" },
-    { name_type: "Cabaña" },
+    { id: 1, name_type: 'Alquilada' },
+    { id: 2, name_type: 'Propia' },
+    { id: 3, name_type: 'Familiar' },
+    { id: 4, name_type: 'Tienda' },
+    { id: 5, name_type: 'Instituciones' },
+    { id: 6, name_type: 'Edificio' },
+    { id: 7, name_type: 'Hostal/Hotel' },
+    { id: 8, name_type: 'Finca' },
+    { id: 9, name_type: 'Cabaña' },
   ];
 
   if (viviendas.length <= 0) {

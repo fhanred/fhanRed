@@ -4,13 +4,15 @@ import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-//import { useDispatch } from 'react-redux';
+import { FaUser } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
 import './Register.css';
+import { createUser } from '../../Redux/Actions/actions';
 
 function Register() {
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
-  const [sendForm, setSendForm] = useState(false);
+  const [submissionResult, setSubmissionResult] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -21,32 +23,27 @@ function Register() {
     <div className="containerRegister">
       <Formik
         initialValues={{
-          name: '',
-          lastName: '',
-          address: '',
+          tipo_persona: 'none',
+          name_razonSocial: '',
+          tipo_documento: '',
+          n_documento: '',
           email: '',
           password: '',
         }}
         validate={(values) => {
           let errors = {};
           // Validación de nombre
-          if (!values.name) {
-            errors.name = 'Por favor ingrese un nombre';
+          if (values.tipo_persona === 'P.NATURAL' && !values.name_razonSocial) {
+            errors.name_razonSocial =
+              'Por favor ingrese sus nombres y apellidos';
           } else {
             const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
-            if (!nameRegex.test(values.name)) {
-              errors.name = 'El nombre solo puede contener letras y espacios';
+            if (!nameRegex.test(values.name_razonSocial)) {
+              errors.name_razonSocial =
+                'Este campo solo puede contener letras y espacios';
             }
           }
-          if (!values.lastName) {
-            errors.lastName = 'Por favor ingrese su apellido';
-          } else {
-            const lastNameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
-            if (!lastNameRegex.test(values.lastName)) {
-              errors.lastName =
-                'El apellido solo puede contener letras y espacios';
-            }
-          }
+
           // Validación de email
           if (!values.email) {
             errors.email = 'Por favor ingrese un correo electronico';
@@ -59,41 +56,96 @@ function Register() {
           }
           // validacion de password
           if (!values.password) {
-            errors.password =
-            "La contraseña debe tener: Al menos 8 caracteres. Al menos una letra minúscula, Al menos una letra mayúscula, Al menos un número, Al menos un carácter especial.";
-            // " The password must be at least one lowercase letter, one uppercase letter, one number, and one special character, and be at least 8 characters long.";
-            // errors.password = "Enter your password";
+            errors.password = 'La contraseña es requerida.';
           } else if (
             !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
               values.password
             )
           ) {
-            // errors.password =
-            // " The password must be at least one lowercase letter, one uppercase letter, one number, and one special character, and be at least 8 characters long.";
+            errors.password =
+              'La contraseña debe tener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un carácter especial.';
           }
-          if (!values.address) {
-            errors.address = 'Dato requerido';
+          
+          if (
+            values.tipo_persona === 'P.JURIDICA' &&
+            !values.name_razonSocial
+          ) {
+            errors.name_razonSocial = 'Dato Requerido';
+          }
+          if (values.tipo_documento === 'none') {
+            errors.tipo_documento = 'Dato Requerido';
+          }
+          if (!values.n_documento || values.n_documento.trim() === '') {
+            errors.n_documento = 'Dato Requerido';
+          } else if (!/^[a-zA-Z0-9]+$/.test(values.n_documento)) {
+            errors.n_documento =
+              'El numero de documento no debe contener caracteres especiales ni espacios';
+          }
+          if (values.tipo_persona === 'none') {
+            errors.tipo_persona = 'Dato Requerido';
           }
           return errors;
         }}
-        onSubmit={(values, { resetForm, setSubmitting }) => {
-          console.log(values);
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
+          try {
+            const response = await dispatch(createUser(values));
 
-          setSendForm(true);
-          history.push('/');
-          resetForm();
-          setSubmitting(false);
+            if (response.success) {
+              setSubmissionResult('success');
+              resetForm();
+              setTimeout(() => {
+                setSubmissionResult(null); // Reinicia el estado después de un cierto tiempo
+                history.push('/');
+              }, 2000); // Tiempo en milisegundos
+            } else {
+              setSubmissionResult('error');
+              console.error(response.message);
+            }
+          } catch (error) {
+            console.error('Hubo un error al enviar el formulario:', error);
+            // Manejo adicional de errores si es necesario
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
-        {({ errors, isSubmitting }) => (
+        {({ errors, values, isSubmitting }) => (
           <div>
-            <Form className="main">
+            <Form>
               <div className="register">
                 <h2>Registro</h2>
-                <div>
-                  <label htmlFor="name">Nombre:</label>
-                  <Field type="text" id="name" name="name" placeholder="" />
+                <div className="form-div">
+                  <label htmlFor="tipo_persona" className="label-reg">
+                    Tipo de persona:
+                  </label>
+                  <Field id="tipo_persona" name="tipo_persona" as="select" className="select">
+                    <option value={'none'} className="option">Selecciona una opción</option>
+                    <option value={'P.JURIDICA'} className="option">Jurídica</option>
+                    <option value={'P.NATURAL'} className="option">Natural</option>
+                  </Field>
                 </div>
+                <p>
+                  <ErrorMessage
+                    name="tipo_persona"
+                    component={() => (
+                      <div className="error-message">{errors.tipo_persona}</div>
+                    )}
+                  />
+                </p>
+                {values.tipo_persona === 'P.NATURAL' && (
+                  <div className="form-div">
+                    <label htmlFor="name" className="label-reg">
+                      Nombres y Apellidos:
+                    </label>
+                    <Field
+                      type="text"
+                      id="name"
+                      name="name_razonSocial"
+                      placeholder=""
+                      disabled={values.tipo_persona === 'P.JURIDICA'}
+                    />
+                  </div>
+                )}
                 <p>
                   <ErrorMessage
                     name="name"
@@ -102,49 +154,104 @@ function Register() {
                     )}
                   />
                 </p>
-                <div>
-                  <label htmlFor="lastName">Apellidos:</label>
-                  <Field
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    placeholder=""
-                  />
-                </div>
+
+                {values.tipo_persona === 'P.JURIDICA' && (
+                  <div className="form-div">
+                    <label htmlFor="name_razonSocial" className="label-reg">
+                      Razón social:
+                    </label>
+                    <Field
+                      type="text"
+                      id="name_razonSocial"
+                      name="name_razonSocial"
+                      placeholder=""
+                      disabled={values.tipo_persona === 'P.NATURAL'}
+                    />
+                  </div>
+                )}
                 <p>
                   <ErrorMessage
-                    name="lastName"
+                    name="name_razonSocial"
                     component={() => (
-                      <div className="error-message">{errors.lastName}</div>
+                      <div className="error-message">
+                        {errors.name_razonSocial}
+                      </div>
                     )}
                   />
                 </p>
-                <div>
-                  <label htmlFor="address">Dirección:</label>
-                  <Field
-                    type="text"
-                    id="address"
-                    name="address"
-                    placeholder=""
-                  />
-                </div>
+                {values.tipo_persona === 'P.JURIDICA' ||
+                values.tipo_persona === 'P.NATURAL' ? (
+                  <div className="form-div">
+                    <label htmlFor="tipo_documento" className="label-reg">
+                      Tipo de documento:
+                    </label>
+                    <Field
+                      id="tipo_documento"
+                      name="tipo_documento"
+                      as="select"
+                      className="select"
+                    >
+                      <option value={'none'} className="option">Selecciona una opción</option>
+                      <option value={'CC'} className="option">CC</option>
+                      <option value={'CE'} className="option">CE</option>
+                      <option value={'NIT'} className="option">NIT</option>
+                      <option value={'PP'} className="option">PP</option>
+                    </Field>
+                  </div>
+                ) : null}
+
                 <p>
                   <ErrorMessage
-                    name="address"
+                    name="tipo_documento"
                     component={() => (
-                      <div className="error-message">{errors.address}</div>
+                      <div className="error-message">
+                        {errors.tipo_documento}
+                      </div>
                     )}
                   />
                 </p>
-                <div>
-                  <label htmlFor="email">Correo electrónico:</label>
+                {values.tipo_persona === 'P.JURIDICA' ||
+                values.tipo_persona === 'P.NATURAL' ? (
+                  <div className="form-div-doc">
+                    {values.tipo_documento === 'NIT' && (
+                      <p className="verification-note">
+                        NO debe registrar el DV, no debe enviar caracteres
+                        especiales como espacios o letras
+                      </p>
+                    )}
+                    {values.tipo_documento !== 'NIT' &&
+                      values.tipo_documento !== '' && (
+                        <p className="verification-note">
+                          NO debe enviar caracteres especiales como espacios o
+                          letras
+                        </p>
+                      )}
+                    <div className="label-input-doc">
+                      <label htmlFor="n_documento" className="label-doc">
+                        Número de documento:
+                      </label>
+                      <Field type="text" id="n_documento" name="n_documento" />
+                    </div>
+                  </div>
+                ) : null}
+
+                <p>
+                  <ErrorMessage
+                    name="n_documento"
+                    component={() => (
+                      <div className="error-message">{errors.n_documento}</div>
+                    )}
+                  />
+                </p>
+                <div className="form-div">
+                  <label htmlFor="email" className="label-reg">
+                    Correo electrónico:
+                  </label>
                   <Field
-                    
                     type="text"
                     id="email"
                     name="email"
                     placeholder="Email"
-                    
                   />
                 </div>
                 <p>
@@ -155,22 +262,25 @@ function Register() {
                     )}
                   />
                 </p>
-                <div >
-                  <label htmlFor="password">Contraseña:</label>
+                <div className="form-div">
+                  <label htmlFor="password" className="label-reg">
+                    Contraseña:
+                  </label>
                   <Field
                     type={showPassword ? 'text' : 'password'}
                     id="password"
                     name="password"
                     placeholder="Password"
+                    className="passwordInput"
                   />
                   {showPassword ? (
                     <MdOutlineRemoveRedEye
-                      
+                      className="passwordInput-eyeIcon"
                       onClick={togglePasswordVisibility}
                     />
                   ) : (
                     <RiEyeCloseLine
-                     
+                      className="passwordInput-eyeIcon"
                       onClick={togglePasswordVisibility}
                     />
                   )}
@@ -185,24 +295,34 @@ function Register() {
                 </p>
                 <div>
                   <label>
-                  <NavLink to="/">
-                    <span>¿Ya estas registrado?</span>
-                  </NavLink>
+                    <NavLink to="/">
+                      <span>¿Ya estas registrado?</span>
+                    </NavLink>
                   </label>
                 </div>
 
                 <div>
                   <button type="submit" disabled={isSubmitting}>
-                    Registrar
+                  <FaUser  />  Crear cuenta
                   </button>
                 </div>
-
-                {sendForm && <p>"User successfully added"</p>}
               </div>
+              {submissionResult === 'success' && (
+        <div className="success-message">
+          'Usuario registrado correctamente.'
+        </div>
+      )}
+      {submissionResult === 'error' && (
+        <div className="error-message">
+          'El registro NO fue exitoso. Inténtelo nuevamente.'
+        </div>
+      )}
             </Form>
           </div>
         )}
+        
       </Formik>
+      
     </div>
   );
 }

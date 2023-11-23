@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
       n_contrato: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
     
       },

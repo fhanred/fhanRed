@@ -1,112 +1,129 @@
 .containerRegister {
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centrado horizontal */
-    justify-content: center; /* Centrado vertical */
-    height: 100vh; /* Altura del 100% de la ventana */
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: -0.2px;
-    font-size: 16px;
-    /* color: #121144e5; */
-  }
-.main {
-  display: inline-block;
-  width: 49%;
-  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 160px;
+  justify-content: center; /* Centrado vertical */
+  height: 100vh; /* Altura del 100% de la ventana */
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.2px;
+  font-size: 16px;
+  /* color: #121144e5; */
 }
-
-    .register {
-       border: none; 
-        
-        h3 {
-          border-bottom-color: #909090;
-        }
-    
-        .sep{
-          border-color: #909090;
-        }
-    }
-  
 
 .register {
-  	width: 500px;
-  	margin: 10px auto;
-  	padding: 10px;
-  	border: 7px solid;
-    border-color: #22C4CF;
-  	border-radius: 10px;
-  	
-	  color: #444;
-  	
-  	box-shadow: 0 0 20px 0 #22C4CF;
+  width: 550px;
+  margin: 10px auto;
+  padding: 10px;
+  border: 7px solid;
+  border-color: #22c4cf;
+  border-radius: 10px;
 
-  h2 {
-	  	margin: 0 15px 20px;
-	  	border-bottom: 2px solid ;
-	  	padding: 5px 10px 5px 0;
-	  	font-size: 1.1em;
-	}
+  color: #444;
 
-	div{
-		margin: 0 0 15px 0;
-	  	border : none;
-	}
+  box-shadow: 0 0 20px 0 #22c4cf;
+}
+.h2 {
+  margin: 0 15px 20px;
+  border-bottom: 2px solid;
+  padding: 5px 10px 5px 0;
+  font-size: 1.1em;
+}
 
-	label {
-	  	display: inline-block;
-	  	width: 25%;
-	  	text-align: right;
-	  	margin: 10px
-	}
+.form-div {
+  display: flex;
 
-	input[type=text], input[type=password]{
-  		width: 65%; 
-  		
-  		padding: 5px;
-  		font-size: 0.9em;
-  		border-radius: 5px;
-  		background: rgba(0, 0, 0, 0.07);
-	}
-  
-  input[type=text]:focus, input[type=password]:focus{
-		background: #FFFFFF;
-	}
+  align-items: center;
+  margin-right: 50px;
+}
 
-	
-	
-	
-	
+.label-reg {
+  display: flex;
+  width: 75%;
+  margin-left: 50px;
+  margin-top: 30px;
+}
 
-	
+.form-div-doc {
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+}
+
+.label-input-doc {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; /* Espacio entre label-input y párrafo */
+}
+
+.label-doc {
+  width: 75%;
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.verification-note {
+  margin-top: 2px; /* Espacio entre el párrafo y el label-input */
+  margin-left: 50px;
+  color: #1f2852;
 }
 
 
 
+.passwordInput {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+}
 
+.passwordInput input {
+  flex: 1;
+  border: none;
+}
+
+.passwordInput-eyeIcon {
+  cursor: pointer;
+  font-size: 50px;
+}
+
+/* Mensajes de éxito y error */
 .error-message {
-    background-color: #cf151f;
-    color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-  }
+  background-color: #cf151f;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
 
-  .passwordInput {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    padding: 5px;
-    border-radius: 16px;
-  }
-  
-  .passwordInput input {
-    flex: 1;
-    border: none;
-  }
-  
-  .passwordInput .eyeIcon {
-    cursor: pointer;
-    font-size: 20px;
-  }
+.success-message {
+  background-color: #22c4cf;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+/* Estilos para el select */
+.select {
+  width: 200px; /* Ancho personalizado */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ebecf0;
+}
+
+/* Estilos para las opciones */
+.option {
+  background-color: #ebecf0;; /* Color de fondo */
+  color: #333; /* Color del texto */
+  padding: 8px;
+}
+
+/* Estilo para la opción seleccionada */
+.select option:checked {
+  background-color: #e0e0e0; /* Color de fondo cuando está seleccionado */
+  font-weight: bold; /* Cambiar el peso de la fuente */
+}
+
