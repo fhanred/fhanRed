@@ -12,6 +12,6 @@ conn.sync({force: true }).then(async () => {
   }); 
   await helpers.chargeRol();
   await helpers.chargePlan();
-  
+  await helpers.chargeVivienda();
   await helpers.chargeUsers();
 });

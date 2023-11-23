@@ -1,6 +1,6 @@
 module.exports = {
-    chargeRol: require('./chargeRol'),
-    chargePlan: require('./chargePlan'),
-    
-    chargeUsers: require('./chargeUsers'),
-}
+  chargeRol: require('./chargeRol'),
+  chargePlan: require('./chargePlan'),
+  chargeVivienda: require('./chargeVivienda'),
+  chargeUsers: require('./chargeUsers'),
+};

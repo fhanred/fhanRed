@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING
       },
       sexo: {
-        type: DataTypes.STRING
+        type: DataTypes.ENUM('F', 'M' ),
       },  
       email: {
         type: DataTypes.STRING,
