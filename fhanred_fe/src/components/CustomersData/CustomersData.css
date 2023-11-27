@@ -1,30 +1,30 @@
 /* Estilos generales */
-.clients-container {
-  text-align: center;
+.clients {
   background-color: #ebecf0;
-  font-family: Arial, sans-serif;
-  margin-top: 200px; /* Añade margen en la parte superior para separar de la Navbar superior */
+  margin-top: 150px; /* Añade margen en la parte superior para separar de la Navbar superior */
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.2px;
+  font-size: 16px;
 }
 
-.table-container {
-    margin-top: 150px; /* Añade margen en la parte superior para separar de los elementos anteriores */
-   /* Añade margen en la parte superior para separar de los elementos anteriores */
-    width: 100%; /* Establece el ancho del contenedor de la tabla al 100% */
-    overflow-x: auto; /* Agrega una barra de desplazamiento horizontal si la tabla es más ancha que la pantalla */
+.table {
+  margin-top: 50px; /* Añade margen en la parte superior para separar de los elementos anteriores */
+  margin-left: 300px;
+  margin-right: 50px;
+  overflow-x: auto; /* Agrega una barra de desplazamiento horizontal si la tabla es más ancha que la pantalla */
 }
 
-.input-container {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    margin-bottom: 10px;
-    padding-inline: 10px;
-  }
+.input {
+  align-items: flex-end;
+  margin-left: 300px;
+  margin-bottom: 10px;
+  padding-inline: 10px;
+}
 
 /* Estilos para la entrada de búsqueda */
 input[type='text'] {
-  width: 250px;
-  padding: 5px;
+  width: 300px;
+  padding: 7px;
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -32,7 +32,7 @@ input[type='text'] {
 
 /* Estilos para los botones de búsqueda y restauración */
 button {
-  background-color: #121144e5;
+  background-color: #1f2852;
   color: white;
   padding: 5px 10px;
   border: none;
@@ -41,28 +41,28 @@ button {
 }
 
 button:hover {
-  background-color:#121144e5;
+  background-color: #1f2852;
 }
 
 /* Estilos para la tabla */
 table {
   width: 100%;
-  
 }
 
 th {
-  background-color:  #ebecf0;
-  border: 1px solid #ccc;
+  background-color: #22c4cf;
+  color: white;
+  border:  rgb(233, 228, 228) 6px outset;
   cursor: pointer;
-  padding: 8px;
+  padding: 5px;
 }
 
 th:hover {
-  background-color: #ddd;
+  background-color: #1f2852;
 }
 
 th:active {
-  background-color:  #ebecf0;;
+  background-color: #ebecf0;
 }
 
 th:focus {
@@ -78,8 +78,8 @@ tr {
 }
 
 td {
-  border: 1px solid #ccc;
-  padding: 8px;
+  border:  rgb(233, 228, 228) 3px outset;
+  padding: 3px;
 }
 
 /* Estilos para la celda de ordenamiento activa */
@@ -95,7 +95,7 @@ tr.highlight {
 
 /* Estilos para el efecto de botón en hover */
 .client-item:hover {
-  background-color: #0056a5;
+  background-color: #22c4cf;
   color: white;
   transform: scale(1.03);
 }
@@ -106,29 +106,82 @@ tr.highlight {
 
 /* Estilos para el efecto de botón en click */
 .client-item:active {
-  background-color: #003e7e;
+  background-color: #22c4cf;
 }
 
 .client-item:active td {
   color: white;
 }
 
-/* Estilos para el encabezado de columna en orden ascendente */
-th[aria-sort='ascending'] {
-  background-color: #0074d9;
-  color: white;
+/* Estilo para la clase "asc" */
+.asc {
+  background-color: #f0ed46; /* Cambia el color de fondo para ascendente */
+  color: #22c4cf;
 }
 
-th[aria-sort='ascending']:hover {
-  background-color: #0056a5;
+.asc:hover {
+  background-color: #f0ed46;
 }
 
-/* Estilos para el encabezado de columna en orden descendente */
-th[aria-sort='descending'] {
-  background-color: #ff6f61;
-  color: white;
+/* Estilo para la clase "desc" */
+.desc {
+  background-color: #d25037; /* Cambia el color de fondo para descendente */
 }
 
-th[aria-sort='descending']:hover {
-  background-color: #d94536;
+.desc:hover {
+  background-color: #d25037;
+}
+
+.pagination-container {
+  display: flex;
+  overflow-x: auto;
+  margin-top: 15px; /* Ajusta el margen superior según sea necesario */
+  margin-bottom: 15px; /* Espacio para la barra de desplazamiento */
+}
+
+.pagination-container button {
+  border:  rgb(233, 228, 228) 4px outset;
+  margin: 0 2px; /* Espacio entre botones */
+  
+}
+
+.paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  width: 15px;
+  height: 25px;
+  margin-bottom: 2px;
+  border: none;
+  background-color: #22c4cf;
+  cursor: pointer;
+}
+
+.paginate.active {
+  background-color: #d25037; /* Cambia el color cuando esté activo */
+}
+
+.page-number {
+  margin-left: 5px; /* Espacio entre el ícono y el número */
+}
+
+.asc-icon {
+  font-size: 20px;
+  padding-left: 25px;
+  margin-top: 2px;
+}
+
+.desc-icon {
+  font-size: 20px;
+  padding-left: 25px;
+  margin-top: 2px;
+}
+
+.error-message {
+  background-color: #cf151f;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
 }

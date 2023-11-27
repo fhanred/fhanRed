@@ -1,7 +1,7 @@
 import { Card } from 'semantic-ui-react';
 import './CameraCapture.css';
 import { useRef, useState } from 'react';
-import { BiCamera } from "react-icons/bi"
+import { BiCamera } from 'react-icons/bi';
 
 function CameraCapture({ setFieldValue }) {
   const videoDiv = useRef();
@@ -12,6 +12,7 @@ function CameraCapture({ setFieldValue }) {
   const [photo, setPhoto] = useState('');
   const [fotoGuardada, setFotoGuardada] = useState(false);
   const [cameraActiva, setCameraActiva] = useState(true);
+  const [camaraDetectada, setCamaraDetectada] = useState(true);
 
   const verCamara = () => {
     navigator.mediaDevices
@@ -73,10 +74,26 @@ function CameraCapture({ setFieldValue }) {
     }
   };
 
-  const iniciarCamara = () => {
-    if (cameraActiva) {
+  const iniciarCamara = async () => {
+    try {
+      const dispositivos = await navigator.mediaDevices.enumerateDevices();
+      const camaras = dispositivos.filter(
+        (dispositivo) => dispositivo.kind === 'videoinput'
+      );
+
+      if (camaras.length === 0) {
+        console.log('No se detectó ninguna cámara disponible.');
+        setCamaraDetectada(false); // Actualiza el estado a false
+        return; // No hay cámaras disponibles, se puede detener aquí
+      }
+
+      // Si hay cámaras disponibles, actualiza el estado a true y procede con la lógica de activación de la cámara
+      setCamaraDetectada(true);
       verCamara();
       setCameraActiva(false);
+    } catch (error) {
+      console.error('Error al intentar acceder a los dispositivos: ', error);
+      // Manejo de errores, puedes mostrar un mensaje al usuario informando del problema
     }
   };
 
@@ -124,17 +141,35 @@ function CameraCapture({ setFieldValue }) {
         <Card.Group centered>
           <Card>
             <Card.Content>
-              <button type="button" onClick={iniciarCamara} disabled={!cameraActiva || fotoGuardada}>
-               <BiCamera className='camera'/> Iniciar camara
-              </button>
-              <button type="button" onClick={stopCamara} disabled={cameraActiva || fotoGuardada}>
-                Detener camara
-              </button>
-              <button type="button" onClick={tomarFoto} disabled={cameraActiva || fotoGuardada}>
-                {' '}
-                Tomar foto
-              </button>
+              {camaraDetectada ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={iniciarCamara}
+                    disabled={!cameraActiva || fotoGuardada}
+                  >
+                    <BiCamera className="camera" /> Iniciar cámara
+                  </button>
+                  <button
+                    type="button"
+                    onClick={stopCamara}
+                    disabled={cameraActiva || fotoGuardada}
+                  >
+                    Detener cámara
+                  </button>
+                  <button
+                    type="button"
+                    onClick={tomarFoto}
+                    disabled={cameraActiva || fotoGuardada}
+                  >
+                    Tomar foto
+                  </button>
+                </>
+              ) : (
+                <p className='error-message' >No se detectó ninguna cámara disponible.</p>
+              )}
             </Card.Content>
+
             <video ref={videoDiv}></video>
           </Card>
           <Card>
@@ -144,11 +179,19 @@ function CameraCapture({ setFieldValue }) {
                 <p>La foto ha sido guardada con exito.</p>
               ) : (
                 <>
-                  <button type="button" onClick={deleteFoto} disabled={cameraActiva}>
+                  <button
+                    type="button"
+                    onClick={deleteFoto}
+                    disabled={cameraActiva}
+                  >
                     {' '}
                     Borrar foto
                   </button>
-                  <button type="button" onClick={guardarFoto} disabled={cameraActiva}>
+                  <button
+                    type="button"
+                    onClick={guardarFoto}
+                    disabled={cameraActiva}
+                  >
                     Guardar foto
                   </button>
                 </>

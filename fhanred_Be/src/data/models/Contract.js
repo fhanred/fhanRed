@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-    
+        field: 'id_Contract',
       },
       init_date: {
         type: DataTypes.DATEONLY,

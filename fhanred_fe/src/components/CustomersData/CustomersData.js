@@ -1,52 +1,91 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { FaArrowAltCircleDown, FaArrowAltCircleUp } from 'react-icons/fa';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import './CustomersData.css';
 
 function CustomersData() {
-  const clientesData = useSelector((state) => state.clientesData);
+  const clientesData = useSelector((state) => state.usersData);
   const [clientes, setClientes] = useState(clientesData);
   const [orderBy, setOrderBy] = useState('nombre'); // Columna inicial de ordenamiento
   const [orderAsc, setOrderAsc] = useState(true); // Orden inicial (ascendente)
   const [searchText, setSearchText] = useState('');
+  const [filteredClientes, setFilteredClientes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [userNotFound, setUserNotFound] = useState(false);
+  const usersPerPage = 15;
+
+  // Lógica para obtener usuarios mostrados basados en la página actual y la búsqueda
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
   // Función para cambiar el orden de la tabla
   const handleSort = (column) => {
+    let newOrderAsc = true;
+
     if (column === orderBy) {
-      setOrderAsc(!orderAsc);
+      newOrderAsc = !orderAsc;
+      setOrderAsc(newOrderAsc);
     } else {
       setOrderBy(column);
-      setOrderAsc(true);
     }
+
+    // Ordenar los datos basados en la columna y el orden seleccionados
+    const sortedData = _.orderBy(
+      filteredClientes.length > 0 ? filteredClientes : clientes,
+      [column],
+      [newOrderAsc ? 'asc' : 'desc']
+    );
+    setFilteredClientes(sortedData);
   };
 
   // Función para buscar clientes por nombre, cédula o plan
   const handleSearch = () => {
-    const filteredClientes = clientesData.filter(
+    const filtered = clientes.filter(
       (cliente) =>
-        cliente.nombre.toLowerCase().includes(searchText.toLowerCase()) ||
-        cliente.cedula.includes(searchText) ||
-        cliente.plan.toLowerCase().includes(searchText.toLowerCase())
+        cliente.name_razonSocial
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        cliente.n_documento.includes(searchText)
     );
-    setClientes(filteredClientes);
+    setFilteredClientes(filtered);
+    setCurrentPage(1);
+
+    if (filtered.length === 0) {
+      // Si no hay resultados, mostrar mensaje de usuario no encontrado
+      setUserNotFound(true);
+    } else {
+      setUserNotFound(false);
+    }
   };
 
   // Función para restaurar la lista completa
   const handleResetSearch = () => {
-    setClientes(clientesData);
+    setClientes(clientes);
     setSearchText('');
+    setFilteredClientes([]);
+    setCurrentPage(1);
+    setUserNotFound(false)
   };
 
-  // Ordena la lista de clientes según la columna y dirección de ordenamiento
-  const sortedClientes = _.orderBy(
-    clientes,
-    [orderBy],
-    [orderAsc ? 'asc' : 'desc']
-  );
+  // Renderizado de clientes basados en la lógica de búsqueda y paginación
+  let renderClientes = filteredClientes.length > 0 ? filteredClientes : clientes.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Lógica para renderizar los números de página
+  const totalUsersCount =
+    filteredClientes.length > 0 ? filteredClientes.length : clientes.length;
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalUsersCount / usersPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  // Función para cambiar de página
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="clients-container">
-      <div className="input-container">
+    <div className="clients">
+      <div className="input">
         <input
           type="text"
           placeholder="Buscar por nombre, cédula o plan"
@@ -55,50 +94,179 @@ function CustomersData() {
         />
         <button onClick={handleSearch}>Buscar</button>
         <button onClick={handleResetSearch}>Restaurar búsqueda</button>
+        {userNotFound && (
+        <p className='error-message'>Usuario no registrado, verifique nuevamente</p>
+      )}
       </div>
-      <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort('cedula')}>
-              Cédula
-              {orderBy === 'cedula' && (orderAsc ? '↑' : '↓')}
-            </th>
-            <th onClick={() => handleSort('nombre')}>
-              Nombre
-              {orderBy === 'nombre' && (orderAsc ? '↑' : '↓')}
-            </th>
-            <th onClick={() => handleSort('apellido')}>
-              Apellido
-              {orderBy === 'apellido' && (orderAsc ? '↑' : '↓')}
-            </th>
-            <th onClick={() => handleSort('fechaNacimiento')}>
-              Fecha de Nacimiento
-              {orderBy === 'fechaNacimiento' && (orderAsc ? '↑' : '↓')}
-            </th>
-            <th onClick={() => handleSort('plan')}>
-              Plan Contratado
-              {orderBy === 'plan' && (orderAsc ? '↑' : '↓')}
-            </th>
-            <th onClick={() => handleSort('ultimoPago')}>
-              Último Pago
-              {orderBy === 'ultimoPago' && (orderAsc ? '↑' : '↓')}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedClientes.map((cliente) => (
-            <tr key={cliente.cedula} className="client-item">
-              <td>{cliente.cedula}</td>
-              <td>{cliente.nombre}</td>
-              <td>{cliente.apellido}</td>
-              <td>{cliente.fechaNacimiento}</td>
-              <td>{cliente.plan}</td>
-              <td>{cliente.ultimoPago}</td>
+      <div className="table">
+        <table>
+          <thead>
+            <tr>
+              <th
+                onClick={() => handleSort('n_documento')}
+                className={
+                  orderBy === 'n_documento' ? (orderAsc ? 'asc' : 'desc') : ''
+                }
+              >
+                Cédula
+                {orderBy === 'n_documento' && (
+                  <span>
+                    {orderAsc ? (
+                      <span className="asc">
+                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
+                      </span>
+                    ) : (
+                      <span className="desc">
+                        <FaArrowAltCircleDown className="desc-icon" /> -
+                        Descendente{' '}
+                      </span>
+                    )}
+                  </span>
+                )}
+              </th>
+
+              <th
+                onClick={() => handleSort('name_razonSocial')}
+                className={
+                  orderBy === 'name_razonSocial'
+                    ? orderAsc
+                      ? 'asc'
+                      : 'desc'
+                    : ''
+                }
+              >
+                Nombre y Apellidos / Razon social
+                {orderBy === 'name_razonSocial' && (
+                  <span>
+                    {orderAsc ? (
+                      <span className="asc">
+                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
+                      </span>
+                    ) : (
+                      <span className="desc">
+                        <FaArrowAltCircleDown className="desc-icon" /> -
+                        Descendente{' '}
+                      </span>
+                    )}
+                  </span>
+                )}
+              </th>
+
+              <th
+                onClick={() => handleSort('contrato')}
+                className={
+                  orderBy === 'contrato' ? (orderAsc ? 'asc' : 'desc') : ''
+                }
+              >
+                # Contrato
+                {orderBy === 'contrato' && (
+                  <span>
+                    {orderAsc ? (
+                      <span className="asc">
+                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
+                      </span>
+                    ) : (
+                      <span className="desc">
+                        <FaArrowAltCircleDown className="desc-icon" /> -
+                        Descendente{' '}
+                      </span>
+                    )}
+                  </span>
+                )}
+              </th>
+              <th
+                onClick={() => handleSort('plan')}
+                className={
+                  orderBy === 'plan' ? (orderAsc ? 'asc' : 'desc') : ''
+                }
+              >
+                Plan Contratado
+                {orderBy === 'plan' && (
+                  <span>
+                    {orderAsc ? (
+                      <span className="asc">
+                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
+                      </span>
+                    ) : (
+                      <span className="desc">
+                        <FaArrowAltCircleDown className="desc-icon" /> -
+                        Descendente{' '}
+                      </span>
+                    )}
+                  </span>
+                )}
+              </th>
+              <th
+                onClick={() => handleSort('ultimoPago')}
+                className={
+                  orderBy === 'ultimoPago' ? (orderAsc ? 'asc' : 'desc') : ''
+                }
+              >
+                Último Pago
+                {orderBy === 'ultimoPago' && (
+                  <span>
+                    {orderAsc ? (
+                      <span className="asc">
+                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
+                      </span>
+                    ) : (
+                      <span className="desc">
+                        <FaArrowAltCircleDown className="desc-icon" /> -
+                        Descendente{' '}
+                      </span>
+                    )}
+                  </span>
+                )}
+              </th>
+              <th>Estado cliente</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {renderClientes.map((cliente) => (
+              <tr key={cliente.n_documento}>
+                <td>{cliente.n_documento}</td>
+                <td>{cliente.name_razonSocial}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{cliente.active ? 'Activo' : 'Inactivo'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="pagination-container">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`paginate ${currentPage === 1 ? 'active' : ''}`}
+          >
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+              <BsChevronLeft style={{ width: '20px', height: '20px' }} />
+            </span>
+          </button>
+          {pageNumbers
+            .slice(currentPage - 1, currentPage + 14)
+            .map((number) => (
+              <button
+                key={number}
+                onClick={() => paginate(number)}
+                className={`paginate ${currentPage === number ? 'active' : ''}`}
+              >
+                <span className="page-number">{number}</span>
+              </button>
+            ))}
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === pageNumbers.length}
+            className={`paginate ${
+              currentPage === pageNumbers.length ? 'active' : ''
+            }`}
+          >
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+              <BsChevronRight style={{ width: '20px', height: '20px' }} />
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );

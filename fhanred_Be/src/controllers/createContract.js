@@ -10,7 +10,7 @@ const response = require('../utils/response');
 
 module.exports = async (req, res) => {
   const n_documento = req.body.n_documento;
-  
+  console.log(n_documento)
   // Buscar el usuario por n_documento para verificar su existencia
   const user = await User.findByPk(n_documento);
 
@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
     'fecha_cumple',
   ]; // Campos del modelo User
   const contractFields = [
-    'n_contrato',
+   
     'init_date',
     'caja_nap',
     'ultimo_pago',
@@ -71,7 +71,7 @@ module.exports = async (req, res) => {
 
   //Actualizar User
   const stringFechaCumple = filteredUserData.fecha_cumple; // Obtenemos la cadena de fecha de filteredUserData
-
+console.log(stringFechaCumple)
   // Convertir la cadena de fecha a un objeto Date (estableciendo la zona horaria a UTC)
   const fechaCumple = new Date(`${stringFechaCumple}T00:00:00.000Z`);
 
@@ -96,12 +96,13 @@ module.exports = async (req, res) => {
   const createdContract = await Contract.create({
     ...filteredContractData,
     n_documento: filteredUserData.n_documento,
-    init_date: fechaInitDate,
-    ultimo_pago: fechaUltimoPago,
+    init_date: fechaInitDate.toISOString().split('T')[0],
+    ultimo_pago: fechaUltimoPago.toISOString().split('T')[0],
   });
 
   // relación entre contrato y plan
   let idPlan = parseInt(filteredPlanData.id_plan, 10); // Convierte el valor a un número
+  console.log(idPlan)
   const plan = await Plan.findByPk(idPlan); // Busca el plan por id
   if (plan) {
     await createdContract.setPlan(plan); // Establece la relación entre contrato y plan

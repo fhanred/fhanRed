@@ -27,6 +27,7 @@ function Register() {
           name_razonSocial: '',
           tipo_documento: '',
           n_documento: '',
+          sexo: "none",
           email: '',
           password: '',
         }}
@@ -84,6 +85,9 @@ function Register() {
           if (values.tipo_persona === 'none') {
             errors.tipo_persona = 'Dato Requerido';
           }
+          if (values.sexo === "none") {
+            errors.sexo = "Dato Requerido";
+          }
           return errors;
         }}
         onSubmit={async (values, { resetForm, setSubmitting }) => {
@@ -113,10 +117,10 @@ function Register() {
           <div>
             <Form>
               <div className="register">
-                <h2>Registro</h2>
+                <h2 className='tittle'>Registro</h2>
                 <div className="form-div">
                   <label htmlFor="tipo_persona" className="label-reg">
-                    Tipo de persona:
+                    Tipo de persona
                   </label>
                   <Field id="tipo_persona" name="tipo_persona" as="select" className="select">
                     <option value={'none'} className="option">Selecciona una opción</option>
@@ -135,7 +139,7 @@ function Register() {
                 {values.tipo_persona === 'P.NATURAL' && (
                   <div className="form-div">
                     <label htmlFor="name" className="label-reg">
-                      Nombres y Apellidos:
+                      Nombres y Apellidos
                     </label>
                     <Field
                       type="text"
@@ -158,7 +162,7 @@ function Register() {
                 {values.tipo_persona === 'P.JURIDICA' && (
                   <div className="form-div">
                     <label htmlFor="name_razonSocial" className="label-reg">
-                      Razón social:
+                      Razón social
                     </label>
                     <Field
                       type="text"
@@ -183,7 +187,7 @@ function Register() {
                 values.tipo_persona === 'P.NATURAL' ? (
                   <div className="form-div">
                     <label htmlFor="tipo_documento" className="label-reg">
-                      Tipo de documento:
+                      Tipo de documento
                     </label>
                     <Field
                       id="tipo_documento"
@@ -228,7 +232,7 @@ function Register() {
                       )}
                     <div className="label-input-doc">
                       <label htmlFor="n_documento" className="label-doc">
-                        Número de documento:
+                        Número de documento
                       </label>
                       <Field type="text" id="n_documento" name="n_documento" />
                     </div>
@@ -243,9 +247,57 @@ function Register() {
                     )}
                   />
                 </p>
+
+                <div className="form-div">
+                    <label htmlFor="sexo" className="label-reg">
+                      Sexo
+                    </label>
+                    <Field id="sexo" name="sexo" as="select" className="select">
+                      <option value={"none"} className="option">
+                        Selecciona una opción
+                      </option>
+                      <option value={"M"} className="option">
+                        Masculino
+                      </option>
+                      <option value={"F"} className="option">
+                        Femenino
+                      </option>
+                    </Field>
+                  </div>
+                  <p>
+                    <ErrorMessage
+                      name="sexo"
+                      component={() => (
+                        <div className="error-message">{errors.sexo}</div>
+                      )}
+                    />
+                  </p>
+
+                  <div className="form-div">
+                    <label htmlFor="fecha_cumple" className="label-reg">
+                      Fecha de nacimiento
+                    </label>
+                    <Field
+                      type="text"
+                      id="fecha_cumple"
+                      name="fecha_cumple"
+                      placeholder="YYYY-MM-DD"
+                    />
+                  </div>
+                  <p>
+                    <ErrorMessage
+                      name="fecha_cumple"
+                      component={() => (
+                        <div className="error-message">
+                          {errors.fecha_cumple}
+                        </div>
+                      )}
+                    />
+                  </p>
+
                 <div className="form-div">
                   <label htmlFor="email" className="label-reg">
-                    Correo electrónico:
+                    Correo electrónico
                   </label>
                   <Field
                     type="text"
@@ -264,7 +316,7 @@ function Register() {
                 </p>
                 <div className="form-div">
                   <label htmlFor="password" className="label-reg">
-                    Contraseña:
+                    Contraseña
                   </label>
                   <Field
                     type={showPassword ? 'text' : 'password'}
