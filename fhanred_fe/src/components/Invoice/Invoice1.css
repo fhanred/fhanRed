@@ -3,13 +3,14 @@
   max-width: 620px;
   margin: 0 auto;
   margin-top: 160px;
+  margin-bottom: 20px;
   padding: 20px;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: -0.2px;
   font-size: 16px;
 
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border:  rgb(233, 228, 228) 8px outset;
+  border-radius: 8px;
 }
 
 /* Formulario */

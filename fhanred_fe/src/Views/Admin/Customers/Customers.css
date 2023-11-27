@@ -10,6 +10,7 @@
 
 .icon {
   font-size: 200px; /* Tamaño del icono en píxeles */
+  background-color: #22c4cf;
 }
 
 .client-item {
@@ -26,15 +27,17 @@
   background-color: #f0f0f0;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra 3D */
   transition: transform 0.2s;
+  
 }
 
 .client-item:hover {
   transform: scale(1.05); /* Escala ligeramente al pasar el mouse */
+  
 }
 
 .client-item a {
   text-decoration: none;
-  color: #1f2852;
+  color: #22c4cf;
 }
 
 

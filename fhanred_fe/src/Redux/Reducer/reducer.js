@@ -4,10 +4,12 @@ import {
   CREATE_INVOICE,
   CREATE_USER,
   INCREMENT_NUMBER_FACT,
+  GET_USERS,
 } from '../Actions/actions-types';
 
 const initialState = {
   userInfo: {},
+  usersData: [],
   numberFact: 1, // Inicializa el numero de la facturacion de Fhanred
 };
 
@@ -18,11 +20,18 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
       };
+    case GET_USERS:
+      console.log(action.payload)
+      return {
+        ...state,
+        
+        usersData: action.payload,
+      };
     case CREATE_INVOICE:
       return {
         ...state,
       };
-      case CREATE_USER:
+    case CREATE_USER:
       return {
         ...state,
       };

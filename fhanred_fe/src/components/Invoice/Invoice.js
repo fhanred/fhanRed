@@ -89,7 +89,6 @@ function Invoice() {
           tel2: "", //ok
           tel3: "", //ok
           id_plan: "none" /*plan*/, //ok
-
           idStratus: "none", //ok
           idZone: "none", //ok
           id_vivienda: "none", // ok
@@ -471,10 +470,10 @@ function Invoice() {
                       <option value={"none"} className="option">
                         Selecciona una opción
                       </option>
-                      <option value={"Masculino"} className="option">
+                      <option value={"M"} className="option">
                         Masculino
                       </option>
-                      <option value={"Femenino"} className="option">
+                      <option value={"F"} className="option">
                         Femenino
                       </option>
                     </Field>
