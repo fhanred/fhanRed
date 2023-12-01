@@ -70,20 +70,20 @@ export const clientsLinks = [
   {
     id: 1,
     name: 'Datos Clientes',
-    icon: <RiContactsBookFill size={200} />,
+    icon: <RiContactsBookFill  />,
     path: '/admin/datosClientes',
   },
   {
     id: 2,
     name: 'Contratos',
-    icon: <RiFolder5Fill size={200} />,
+    icon: <RiFolder5Fill  />,
     path: '/admin/clientesContratos',
   },
 
   {
     id: 3,
     name: 'Cumpleaños',
-    icon: <RiCake2Fill size={200} />,
+    icon: <RiCake2Fill />,
     path: '/admin/cumpleañosclientes',
   },
 ];
@@ -92,7 +92,7 @@ export const tesoreriaLinks = [
   {
     id: 1,
     name: 'Cartera',
-    icon: <RiCurrencyLine size={200} />,
+    icon: <RiCurrencyLine />,
     path: '/admin/carteraClientes',
   },
 ];

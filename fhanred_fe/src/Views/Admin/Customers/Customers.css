@@ -1,6 +1,7 @@
+/* Estilos base para tamaños de pantalla más grandes */
 .clients-container {
-  
   display: grid;
+  margin-left: 20%;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 5px;
   text-align: center;
@@ -8,71 +9,66 @@
   font-size: 16px;
 }
 
-.icon {
-  font-size: 200px; /* Tamaño del icono en píxeles */
-  background-color: #22c4cf;
-}
-
 .client-item {
+  width: 60%;
+  height: 55%;
   border: 1px solid #f0f0f0;
   border-radius: 8px;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centra verticalmente */
+  justify-content: center;
   margin-top: 170px;
-  margin-left: 300px;
-  margin-right: 50px;
+  margin-right: 20px;
   background-color: #f0f0f0;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra 3D */
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
-  
 }
 
 .client-item:hover {
-  transform: scale(1.05); /* Escala ligeramente al pasar el mouse */
-  
+  transform: scale(1.05);
 }
 
 .client-item a {
   text-decoration: none;
-  color: #22c4cf;
+    color: #1f2852;
 }
-
-
 
 .client-name {
-  
   margin-top: 10px;
 }
+.icon {
+  font-size: 150px;
+}
 
-/* Estilos para pantallas medianas (tabletas) */
 /* Estilos para pantallas medianas (tabletas) */
 @media (max-width: 1024px) {
   .container {
     max-width: 90%; /* Reduzca el ancho máximo del contenedor en pantallas medianas */
     margin-top: 120px; /* Ajuste el margen superior en pantallas medianas */
-    margin-right: 20px; 
+    margin-right: 5px;
   }
 
   .clients-container {
-    grid-template-columns: repeat(2, 1fr); /* Cambia a una sola columna en pantallas pequeñas */
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Cambia a una sola columna en pantallas pequeñas */
   }
-
-  
 }
-
 
 /* Estilos para pantallas pequeñas (teléfonos móviles) */
 @media (max-width: 768px) {
   .container {
-    max-width: 90%; /* Reduzca el ancho máximo del contenedor en pantallas pequeñas */
+    max-width: 60%; /* Reduzca el ancho máximo del contenedor en pantallas pequeñas */
     margin-top: 100px; /* Ajuste el margen superior en pantallas pequeñas */
   }
 
   .client-item {
-    margin-right: 50px; /* Agrega un margen derecho en pantallas medianas */
+   
+    margin-left: 30px;
+    margin-right: 5px; /* Agrega un margen derecho en pantallas medianas */
     font-size: 12px;
   }
 
@@ -80,3 +76,5 @@
     grid-template-columns: 1fr; /* Cambia a una sola columna en pantallas pequeñas */
   }
 }
+
+

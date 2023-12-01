@@ -1,47 +1,49 @@
 /* Estilos generales */
 .clients {
-  background-color: #ebecf0;
-  margin-top: 150px; /* Añade margen en la parte superior para separar de la Navbar superior */
+  display: flex;
+  margin-top: 7%; /* Añade margen en la parte superior para separar de la Navbar superior */
+  margin-left: 15%;
+  flex-direction: column;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: -0.2px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .table {
-  margin-top: 50px; /* Añade margen en la parte superior para separar de los elementos anteriores */
-  margin-left: 300px;
-  margin-right: 50px;
+  margin-top: 2%;
+  margin-left: 3%; /* Añade margen en la parte superior para separar de los elementos anteriores */
+  margin-right: 3%;
   overflow-x: auto; /* Agrega una barra de desplazamiento horizontal si la tabla es más ancha que la pantalla */
 }
 
 .input {
-  align-items: flex-end;
-  margin-left: 300px;
-  margin-bottom: 10px;
-  padding-inline: 10px;
+  display: flex;
+  align-items:flex-start;
+  margin-left: 3%;
 }
 
 /* Estilos para la entrada de búsqueda */
-input[type='text'] {
-  width: 300px;
-  padding: 7px;
-  margin-right: 10px;
+.special-input {
+  width: 30%;
+  padding: 0.7%;
+  margin-right: 1%;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 /* Estilos para los botones de búsqueda y restauración */
-button {
-  background-color: #1f2852;
-  color: white;
+.button-clients {
+  
+  margin-top: 5px;
+  margin-right: 5px;
+  color: #1f2852;
   padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
+  font-size: 16px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #1f2852;
+.button-clients:hover {
+  color: #22c4cf;
 }
 
 /* Estilos para la tabla */
@@ -50,15 +52,15 @@ table {
 }
 
 th {
-  background-color: #22c4cf;
+  background-color: #1f2852;
   color: white;
   border:  rgb(233, 228, 228) 6px outset;
   cursor: pointer;
-  padding: 5px;
+  padding: 0.5%;
 }
 
 th:hover {
-  background-color: #1f2852;
+  background-color: #22c4cf;
 }
 
 th:active {
@@ -79,13 +81,13 @@ tr {
 
 td {
   border:  rgb(233, 228, 228) 3px outset;
-  padding: 3px;
+  padding: 0.3%;
 }
 
 /* Estilos para la celda de ordenamiento activa */
 th[aria-sort]::before {
   content: attr(aria-sort);
-  padding-left: 5px;
+  padding-left: 0.5%
 }
 
 /* Estilos para el resaltado de búsqueda */
@@ -134,9 +136,11 @@ tr.highlight {
 
 .pagination-container {
   display: flex;
-  overflow-x: auto;
-  margin-top: 15px; /* Ajusta el margen superior según sea necesario */
-  margin-bottom: 15px; /* Espacio para la barra de desplazamiento */
+  flex-wrap: wrap;
+  justify-content: center; /* Centra los elementos horizontalmente */
+  gap: 5px; /* Espacio entre los botones de paginación */
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 .pagination-container button {
@@ -150,12 +154,16 @@ tr.highlight {
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  width: 15px;
-  height: 25px;
+  padding: 10px 18px;
+  height: 2px;
   margin-bottom: 2px;
   border: none;
-  background-color: #22c4cf;
+  background-color: #1f2852;
+  color: white;
   cursor: pointer;
+}
+.paginate:hover {
+  background-color: #22c4cf;
 }
 
 .paginate.active {
@@ -163,25 +171,97 @@ tr.highlight {
 }
 
 .page-number {
-  margin-left: 5px; /* Espacio entre el ícono y el número */
+  margin-left: 0.5%; /* Espacio entre el ícono y el número */
 }
 
 .asc-icon {
   font-size: 20px;
-  padding-left: 25px;
-  margin-top: 2px;
+  padding-left: 2.5%;
+  margin-top: 0.2%;
 }
 
 .desc-icon {
   font-size: 20px;
-  padding-left: 25px;
-  margin-top: 2px;
+  padding-left: 2.5%;
+  margin-top: 0.2%;
 }
 
-.error-message {
+.error-message-clients {
   background-color: #cf151f;
+  margin-left: 3%;
+  width: 40%;
   color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 2px;
+  margin-bottom: 1px;
   border-radius: 4px;
+}
+
+/*------------------------------------------------responsive-------------------------------*/
+@media (max-width: 1300px) {
+ .clients {
+  margin-top: 20%;
+ }
+}
+/* Estilos para pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+  .clients {
+   font-size: 12px;
+  }
+  .paginate {
+    font-size: 12px;
+  }
+ }
+
+/* Estilos para pantallas pequeñas (teléfonos móviles) */
+@media (max-width: 768px) {
+  .clients {
+    font-size: 10px;
+   }
+   .input {
+    flex-direction: column;
+   }
+   .special-input {
+    width: 50%;
+    font-size: 10px;
+   }
+   .button-clients {
+    font-size: 10px;
+   }
+   .paginate {
+    font-size: 10px;
+   }
+}
+
+@media (max-width: 600px) {
+
+  .pagination-container {
+    flex-direction: column; /* Cambia la dirección a column para pantallas más pequeñas */
+    align-items: center; /* Centra los elementos verticalmente */
+  }
+}
+
+/* Estilos para celulares (pantallas muy pequeñas) */
+@media (max-width: 480px) {
+  .clients {
+    margin-left: 18%;
+    font-size: 8px;
+   }
+   .special-input {
+    width: 50%;
+   }
+   .paginate {
+    font-size: 8px;
+   }
+}
+
+@media (max-width: 380px) {
+  .clients {
+    margin-top: 20%;
+    font-size: 6.5px;
+    font-weight: bold;
+   }
+   .paginate {
+    font-size: 6.5px;
+   }
+
 }

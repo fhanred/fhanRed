@@ -5,7 +5,14 @@ body {
 /* Estilos para el Navbar (pantallas grandes) */
 .navbar {
   margin: 0; /* Elimina el margen de la barra de navegación */
-  background-color: #1f2852;
+  background: linear-gradient(
+    to right,
+    #1f2852 20%,
+    #22c4cf,
+    #d25037,
+    #f0ed46,
+    #cf151f
+  );
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,6 +26,8 @@ body {
   width: 100%;
   height: 80px;
   z-index: 1000;
+  border-bottom: 8px outset; /* Ancho del borde y estilo */
+  border-image: linear-gradient(to right, #1f2852 20%, #22c4cf) 1;
 }
 
 /* Estilos para el logo (pantallas grandes) */
@@ -29,6 +38,7 @@ body {
 /* Estilo para el logo de la compañía (pantallas grandes) */
 .logo-image {
   height: 100%;
+  margin-left: 0px;
 }
 
 /* Estilos para la información del usuario, avatar y icono de cierre de sesión (pantallas grandes) */

@@ -1,17 +1,15 @@
 .container-factura {
-    max-width: 1150px;
-    margin: 0 auto;
+    max-width: 1250px;
     margin-top: 160px;
     padding: 20px;
     font-family: 'Montserrat', sans-serif;
     letter-spacing: -0.2px;
-    
+    margin-left: -100px;
     background-color: #f7f7f7;
     border: 1px solid #ccc;
     border-radius: 5px;
 
-     /* Agrega el margen izquierdo deseado */
-     margin-left: 350px;
+     
   }
 
   .container-cabecera {

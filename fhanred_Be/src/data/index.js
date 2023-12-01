@@ -58,8 +58,8 @@ Contract.belongsTo(User, { foreignKey: "n_documento" });
 User.hasMany(Contract, { foreignKey: "n_documento" });
 
 // contract ---> plan
-Contract.belongsTo(Plan, { foreignKey: "id_plan" });
-Plan.hasOne(Contract, { foreignKey: "id_plan" });
+Contract.belongsTo(Plan, { foreignKey: "name_plan" });
+Plan.hasOne(Contract, { foreignKey: "name_plan" });
 
 // contract  ----> delivery
 Contract.belongsTo(Delivery, { foreignKey: "id_delivery" });

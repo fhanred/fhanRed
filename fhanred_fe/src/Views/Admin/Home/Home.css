@@ -1,3 +1,13 @@
-.container {
-  background-color: #ebecf0;
+.container-home {
+  max-width: 620px;
+    margin-top: 160px;
+    margin-left: 350px;
+    margin-bottom: 20px;
+    padding: 50px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+    border: rgb(233, 228, 228) 8px outset;
+    border-radius: 8px;
+  
 }
