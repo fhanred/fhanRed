@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
     'estado_cp_correo',
     'estado_contrato',
   ]; // Campos del modelo Contract
-  const planFields = ['id_plan']; // campo modelo Plan
+  const planFields = ['name_plan']; // campo modelo Plan
   const viviendaFields = ['id_vivienda']; // campo modelo Vivienda
   const deliveryFields = ['municipio', 'barrio_vereda', 'direccion']; // campos modelo Delivery
 
@@ -101,9 +101,9 @@ console.log(stringFechaCumple)
   });
 
   // relación entre contrato y plan
-  let idPlan = parseInt(filteredPlanData.id_plan, 10); // Convierte el valor a un número
-  console.log(idPlan)
-  const plan = await Plan.findByPk(idPlan); // Busca el plan por id
+  let namePlan = filteredPlanData.name_plan; 
+  console.log(namePlan)
+  const plan = await Plan.findByPk(namePlan); // Busca el plan por nombre
   if (plan) {
     await createdContract.setPlan(plan); // Establece la relación entre contrato y plan
   } else {

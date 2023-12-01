@@ -1,18 +1,13 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Plan",
+    'Plan',
     {
-      id_plan: {
-        type: DataTypes.INTEGER,
+      name_plan: {
+        type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
-        autoIncrement: true,
-        field: "id_plan",
-      },
-      name: {
-        type: DataTypes.STRING,
       },
       costo: {
         type: DataTypes.STRING,

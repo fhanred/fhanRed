@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
-import { FaArrowAltCircleDown, FaArrowAltCircleUp } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaSearch, FaUndo } from 'react-icons/fa';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import './CustomersData.css';
 
@@ -66,11 +67,14 @@ function CustomersData() {
     setSearchText('');
     setFilteredClientes([]);
     setCurrentPage(1);
-    setUserNotFound(false)
+    setUserNotFound(false);
   };
 
   // Renderizado de clientes basados en la lógica de búsqueda y paginación
-  let renderClientes = filteredClientes.length > 0 ? filteredClientes : clientes.slice(indexOfFirstUser, indexOfLastUser);
+  let renderClientes =
+    filteredClientes.length > 0
+      ? filteredClientes.slice(indexOfFirstUser, indexOfLastUser)
+      : clientes.slice(indexOfFirstUser, indexOfLastUser);
 
   // Lógica para renderizar los números de página
   const totalUsersCount =
@@ -86,18 +90,22 @@ function CustomersData() {
   return (
     <div className="clients">
       <div className="input">
+        
         <input
           type="text"
           placeholder="Buscar por nombre, cédula o plan"
           value={searchText}
+          className='special-input'
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button onClick={handleSearch}>Buscar</button>
-        <button onClick={handleResetSearch}>Restaurar búsqueda</button>
-        {userNotFound && (
-        <p className='error-message'>Usuario no registrado, verifique nuevamente</p>
-      )}
+        <FaSearch onClick={handleSearch} className="button-clients" />
+        <FaUndo onClick={handleResetSearch} className="button-clients" />
       </div>
+      {userNotFound && (
+        <p className="error-message-clients">
+          Usuario no registrado, verifique nuevamente
+        </p>
+      )}
       <div className="table">
         <table>
           <thead>
@@ -226,7 +234,12 @@ function CustomersData() {
               <tr key={cliente.n_documento}>
                 <td>{cliente.n_documento}</td>
                 <td>{cliente.name_razonSocial}</td>
-                <td></td>
+                <td>
+                  {/* Envuelve el valor de n_contrato en un Link */}
+                  <Link to={`/ruta/nuevo-componente/${cliente.n_contrato}`}>
+                    {cliente.n_contrato}
+                  </Link>
+                </td>
                 <td></td>
                 <td></td>
                 <td>{cliente.active ? 'Activo' : 'Inactivo'}</td>
@@ -245,7 +258,7 @@ function CustomersData() {
             </span>
           </button>
           {pageNumbers
-            .slice(currentPage - 1, currentPage + 14)
+            .slice(currentPage - 1, currentPage + 15)
             .map((number) => (
               <button
                 key={number}

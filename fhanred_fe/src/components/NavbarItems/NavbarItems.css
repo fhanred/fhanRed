@@ -1,19 +1,29 @@
 /* Estilos base para NavbarItems */
 .NavbarItems {
-  position: fixed;
-  top: 0;
+  position:fixed;
+  top: 0px;
   left: 0;
   bottom: 0;
-  background-color: #1f2852;
+  background: linear-gradient(
+    to bottom,
+    #1f2852 80%,
+    #22c4cf,
+    #d25037,
+    #f0ed46,
+    #cf151f
+  );
   padding: 20px;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: -0.2px;
-  font-size: 16px;
+  font-size: 13px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  border-right: 8px outset; /* Ancho del borde y estilo */
+  border-image: linear-gradient(to bottom, #1f2852 20%, #22c4cf) 1;
+   
 }
 
 .NavbarItems ul {
@@ -45,44 +55,49 @@
   color: #22cacf;
 }
 
-/* Estilos para pantallas medianas (tabletas) */
-@media (max-width: 1024px) {
-  .NavbarItems {
-   
-    font-size: 16px; /* Ajusta el tamaño de fuente en pantallas medianas */
-  }
-
-  .NavbarItems ul {
-    margin-top: 100px; /* Ajusta el margen superior en pantallas medianas */
-  }
+/* Estilos del botón del menú */
+.menu-toggle {
+  /* Estilos del botón del menú */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  /* Color de fondo */
+  color: #fff; /* Color del texto */
+  padding: 10px 15px; /* Padding alrededor del texto/icono */
+  border: none; /* Elimina el borde */
+  border-radius: 5px; /* Borde redondeado */
+  font-size: 19px; /* Tamaño de fuente */
+  transition: background-color 0.3s ease; /* Transición suave */
 }
 
-/* Estilos para pantallas pequeñas (teléfonos móviles) */
+.menu-toggle:hover {
+  text-decoration: underline;
+  color: #22cacf;
+}
+
+.closed-toggle {
+  position:absolute;
+  top: 150px;
+  left: 170px;
+  font-size: 23px;
+}
+/*------------------------------------------responsive-------------------------*/
 @media (max-width: 768px) {
-  .NavbarItems {
-   
-    font-size: 14px; /* Ajusta el tamaño de fuente en pantallas pequeñas */
-  }
-
-  .NavbarItems ul {
-    margin-top: 50px; /* Ajusta el margen superior en pantallas pequeñas */
-  }
-
-  .NavbarItems li {
-    align-items: center; /* Centra verticalmente los elementos en ítems de lista en pantallas pequeñas */
-  }
-
+  .NavbarItems  {
+    padding: 10px;
+    font-size: 12px;
+   }
+   .closed-toggle {
+    left: 120px;
+   }
 }
 
-/* Estilos para celulares (pantallas muy pequeñas) */
-@media (max-width: 480px) {
-  .NavbarItems {
+@media (max-width: 380px) {
+  .NavbarItems  {
+    padding: 7px;
+    font-size: 10px;
     
-    font-size: 12px; /* Ajusta el tamaño de fuente en pantallas de celulares */
-  }
-
-  .NavbarItems ul {
-    margin-top: 30px; /* Ajusta el margen superior en pantallas de celulares */
-  }
-
+   }
 }
+
+
+
+

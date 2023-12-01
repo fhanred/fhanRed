@@ -1,30 +1,39 @@
 /* Estilos generales */
 .container {
-  max-width: 620px;
-  margin: 0 auto;
-  margin-top: 160px;
+  display: flex;
+  max-width: 850px;
+  width: 100%;
+  margin-top: 10%;
+  margin-left: 25%;
+  margin-right: 50px;
   margin-bottom: 20px;
   padding: 20px;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: -0.2px;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bold;
+}
 
-  border:  rgb(233, 228, 228) 8px outset;
-  border-radius: 8px;
+.formDiv {
+  width: 80%;
 }
 
 /* Formulario */
-
+.divInvoice {
+ background-color: #f0f1f5;
+  margin: 10px auto;
+  padding: 10px;
+  border: rgb(233, 228, 228) 8px outset;
+  border-radius: 8px;
+  color: #444;
+}
 /* Grupos de formulario */
 .form-group {
   display: flex;
-  align-items: center;
-  margin-right: 90px;
 }
 
 .form-group-img {
   display: flex;
-  
 }
 
 .form-group-cont {
@@ -36,7 +45,7 @@
 
 .form-group-button {
   display: flex;
-  
+
   margin-right: 90px;
 }
 
@@ -57,22 +66,16 @@
 .form-group-address label {
   margin-bottom: 5px;
 }
-
-.form-group-address button {
-  margin-top: 10px; /* Espacio entre la última etiqueta y el botón */
-}
-
 .form-group-firma {
   margin-bottom: 20px;
   border-style: double;
   border-width: 3px;
-  border-color: #000;
+  border-color: #1f2852;
   align-items: center;
   display: flex;
-  margin-left: 50px;
+  margin-left: 80px;
   margin-right: 90px;
 }
-
 .button-container-firma {
   display: flex;
   margin-bottom: 10px;
@@ -80,26 +83,160 @@
 }
 
 .tittle {
-  background-color: #22c4cf;
+  background: linear-gradient(
+    to right,
+    #1f2852 30%,
+    #22c4cf,
+    #d25037,
+    #f0ed46,
+    #cf151f
+  );
   color: #fff;
   padding: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   border-radius: 4px;
   font-size: 19px;
 }
 
 .label-invoice {
   display: flex;
-  margin-top: 30px;
+  color: #1f2852;
+  margin-top: 5px;
   margin-left: 80px;
+  margin-right: 20px;
+  margin-bottom: 15px;
   font-weight: bold;
+}
+
+.label-invoice-via {
+  display: flex;
+  color: #1f2852;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.labelInputContra {
+  padding: 7px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #1f2852;
+}
+.labelInputContraVia {
+  width: 35px;
+  padding: 7px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #1f2852;
+}
+.labelInputContraVia2 {
+  width: 145px;
+  padding: 7px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #1f2852;
+}
+
+.label-invoice:after {
+  content: '*';
+  color: red;
+  margin-left: 4px;
 }
 
 .label-invoice-firma {
   display: flex;
+  color:#1f2852;
   margin-top: 10px;
   margin-left: 10px;
-  font-weight: bold;
+}
+
+.div1 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 173px;
+}
+.div2 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 110px;
+}
+.div3 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 75px;
+}
+.div4 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 132px;
+}
+.div5 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 182px;
+}
+.div6 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 90px;
+}
+.div7 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 67px;
+}
+.div8 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 96px;
+}
+.div9 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 82px;
+}
+.div10 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 156px;
+}
+.div11 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 98px;
+}
+.div12 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 172px;
+}
+.div13 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 142px;
+}
+.div14 {
+   /* Mantener el primer elemento en su lugar */
+   margin-left: 165px;
+}
+.div15 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 45px;
+}
+.div16 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 1px;
+}
+.div17 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 113px;
+}
+.div18 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 88px;
+}
+.div19 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 125px;
+}
+.combined-container {
+  margin-top: 60px;
+}
+.combinedAddress {
+  height: 35px;
+  align-items: center;
 }
 
 /* Estilos para el select */
@@ -110,7 +247,18 @@
   border-radius: 4px;
   background-color: #ebecf0;
   margin-right: 8px;
-  font-size: 16px;
+  font-size: 14px;
+  color: #1f2852;
+}
+.selectVia {
+  width: 90px; /* Ancho personalizado */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ebecf0;
+  margin-right: 8px;
+  font-size: 12px;
+  color: #1f2852;
 }
 
 /* Estilos para las opciones */
@@ -127,28 +275,30 @@
 }
 
 .calendar {
-  font-size: 80px;
+  font-size: 20px;
   margin-right: 10px;
   margin-bottom: 5px;
-  margin-left: 5px;
-  color:#22c4cf
+  margin-left: 8px;
+  color: #1f2852;
 }
 
 .phone {
-  font-size: 50px;
+  font-size: 17px;
   margin-right: 10px;
   margin-bottom: 5px;
-  color:#22c4cf
+  margin-left: 8px;
+  color: #1f2852;
 }
 
 .email {
-  font-size: 60px;
+  font-size: 20px;
   margin-right: 10px;
   margin-bottom: 5px;
-  color:#22c4cf
+  margin-left: 8px;
+  color: #1f2852;
 }
 
-.address{
+.address {
   margin-right: 90px;
 }
 /* Botones */
@@ -159,7 +309,12 @@ button {
   font-size: 16px;
   cursor: pointer;
   margin-right: 10px;
-  background-color: #22c4cf;
+  background-color: #1f2852;
+  color: white;
+}
+
+button:hover {
+  background-color: #22c4cf; 
 }
 
 /* Botón "Siguiente" */
@@ -193,14 +348,49 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-/* Mensajes de éxito y error */
+/* Estilos para el contenedor del mensaje de éxito */
+.message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
 
-.error-message {
+/* Estilos para el mensaje de éxito y error */
+.success {
+  padding: 20px;
+  color: white;
+  background-color: #22c4cf;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error {
   background-color: #cf151f;
-  color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-message-invoice {
+  margin-left: 80px;
+  width: 70%;
+  color: #cf151f;
+  padding: 5px;
+  font-size: 12px;
+  margin-bottom: 1px;
   border-radius: 4px;
+}
+.parrafo {
+  margin-top: 0;
 }
 
 .success-message {
@@ -212,17 +402,3 @@ button[disabled] {
 }
 
 /* Estilos para pantallas medianas (tabletas) */
-@media (max-width: 1024px) {
-  .container {
-    max-width: 80%;
-    margin-top: 120px;
-  }
-}
-
-/* Estilos para pantallas pequeñas (teléfonos móviles) */
-@media (max-width: 768px) {
-  .container {
-    max-width: 90%;
-    margin-top: 100px;
-  }
-}

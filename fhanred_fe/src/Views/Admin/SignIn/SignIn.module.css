@@ -1,12 +1,9 @@
-body {
-  background-color: #ebecf0;
 
-}
 
 
 /* Estilos para el contenedor principal */
 .container {
-    background-color: #ebecf0;
+    
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrado horizontal */
@@ -43,6 +40,7 @@ body {
    
 
    input {
+    display:flex;
     border: 2px solid #ccc; /* Añade un borde */
     outline: none;
     font-size: 16px;
@@ -71,23 +69,26 @@ body {
     display: block;
     margin-bottom: 30px; /* Añade separación vertical entre etiquetas */
     width: 100%;
-
+    color:#1f2852
     
   }
   label span {
     margin-top: 80px; /* Agrega un margen superior para separación vertical */
+    margin-left: 10px;
+    color:#1f2852
   } 
 
   /* Estilos para el enlace dentro de la etiqueta label */
 label a {
     text-decoration: none; /* Elimina el subrayado */
-     /* Cambia el color del enlace a negro */
+    color: #1f2852
   }
   
   /* estilo específico cuando se coloca el cursor sobre el enlace */
   label a:hover {
     text-decoration: underline; /* Agrega subrayado al pasar el cursor por encima del enlace */
     color: #cf151f; /* Cambia el color del enlace al pasar el cursor por encima */
+    font-size: 18px;
   }
 
  
