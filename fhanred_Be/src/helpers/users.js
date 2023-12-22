@@ -6033,5 +6033,15 @@ let data = [
     email: "CLINTONMORERA25@GMAIL.COM",
     n_contrato: 639,
   },
+  {
+    name_razon_social: "ANULADO",
+    sexo: "MASCULINO",
+    tipo_persona: "P.NATURAL",
+    tipo_documento: "CC",
+    fecha_cumple: "2023-12-21",
+    n_documento: "123",
+    email: "ANULADO@GMAIL.COM",
+    
+  },
 ];
 module.exports = { data };

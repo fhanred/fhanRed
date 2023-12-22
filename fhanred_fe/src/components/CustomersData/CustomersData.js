@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FaArrowAltCircleDown, FaArrowAltCircleUp, FaSearch, FaUndo } from 'react-icons/fa';
+import {
+  FaArrowAltCircleDown,
+  FaArrowAltCircleUp,
+  FaSearch,
+  FaUndo,
+} from 'react-icons/fa';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import './CustomersData.css';
 
@@ -48,7 +53,13 @@ function CustomersData() {
         cliente.name_razonSocial
           .toLowerCase()
           .includes(searchText.toLowerCase()) ||
-        cliente.n_documento.includes(searchText)
+        cliente.n_documento.includes(searchText) ||
+        cliente.Contracts[0].name_plan
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        cliente.Contracts[0].estado_contrato
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
     );
     setFilteredClientes(filtered);
     setCurrentPage(1);
@@ -90,12 +101,11 @@ function CustomersData() {
   return (
     <div className="clients">
       <div className="input">
-        
         <input
           type="text"
-          placeholder="Buscar por nombre, cédula o plan"
+          placeholder="Buscar por usuario, cédula, plan, estado contrato"
           value={searchText}
-          className='special-input'
+          className="special-input"
           onChange={(e) => setSearchText(e.target.value)}
         />
         <FaSearch onClick={handleSearch} className="button-clients" />
@@ -226,7 +236,7 @@ function CustomersData() {
                   </span>
                 )}
               </th>
-              <th>Estado cliente</th>
+              <th>Estado contrato</th>
             </tr>
           </thead>
           <tbody>
@@ -235,14 +245,31 @@ function CustomersData() {
                 <td>{cliente.n_documento}</td>
                 <td>{cliente.name_razonSocial}</td>
                 <td>
-                  {/* Envuelve el valor de n_contrato en un Link */}
-                  <Link to={`/ruta/nuevo-componente/${cliente.n_contrato}`}>
-                    {cliente.n_contrato}
-                  </Link>
+                  {cliente.Contracts && cliente.Contracts.length > 0 ? (
+                    <Link
+                      to={`/ruta/nuevo-componente/${cliente.Contracts[0].id_Contract}`}
+                    >
+                      {cliente.Contracts[0].id_Contract}
+                    </Link>
+                  ) : (
+                    'Sin contrato'
+                  )}
                 </td>
-                <td></td>
-                <td></td>
-                <td>{cliente.active ? 'Activo' : 'Inactivo'}</td>
+                <td>
+                  {cliente.Contracts && cliente.Contracts.length > 0
+                    ? cliente.Contracts[0].name_plan
+                    : 'N/A'}
+                </td>
+                <td>
+                  {cliente.Contracts && cliente.Contracts.length > 0
+                    ? cliente.Contracts[0].ultimo_pago
+                    : 'N/A'}
+                </td>
+                <td>
+                  {cliente.Contracts && cliente.Contracts.length > 0
+                    ? cliente.Contracts[0].estado_contrato
+                    : 'N/A'}
+                </td>
               </tr>
             ))}
           </tbody>

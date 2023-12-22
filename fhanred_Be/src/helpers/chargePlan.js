@@ -68,6 +68,10 @@ module.exports = async () => {
       name_plan: '1000 MG - DEDICADO',
       costo: '14.000.000,00',
     },
+    {
+      name_plan: 'GRATIS',
+      costo: '0,00',
+    },
   ];
 
   if (planes.length <= 0) {

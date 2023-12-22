@@ -7,6 +7,7 @@ import {
   FaEnvelope,
   FaPaperPlane,
   FaPhone,
+  FaSave,
 } from 'react-icons/fa';
 import { RiCalendar2Line } from 'react-icons/ri';
 import Modal from 'react-modal';
@@ -355,7 +356,7 @@ function Invoice() {
               resetForm();
               setTimeout(() => {
                 setSubmissionResult(null); // Reinicia el estado después de un cierto tiempo
-                history.push('/admin/datosClientes');
+                history.push('/admin/clientes');
               }, 3000); // Tiempo en milisegundos
             } else {
               setSubmissionResult('error');
@@ -1593,7 +1594,7 @@ function Invoice() {
                         }
                       }}
                     >
-                      Guardar Firma
+                     <FaSave/> Guardar Firma
                     </button>
 
                     <button
