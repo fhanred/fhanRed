@@ -6,11 +6,10 @@ const {
   Delivery,
   //Inventory,
 } = require('../data');
-const response = require('../utils/response');
 
 module.exports = async (req, res) => {
   const n_documento = req.body.n_documento;
-  console.log(n_documento)
+
   // Buscar el usuario por n_documento para verificar su existencia
   const user = await User.findByPk(n_documento);
 
@@ -30,7 +29,6 @@ module.exports = async (req, res) => {
     'fecha_cumple',
   ]; // Campos del modelo User
   const contractFields = [
-   
     'init_date',
     'caja_nap',
     'ultimo_pago',
@@ -71,7 +69,7 @@ module.exports = async (req, res) => {
 
   //Actualizar User
   const stringFechaCumple = filteredUserData.fecha_cumple; // Obtenemos la cadena de fecha de filteredUserData
-console.log(stringFechaCumple)
+
   // Convertir la cadena de fecha a un objeto Date (estableciendo la zona horaria a UTC)
   const fechaCumple = new Date(`${stringFechaCumple}T00:00:00.000Z`);
 
@@ -101,8 +99,8 @@ console.log(stringFechaCumple)
   });
 
   // relación entre contrato y plan
-  let namePlan = filteredPlanData.name_plan; 
-  console.log(namePlan)
+  let namePlan = filteredPlanData.name_plan;
+
   const plan = await Plan.findByPk(namePlan); // Busca el plan por nombre
   if (plan) {
     await createdContract.setPlan(plan); // Establece la relación entre contrato y plan
@@ -118,7 +116,6 @@ console.log(stringFechaCumple)
 
   // Relación entre direccion y vivienda
   let idVivienda = parseInt(filteredViviendaData.id_vivienda, 10); // Convierte el valor a un número
-  console.log(idVivienda);
 
   if (!isNaN(idVivienda) && idVivienda !== null) {
     const vivienda = await Vivienda.findByPk(idVivienda);
@@ -133,7 +130,4 @@ console.log(stringFechaCumple)
 
   // relación entre contrato y direccion
   await createdContract.setDelivery(createdDelivery);
-
-  // Respondemos con éxito
-  response(res, 201, 'success');
 };

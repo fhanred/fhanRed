@@ -19,7 +19,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div >
+      <div>
         <Navbar />
         {/* {isAuthenticated && <NavbarItems links={links} />} */}
         <Switch>
@@ -33,12 +33,12 @@ function App() {
             <Register />
           </Route>
           <Route path="/admin">
-            <div style={{ flex: 1, display: 'flex'}}>
-              <div >
+            <div style={{ flex: 1, display: 'flex' }}>
+              <div>
                 <NavbarItems links={links} />
               </div>
             </div>
-            <div style={{ flex: 3}}>
+            <div style={{ flex: 3 }}>
               <Switch>
                 <Route path="/admin/home">
                   <Home />
