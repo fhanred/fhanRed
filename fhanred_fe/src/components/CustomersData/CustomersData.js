@@ -170,72 +170,9 @@ function CustomersData() {
                 )}
               </th>
 
-              <th
-                onClick={() => handleSort('contrato')}
-                className={
-                  orderBy === 'contrato' ? (orderAsc ? 'asc' : 'desc') : ''
-                }
-              >
-                # Contrato
-                {orderBy === 'contrato' && (
-                  <span>
-                    {orderAsc ? (
-                      <span className="asc">
-                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
-                      </span>
-                    ) : (
-                      <span className="desc">
-                        <FaArrowAltCircleDown className="desc-icon" /> -
-                        Descendente{' '}
-                      </span>
-                    )}
-                  </span>
-                )}
-              </th>
-              <th
-                onClick={() => handleSort('plan')}
-                className={
-                  orderBy === 'plan' ? (orderAsc ? 'asc' : 'desc') : ''
-                }
-              >
-                Plan Contratado
-                {orderBy === 'plan' && (
-                  <span>
-                    {orderAsc ? (
-                      <span className="asc">
-                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
-                      </span>
-                    ) : (
-                      <span className="desc">
-                        <FaArrowAltCircleDown className="desc-icon" /> -
-                        Descendente{' '}
-                      </span>
-                    )}
-                  </span>
-                )}
-              </th>
-              <th
-                onClick={() => handleSort('ultimoPago')}
-                className={
-                  orderBy === 'ultimoPago' ? (orderAsc ? 'asc' : 'desc') : ''
-                }
-              >
-                Último Pago
-                {orderBy === 'ultimoPago' && (
-                  <span>
-                    {orderAsc ? (
-                      <span className="asc">
-                        <FaArrowAltCircleUp className="asc-icon" /> - Ascendente{' '}
-                      </span>
-                    ) : (
-                      <span className="desc">
-                        <FaArrowAltCircleDown className="desc-icon" /> -
-                        Descendente{' '}
-                      </span>
-                    )}
-                  </span>
-                )}
-              </th>
+              <th># Contrato</th>
+              <th>Plan Contratado</th>
+              <th>Último Pago</th>
               <th>Estado contrato</th>
             </tr>
           </thead>
@@ -246,29 +183,79 @@ function CustomersData() {
                 <td>{cliente.name_razonSocial}</td>
                 <td>
                   {cliente.Contracts && cliente.Contracts.length > 0 ? (
-                    <Link
-                      to={`/ruta/nuevo-componente/${cliente.Contracts[0].id_Contract}`}
-                    >
-                      {cliente.Contracts[0].id_Contract}
-                    </Link>
+                    cliente.Contracts.length === 1 ? (
+                      <Link
+                        to={`/ruta/nuevo-componente/${cliente.Contracts[0].id_Contract}`}
+                      >
+                        {cliente.Contracts[0].id_Contract}
+                      </Link>
+                    ) : (
+                      <ul>
+                        {cliente.Contracts.map((contract) => (
+                          <li key={contract.id_Contract}>
+                            <Link
+                              to={`/ruta/nuevo-componente/${contract.id_Contract}`}
+                            >
+                              {contract.id_Contract}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )
                   ) : (
                     'Sin contrato'
                   )}
                 </td>
+
                 <td>
-                  {cliente.Contracts && cliente.Contracts.length > 0
-                    ? cliente.Contracts[0].name_plan
-                    : 'N/A'}
+                  {cliente.Contracts && cliente.Contracts.length > 0 ? (
+                    cliente.Contracts.length === 1 ? (
+                      cliente.Contracts[0].name_plan
+                    ) : (
+                      <ul>
+                        {cliente.Contracts.map((contract) => (
+                          <li key={contract.name_plan}>{contract.name_plan}</li>
+                        ))}
+                      </ul>
+                    )
+                  ) : (
+                    'N/A'
+                  )}
                 </td>
                 <td>
-                  {cliente.Contracts && cliente.Contracts.length > 0
-                    ? cliente.Contracts[0].ultimo_pago
-                    : 'N/A'}
+                  {cliente.Contracts && cliente.Contracts.length > 0 ? (
+                    cliente.Contracts.length === 1 ? (
+                      cliente.Contracts[0].ultimo_pago
+                    ) : (
+                      <ul>
+                        {cliente.Contracts.map((contract) => (
+                          <li key={contract.ultimo_pago}>
+                            {contract.ultimo_pago}
+                          </li>
+                        ))}
+                      </ul>
+                    )
+                  ) : (
+                    'N/A'
+                  )}
                 </td>
+
                 <td>
-                  {cliente.Contracts && cliente.Contracts.length > 0
-                    ? cliente.Contracts[0].estado_contrato
-                    : 'N/A'}
+                  {cliente.Contracts && cliente.Contracts.length > 0 ? (
+                    cliente.Contracts.length === 1 ? (
+                      cliente.Contracts[0].estado_contrato
+                    ) : (
+                      <ul>
+                        {cliente.Contracts.map((contract) => (
+                          <li key={contract.id_Contract}>
+                            {contract.estado_contrato}
+                          </li>
+                        ))}
+                      </ul>
+                    )
+                  ) : (
+                    'N/A'
+                  )}
                 </td>
               </tr>
             ))}
