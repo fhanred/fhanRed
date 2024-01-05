@@ -813,6 +813,9 @@ function Invoice() {
                         <option value={'20 MG - DEDICADO'} className="option">
                           PLAN DEDICADO 20MG
                         </option>
+                        <option value={'30 MG - DEDICADO'} className="option">
+                          PLAN DEDICADO 30MG
+                        </option>
                         <option value={'50 MG - DEDICADO'} className="option">
                           PLAN DEDICADO 50MG
                         </option>
@@ -828,8 +831,14 @@ function Invoice() {
                         <option value={'500 MG - DEDICADO'} className="option">
                           PLAN DEDICADO 500MG
                         </option>
+                        <option value={'600 MG - DEDICADO'} className="option">
+                          PLAN DEDICADO 600MG
+                        </option>
                         <option value={'1000 MG - DEDICADO'} className="option">
                           PLAN DEDICADO 1000MG
+                        </option>
+                        <option value={'CORTESIA'} className="option">
+                          CORTESIA
                         </option>
                       </Field>
                     </div>
