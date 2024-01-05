@@ -42,6 +42,7 @@ module.exports = async (req, res) => {
     'reporte_c_riesgo',
     'estado_cp_correo',
     'estado_contrato',
+    "idStratus",
   ]; // Campos del modelo Contract
   const planFields = ['name_plan']; // campo modelo Plan
   const viviendaFields = ['id_vivienda']; // campo modelo Vivienda

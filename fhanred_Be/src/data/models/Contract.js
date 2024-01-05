@@ -49,6 +49,9 @@ module.exports = (sequelize) => {
       estado_contrato: {
         type: DataTypes.ENUM('ACTIVO', 'RETIRADO', 'CORTADO','ANULADO', 'POR INSTALAR' ),
       },
+      idStratus: {
+        type: DataTypes.ENUM("1", "2", "3", "4", "5","6")
+      },
     },
     {
       timestamps: false,
