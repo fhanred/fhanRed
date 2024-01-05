@@ -18,6 +18,14 @@ module.exports = (sequelize) => {
       caja_nap: {
         type: DataTypes.STRING,
       },
+      descuento: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0.0,
+      },
+      retefuente : {
+        type: DataTypes.FLOAT,
+        defaultValue: 0.0,
+      },
       deuda: {
         type: DataTypes.STRING,
       },

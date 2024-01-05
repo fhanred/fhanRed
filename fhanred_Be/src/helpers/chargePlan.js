@@ -45,6 +45,10 @@ module.exports = async () => {
       costo: '520.000,00',
     },
     {
+      name_plan: '30 MG - DEDICADO',
+      costo: '780.000,00',
+    },
+    {
       name_plan: '50 MG - DEDICADO',
       costo: '1.200.000,00',
     },
@@ -65,11 +69,15 @@ module.exports = async () => {
       costo: '7.250.000,00',
     },
     {
+      name_plan: '600 MG - DEDICADO',
+      costo: '8.640.000,00',
+    },
+    {
       name_plan: '1000 MG - DEDICADO',
       costo: '14.000.000,00',
     },
     {
-      name_plan: 'GRATIS',
+      name_plan: 'CORTESIA',
       costo: '0,00',
     },
   ];

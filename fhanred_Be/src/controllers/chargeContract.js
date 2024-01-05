@@ -131,4 +131,32 @@ module.exports = async (req, res) => {
 
   // relación entre contrato y direccion
   await createdContract.setDelivery(createdDelivery);
+
+  // Modificar el contrato con el campo id_Contract y establecer el descuento
+  const contractIdToUpdate = 133; // ID del contrato que se desea actualizar
+  const contractIdToUpdateRte = 588;
+
+  const contratoConDescuento = await Contract.findOne({
+    where: {
+      n_contrato: contractIdToUpdate,
+    },
+  });
+
+  if (contratoConDescuento) {
+    // Modificar el campo 'descuento' para este contrato específico
+    contratoConDescuento.descuento = 4.5455; // Modifica aquí el valor del descuento necesario
+    contratoConDescuento.retefuente = 4;
+    await contratoConDescuento.save(); // Guarda los cambios en la base de datos
+  } 
+
+  const contratoConRte = await Contract.findOne({
+    where: {
+      n_contrato: contractIdToUpdateRte,
+    },
+  });
+
+  if(contratoConRte){
+    contratoConRte.retefuente = 4;
+    await contratoConRte.save();
+  }
 };
