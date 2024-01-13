@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const { User, Contract, Plan } = require('../data');
 
 module.exports = async () => {
@@ -7,6 +8,9 @@ module.exports = async () => {
         {
           model: Contract,
           include: [Plan, Delivery], // Incluir la relación con Plan y Delivery en Contract
+          where: {
+            estado_contrato: "ACTIVO", // Solo muestra los usuarios con un estado de contrato ACTIVO
+          },
         },
       ],
     });
