@@ -27,7 +27,7 @@ module.exports = async () => {
         fecha_cumple: e.fecha_cumple,
         n_documento: e.n_documento,
         email:e.email,
-        id_role: 3
+        id_role: 1
       }
     }) : [];
     await User.bulkCreate(users);

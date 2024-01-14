@@ -94,7 +94,9 @@ function Invoice() {
           email: '', //ok
           Order_date: '', //0k
           fecha_cumple: '', // ok
-          name_razonSocial: '', //ok
+          razonSocial: '', //ok
+          apellidos: '', // ok
+          nombres: '', //ok
           tel1: '', //ok
           tel2: '', //ok
           tel3: '', //ok
@@ -118,13 +120,23 @@ function Invoice() {
         }}
         validate={(values) => {
           let errors = {};
-          if (values.tipo_persona === 'P.NATURAL' && !values.name_razonSocial) {
-            errors.name_razonSocial =
-              'Este campo es obligatorio. Por favor ingrese un nombre y apellido';
+          if (values.tipo_persona === 'P.NATURAL' && !values.apellidos) {
+            errors.apellidos =
+              'Este campo es obligatorio. Por favor ingrese un apellido';
           } else {
             const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
-            if (!nameRegex.test(values.name_razonSocial)) {
-              errors.name_razonSocial =
+            if (!nameRegex.test(values.apellidos)) {
+              errors.apellidos =
+                'El apellido solo puede contener letras y espacios';
+            }
+          }
+          if (values.tipo_persona === 'P.NATURAL' && !values.nombres) {
+            errors.nombres =
+              'Este campo es obligatorio. Por favor ingrese un nombre';
+          } else {
+            const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+            if (!nameRegex.test(values.nombres)) {
+              errors.nombres =
                 'El nombre solo puede contener letras y espacios';
             }
           }
@@ -199,11 +211,8 @@ function Invoice() {
             errors.fecha_cumple =
               'Este campo es obligatorio. Por favor, ingrese una fecha.';
           }
-          if (
-            values.tipo_persona === 'P.JURIDICA' &&
-            !values.name_razonSocial
-          ) {
-            errors.name_razonSocial =
+          if (values.tipo_persona === 'P.JURIDICA' && !values.razonSocial) {
+            errors.razonSocial =
               'Este campo es obligatorio. Por favor, ingrese nombre razon social.';
           }
           if (!values.tel1) {
@@ -351,6 +360,7 @@ function Invoice() {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
             const response = await dispatch(createInvoice(values));
+            console.log(values);
             if (response.success) {
               setSubmissionResult('success');
               resetForm();
@@ -445,18 +455,15 @@ function Invoice() {
                   {values.tipo_persona === 'P.NATURAL' && (
                     <div className="form-group">
                       <div>
-                        <label
-                          htmlFor="name_razonSocial"
-                          className="label-invoice"
-                        >
-                          Nombres y Apellidos:
+                        <label htmlFor="apellidos" className="label-invoice">
+                          Apellidos:
                         </label>
                       </div>
-                      <div className="div3">
+                      <div className="div21">
                         <Field
                           type="text"
-                          id="name_razonSocial"
-                          name="name_razonSocial"
+                          id="apellidos"
+                          name="apellidos"
                           placeholder=""
                           className="labelInputContra"
                           disabled={values.tipo_persona === 'P.JURIDICA'}
@@ -466,10 +473,40 @@ function Invoice() {
                   )}
                   <p className="parrafo">
                     <ErrorMessage
-                      name="name_razonSocial"
+                      name="apellidos"
                       component={() => (
                         <div className="error-message-invoice">
-                          {errors.name_razonSocial}
+                          {errors.apellidos}
+                        </div>
+                      )}
+                    />
+                  </p>
+
+                  {values.tipo_persona === 'P.NATURAL' && (
+                    <div className="form-group">
+                      <div>
+                        <label htmlFor="nombres" className="label-invoice">
+                          Nombres:
+                        </label>
+                      </div>
+                      <div className="div20">
+                        <Field
+                          type="text"
+                          id="nombres"
+                          name="nombres"
+                          placeholder=""
+                          className="labelInputContra"
+                          disabled={values.tipo_persona === 'P.JURIDICA'}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <p className="parrafo">
+                    <ErrorMessage
+                      name="nombres"
+                      component={() => (
+                        <div className="error-message-invoice">
+                          {errors.nombres}
                         </div>
                       )}
                     />
@@ -478,18 +515,15 @@ function Invoice() {
                   {values.tipo_persona === 'P.JURIDICA' && (
                     <div className="form-group">
                       <div>
-                        <label
-                          htmlFor="name_razonSocial"
-                          className="label-invoice"
-                        >
+                        <label htmlFor="razonSocial" className="label-invoice">
                           Razón social
                         </label>
                       </div>
                       <div className="div4">
                         <Field
                           type="text"
-                          id="name_razonSocial"
-                          name="name_razonSocial"
+                          id="razonSocial"
+                          name="razonSocial"
                           placeholder=""
                           className="labelInputContra"
                           disabled={values.tipo_persona === 'P.NATURAL'}
@@ -499,10 +533,10 @@ function Invoice() {
                   )}
                   <p className="parrafo">
                     <ErrorMessage
-                      name="name_razonSocial"
+                      name="razonSocial"
                       component={() => (
                         <div className="error-message-invoice">
-                          {errors.name_razonSocial}
+                          {errors.razonSocial}
                         </div>
                       )}
                     />
@@ -1534,7 +1568,9 @@ function Invoice() {
                     <ErrorMessage
                       name="salesman"
                       component={() => (
-                        <div className="error-message-invoice">{errors.salesman}</div>
+                        <div className="error-message-invoice">
+                          {errors.salesman}
+                        </div>
                       )}
                     />
                   </p>
@@ -1603,7 +1639,7 @@ function Invoice() {
                         }
                       }}
                     >
-                     <FaSave/> Guardar Firma
+                      <FaSave /> Guardar Firma
                     </button>
 
                     <button

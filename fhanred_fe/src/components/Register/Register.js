@@ -40,7 +40,9 @@ function Register() {
       <Formik
         initialValues={{
           tipo_persona: 'none',
-          name_razonSocial: '',
+          razonSocial: '',
+          apellidos: '',
+          nombres: '',
           tipo_documento: '',
           n_documento: '',
           fecha_cumple: '',
@@ -50,14 +52,26 @@ function Register() {
         }}
         validate={(values) => {
           let errors = {};
-          // Validación de nombre
-          if (values.tipo_persona === 'P.NATURAL' && !values.name_razonSocial) {
-            errors.name_razonSocial =
-              'Este campo es obligatorio. Por favor ingrese sus nombres y apellidos';
+          // Validación de apellidos
+          if (values.tipo_persona === 'P.NATURAL' && !values.apellidos) {
+            errors.apellidos =
+              'Este campo es obligatorio. Por favor ingrese sus apellidos';
           } else {
             const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
-            if (!nameRegex.test(values.name_razonSocial)) {
-              errors.name_razonSocial =
+            if (!nameRegex.test(values.apellidos)) {
+              errors.apellidos =
+                'Este campo solo puede contener letras y espacios';
+            }
+          }
+
+          // Validación de nombres
+          if (values.tipo_persona === 'P.NATURAL' && !values.nombres) {
+            errors.nombres =
+              'Este campo es obligatorio. Por favor ingrese sus nombres';
+          } else {
+            const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+            if (!nameRegex.test(values.nombres)) {
+              errors.nombres =
                 'Este campo solo puede contener letras y espacios';
             }
           }
@@ -73,6 +87,7 @@ function Register() {
           ) {
             errors.email = 'El correo no es valido';
           }
+
           // validacion de password
           if (!values.password) {
             errors.password =
@@ -85,6 +100,8 @@ function Register() {
             errors.password =
               'La contraseña debe tener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un carácter especial.';
           }
+
+          // validacion fecha cumpleaños
           if (values.fecha_cumple) {
             const datePattern = /^(\d{4})-(\d{2})-(\d{2})$/;
             if (!datePattern.test(values.fecha_cumple)) {
@@ -108,17 +125,19 @@ function Register() {
               'Este campo es obligatorio. Por favor, ingrese una fecha.';
           }
 
-          if (
-            values.tipo_persona === 'P.JURIDICA' &&
-            !values.name_razonSocial
-          ) {
-            errors.name_razonSocial =
+          //validacion razonSocial
+          if (values.tipo_persona === 'P.JURIDICA' && !values.razonSocial) {
+            errors.razonSocial =
               'Este campo es obligatorio. por favor ingrese el nombre de la razón social';
           }
+
+          // validacion tipo de documento
           if (values.tipo_documento === 'none') {
             errors.tipo_documento =
               'Este campo es obligatorio. Por favor seleccione una opción';
           }
+
+          // validacion numero de documento
           if (!values.n_documento || values.n_documento.trim() === '') {
             errors.n_documento =
               'Este campo es obligatorio. Por favor ingrese el número de identificación';
@@ -126,10 +145,14 @@ function Register() {
             errors.n_documento =
               'El numero de documento no debe contener caracteres especiales ni espacios';
           }
+
+          // validacion tipo de persona
           if (values.tipo_persona === 'none') {
             errors.tipo_persona =
               'Este campo es obligatorio. Por favor seleccione una opción';
           }
+
+          // validacion genero
           if (values.sexo === 'none') {
             errors.sexo =
               'Este campo es obligatorio. Por favor seleccione una opción';
@@ -201,16 +224,16 @@ function Register() {
                 </p>
                 {values.tipo_persona === 'P.NATURAL' && (
                   <div className="reg-div">
-                    <div className="item2">
-                      <label htmlFor="name" className="label-reg">
-                        Nombres y Apellidos
+                    <div className="item9">
+                      <label htmlFor="apellidos" className="label-reg">
+                        Apellidos
                       </label>
                     </div>
                     <div>
                       <Field
                         type="text"
-                        id="name"
-                        name="name_razonSocial"
+                        id="apellidos"
+                        name="apellidos"
                         placeholder=""
                         className="labelInput"
                       />
@@ -219,9 +242,38 @@ function Register() {
                 )}
                 <p>
                   <ErrorMessage
-                    name="name"
+                    name="apellidos"
                     component={() => (
-                      <div className="error-message-reg">{errors.name}</div>
+                      <div className="error-message-reg">
+                        {errors.apellidos}
+                      </div>
+                    )}
+                  />
+                </p>
+
+                {values.tipo_persona === 'P.NATURAL' && (
+                  <div className="reg-div">
+                    <div className="item9">
+                      <label htmlFor="nombres" className="label-reg">
+                        Nombres
+                      </label>
+                    </div>
+                    <div>
+                      <Field
+                        type="text"
+                        id="nombres"
+                        name="nombres"
+                        placeholder=""
+                        className="labelInput"
+                      />
+                    </div>
+                  </div>
+                )}
+                <p>
+                  <ErrorMessage
+                    name="nombres"
+                    component={() => (
+                      <div className="error-message-reg">{errors.nombres}</div>
                     )}
                   />
                 </p>
@@ -229,15 +281,15 @@ function Register() {
                 {values.tipo_persona === 'P.JURIDICA' && (
                   <div className="reg-div">
                     <div className="item3">
-                      <label htmlFor="name_razonSocial" className="label-reg">
+                      <label htmlFor="razonSocial" className="label-reg">
                         Razón social
                       </label>
                     </div>
                     <div>
                       <Field
                         type="text"
-                        id="name_razonSocial"
-                        name="name_razonSocial"
+                        id="razonSocial"
+                        name="razonSocial"
                         placeholder=""
                         className="labelInput"
                       />
@@ -246,10 +298,10 @@ function Register() {
                 )}
                 <p>
                   <ErrorMessage
-                    name="name_razonSocial"
+                    name="razonSocial"
                     component={() => (
                       <div className="error-message-reg">
-                        {errors.name_razonSocial}
+                        {errors.razonSocial}
                       </div>
                     )}
                   />
@@ -458,7 +510,7 @@ function Register() {
                   />
                 </p>
 
-                <div className='cuenta'>
+                <div className="cuenta">
                   <button type="submit" disabled={isSubmitting}>
                     <FaUser /> Crear cuenta
                   </button>
