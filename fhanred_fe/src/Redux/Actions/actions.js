@@ -35,7 +35,7 @@ export const createInvoice = (input) => async (dispatch) => {
 
 export const createUser = (input) => async (dispatch) => {
   try {
-    const { data } = await axios.post('http://localhost:3001/user', input);
+    const { data } = await axios.post('http://localhost:3001/auth/signup', input);
     dispatch({ type: CREATE_USER, payload: data });
     return { success: true }; // Indica que la solicitud fue exitosa
   } catch (error) {

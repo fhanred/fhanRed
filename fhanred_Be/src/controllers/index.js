@@ -4,7 +4,6 @@ module.exports = {
   listUsers: catchedAsync(require("./listUsers")),
   getUser: catchedAsync(require("./getUser")),
   createContract: catchedAsync(require("./createContract")),
-  signUser: catchedAsync(require("./signUser")),
   auth: catchedAsync(require("./auth")),
   chargeContract: catchedAsync(require("./chargeContract")),
   getContract: catchedAsync(require("./getContract"))
