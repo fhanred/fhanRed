@@ -32,8 +32,8 @@ module.exports = async (res) => {
                         { password: hashedPassword },
                         { where: { email: user.email } }
                     );
-                    /* await sendEmail({
-                        email: "user.email",
+                    await sendEmail({
+                        email: user.email,
                         subject: 'Documentación solicitada',
                         message: 
                             `<img src="data:image/jpeg;base64,${base64Image}" alt='Logo de la compañía' style='width: 200px; height: auto'></img>
@@ -41,7 +41,7 @@ module.exports = async (res) => {
                             <p>usuario: <span style='color: green; font-size: 20px;'>${user.email}</span></p>
                             <p>contraseña: <span style='color: green; font-size: 20px;'>${newPassword}</span></p>
                             <p style='color: blue;'>Una vez que haya ingresado, suba la imagen de la documentación solicitada. Por su seguridad, solicitamos que modifique la contraseña.</p>`,
-                    }); */
+                    });
                 }
             }
             response(res, 200, { message: 'Correo electrónico enviado exitosamente' });
