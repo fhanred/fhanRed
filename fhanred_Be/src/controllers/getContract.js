@@ -19,6 +19,7 @@ const contract = await Contract.findByPk(id_Contract, {
           }
         ]
       },
+      // Incluir modelo deuda
       {
         model: Plan,
         attributes: ['name_plan', 'costo']
