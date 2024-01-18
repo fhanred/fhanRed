@@ -2,6 +2,9 @@ const app = require('./src/app.js');
 const { conn } = require('./src/data');
 const { PORT } = require('./src/config/envs.js');
 const helpers = require('./src/helpers');
+const sendNotifications = require('./src/controllers/sendNotifications.js')
+
+
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(async () => {
@@ -14,4 +17,5 @@ conn.sync({ force: true }).then(async () => {
   await helpers.chargeUsers();
   await helpers.chargeVivienda();
   await helpers.chargeContratos();
+  await sendNotifications();
 });

@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
       monto: {
         type: DataTypes.STRING,
       },
+      // Agregar campo de inicio de deuda (fecha)
       periodo_en_mora: {
         type: DataTypes.STRING,
       },
