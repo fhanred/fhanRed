@@ -53,16 +53,19 @@ Todas las respuestas son en formato JSON y siguen el siguiente formato:
  {
      
     }
+
 ```
+
 #### Solicitar nueva contraseña 
 - Método: ****POST****
 - Endpoint: ****'user/forgotpassword'**** 
 - Cuerpo de la Solicitud (JSON):
-```
 
- {
-     "email": "user email"
-    }
+```bash 
+{
+ "email":"email user"
+}
+ ```
 
 ### Contracts:
 
