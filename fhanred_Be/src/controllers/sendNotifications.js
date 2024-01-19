@@ -1,13 +1,10 @@
 const { User, Contract} = require('../data');
-const response = require('../utils/response');
 const sendEmail = require('../helpers/sendEmail')
 const bcrypt = require('bcrypt');
 const generatePassword = require('../helpers/generatePassword');
-const fs = require('fs');
-const imageBuffer = fs.readFileSync('D:/IT/fhanRed/fhanred_fe/src/assets/Logo/Logo.jpg');
-const base64Image = imageBuffer.toString('base64');
 
-module.exports = async (res) => {
+
+module.exports = async () => {
     try {
         const users = await User.findAll({
             include: [{
@@ -60,9 +57,6 @@ module.exports = async (res) => {
                     });
                 }
             }
-            response(res, 200, { message: 'Correo electrónico enviado exitosamente' });
-        } else {
-            response(res, 404, { error: 'No se encontraron usuarios con las condiciones especificadas' });
         }
     } catch (error) {console.error('Error al ejecutar sendNotifications:', error);
 }};
