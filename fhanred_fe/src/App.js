@@ -11,7 +11,9 @@ import ForgotPassword from './components/Forgot/ForgotPassword';
 import Register from './components/Register/Register';
 import Treasury from './Views/Admin/Treasury/Treasury';
 import Billing from './Views/Admin/Billing/Billing';
+import Perfil from './Views/Admin/Perfil/Perfil';
 import { links } from './data';
+
 
 function App() {
   const userInfo = useSelector((state) => state.userInfo);
@@ -42,6 +44,9 @@ function App() {
               <Switch>
                 <Route path="/admin/home">
                   <Home />
+                </Route>
+                <Route path="/admin/perfil">
+                  <Perfil />
                 </Route>
                 <Route path="/admin/clientes">
                   <Customers />
