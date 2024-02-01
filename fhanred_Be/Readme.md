@@ -67,6 +67,34 @@ Todas las respuestas son en formato JSON y siguen el siguiente formato:
 }
  ```
 
+### Documentation:
+#### Cargar Documentación (DNI y firma) 
+- Método: ****POST****
+- Endpoint: ****'contract/documentation'**** 
+- Cuerpo de la Solicitud (urlencoded):
+
+```bash 
+{
+ "n_documento":"123",
+ "id_Contract":681,
+ "dniFront": cadena64bits,
+ "dniBack": cadena64bits,
+ "sign": cadena64bits
+}
+ ```
+
+#### Solicitar documentación 
+- Método: ****GET****
+- Endpoint: ****'contract/documentation'**** 
+- Cuerpo de la Solicitud (JSON):
+
+```bash 
+{
+    "n_documento":"123",
+    "id_Contract":681
+}
+ ```
+
 ### Contracts:
 
 #### listar todas las peliculas 

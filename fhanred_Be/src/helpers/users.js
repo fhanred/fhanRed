@@ -6394,17 +6394,6 @@ let data = [
     fecha_cumple: '2023-12-21',
     n_documento: '123',
     email: 'ANULADO@GMAIL.COM',
-    n_contrato: 682,
-  },
-  {
-    name_razon_social: 'JOFRE GUILLERMO', // MI DATO PRUEBA
-    sexo: 'MASCULINO',
-    tipo_persona: 'P.NATURAL',
-    tipo_documento: 'CC',
-    fecha_cumple: '1978-07-30',
-    n_documento: '366999',
-    email: 'JOFREGF@HOTMAIL.COM',
-    n_contrato: 681,
   },
 ];
 module.exports = { data };
