@@ -2,9 +2,6 @@ const { User } = require("../data");
 const generatePassword = require("../helpers/generatePassword");
 const bcrypt = require('bcrypt');
 const sendEmail = require('../helpers/sendEmail')
-const fs = require('fs');
-const imageBuffer = fs.readFileSync('D:/IT/fhanRed/fhanred_fe/src/assets/Logo/Logo.jpg');
-const base64Image = imageBuffer.toString('base64');
 const response = require("../utils/response");
 
 module.exports = async (req, res) => {
