@@ -108,3 +108,6 @@ dist
 
 # package-lock.json
 package-lock.json
+*.xlsx
+fhanred_Be/TODOS_USUARIOS_POR_TODOS_LOS_ESTADOS_21_septiembre_2023.csv
+fhanred_Be/data.ipynb

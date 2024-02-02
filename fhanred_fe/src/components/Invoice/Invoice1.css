@@ -1,0 +1,412 @@
+/* Estilos generales */
+.container {
+  display: flex;
+  max-width: 850px;
+  width: 100%;
+  margin-top: 10%;
+  margin-left: 25%;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.2px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.formDiv {
+  width: 80%;
+}
+
+/* Formulario */
+.divInvoice {
+ background-color: #f0f1f5;
+  margin: 10px auto;
+  padding: 10px;
+  border: rgb(233, 228, 228) 8px outset;
+  border-radius: 8px;
+  color: #444;
+}
+/* Grupos de formulario */
+.form-group {
+  display: flex;
+}
+
+.form-group-img {
+  display: flex;
+}
+
+.form-group-cont {
+  display: flex;
+  align-items: center;
+  margin-right: 90px;
+  margin-bottom: 10px;
+}
+
+.form-group-button {
+  display: flex;
+
+  margin-right: 90px;
+}
+
+.form-group-address-container {
+  display: flex;
+  grid-template-columns: repeat(3, 1fr); /* Divide en tres columnas */
+  gap: 10px; /* Espacio entre los elementos */
+}
+
+.form-group-address {
+  padding: 10px;
+  box-sizing: border-box; /* Evita que el relleno afecte el ancho */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea los elementos a la izquierda */
+}
+
+.form-group-address label {
+  margin-bottom: 5px;
+}
+.form-group-firma {
+  margin-bottom: 20px;
+  border-style: double;
+  border-width: 3px;
+  border-color: #1f2852;
+  align-items: center;
+  display: flex;
+  margin-left: 80px;
+  margin-right: 90px;
+}
+.button-container-firma {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.tittle {
+  background: linear-gradient(
+    to right,
+    #1f2852 30%,
+    #22c4cf,
+    #d25037,
+    #f0ed46,
+    #cf151f
+  );
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 30px;
+  border-radius: 4px;
+  font-size: 19px;
+}
+
+.label-invoice {
+  display: flex;
+  color: #1f2852;
+  margin-top: 5px;
+  margin-left: 80px;
+  margin-right: 20px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.label-invoice-via {
+  display: flex;
+  color: #1f2852;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.labelInputContra {
+  padding: 7px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #1f2852;
+}
+.labelInputContraVia {
+  width: 35px;
+  padding: 7px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #1f2852;
+}
+.labelInputContraVia2 {
+  width: 145px;
+  padding: 7px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #1f2852;
+}
+
+.label-invoice:after {
+  content: '*';
+  color: red;
+  margin-left: 4px;
+}
+
+.label-invoice-firma {
+  display: flex;
+  color:#1f2852;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.div1 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 173px;
+}
+.div2 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 110px;
+}
+.div3 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 75px;
+}
+.div4 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 132px;
+}
+.div5 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 182px;
+}
+.div6 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 90px;
+}
+.div7 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 67px;
+}
+.div8 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 96px;
+}
+.div9 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 82px;
+}
+.div10 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 156px;
+}
+.div11 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 98px;
+}
+.div12 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 172px;
+}
+.div13 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 142px;
+}
+.div14 {
+   /* Mantener el primer elemento en su lugar */
+   margin-left: 165px;
+}
+.div15 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 45px;
+}
+.div16 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 1px;
+}
+.div17 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 113px;
+}
+.div18 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 88px;
+}
+.div19 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 125px;
+}
+.div20 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 150px;
+}
+.div21 {
+  /* Mantener el primer elemento en su lugar */
+  margin-left: 148px;
+}
+.combined-container {
+  margin-top: 60px;
+}
+.combinedAddress {
+  height: 35px;
+  align-items: center;
+}
+
+/* Estilos para el select */
+.select {
+  width: 200px; /* Ancho personalizado */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ebecf0;
+  margin-right: 8px;
+  font-size: 14px;
+  color: #1f2852;
+}
+.selectVia {
+  width: 90px; /* Ancho personalizado */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ebecf0;
+  margin-right: 8px;
+  font-size: 12px;
+  color: #1f2852;
+}
+
+/* Estilos para las opciones */
+.option {
+  background-color: #fff; /* Color de fondo */
+  color: #333; /* Color del texto */
+  padding: 8px;
+}
+
+/* Estilo para la opción seleccionada */
+.select option:checked {
+  background-color: #e0e0e0; /* Color de fondo cuando está seleccionado */
+  font-weight: bold; /* Cambiar el peso de la fuente */
+}
+
+.calendar {
+  font-size: 20px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-left: 8px;
+  color: #1f2852;
+}
+
+.phone {
+  font-size: 17px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-left: 8px;
+  color: #1f2852;
+}
+
+.email {
+  font-size: 20px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-left: 8px;
+  color: #1f2852;
+}
+
+.address {
+  margin-right: 90px;
+}
+/* Botones */
+button {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+  background-color: #1f2852;
+  color: white;
+}
+
+button:hover {
+  background-color: #22c4cf; 
+}
+
+/* Botón "Siguiente" */
+button.next-button {
+  background-color: #22c4cf;
+  color: #fff;
+}
+
+.arrow {
+  line-height: 40px; /* Ajusta este valor según sea necesario */
+  vertical-align: middle;
+}
+
+/* Botón "Anterior" */
+button.previous-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* Botón "Enviar" */
+button.submit-button {
+  background-color: #22c4cf;
+  color: #fff;
+  margin-right: 0;
+}
+
+/* Botón deshabilitado */
+button[disabled] {
+  background-color: #ccc;
+  color: #333;
+  cursor: not-allowed;
+}
+
+/* Estilos para el contenedor del mensaje de éxito */
+.message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+/* Estilos para el mensaje de éxito y error */
+.success {
+  padding: 20px;
+  color: white;
+  background-color: #22c4cf;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error {
+  background-color: #cf151f;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-message-invoice {
+  margin-left: 80px;
+  width: 70%;
+  color: #cf151f;
+  padding: 5px;
+  font-size: 12px;
+  margin-bottom: 1px;
+  border-radius: 4px;
+}
+.parrafo {
+  margin-top: 0;
+}
+
+.success-message {
+  background-color: #22c4cf;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+/* Estilos para pantallas medianas (tabletas) */

@@ -1,7 +1,9 @@
 
+
+
 /* Estilos para el contenedor principal */
 .container {
-    background-color: #ebecf0;
+    
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrado horizontal */
@@ -35,7 +37,10 @@
   }
   
   /* Estilos para los campos de entrada */
-  button, input {
+   
+
+   input {
+    display:flex;
     border: 2px solid #ccc; /* Añade un borde */
     outline: none;
     font-size: 16px;
@@ -44,9 +49,6 @@
     background-color: #EBECF0;
     text-shadow: 1px 1px 0 #FFF;
     margin-bottom: 10px; /*  separación vertical entre campos */
-  }
-
-   input {
     margin-right:16px/2;
     box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
     width: 100%;
@@ -60,58 +62,33 @@
     }
   }
 
-  button {
-    color:#61677C;
-    font-weight: bold;
-    box-shadow: -5px -5px 20px #FFF,  5px 5px 20px #BABECC;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    font-weight: 600;
-    
-    &:hover {
-      box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #e7e8ec;
-    }
-    
-    &:active {
-      box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;;
-    }
-
-    .icon {
-        font-size: 18px;
-        margin-right: 8px;
-      }
-
-     
-    
-      &.red {
-        display: block;
-        width: 100%;
-        color:#cf151f;
-      }
-  }
+  
   
   /* Estilos para las etiquetas (labels) */
   label {
     display: block;
     margin-bottom: 30px; /* Añade separación vertical entre etiquetas */
     width: 100%;
-
+    color:#1f2852
     
   }
   label span {
     margin-top: 80px; /* Agrega un margen superior para separación vertical */
+    margin-left: 10px;
+    color:#1f2852
   } 
 
   /* Estilos para el enlace dentro de la etiqueta label */
 label a {
     text-decoration: none; /* Elimina el subrayado */
-    color: #1f2852; /* Cambia el color del enlace a negro */
+    color: #1f2852
   }
   
   /* estilo específico cuando se coloca el cursor sobre el enlace */
   label a:hover {
     text-decoration: underline; /* Agrega subrayado al pasar el cursor por encima del enlace */
     color: #cf151f; /* Cambia el color del enlace al pasar el cursor por encima */
+    font-size: 18px;
   }
 
  

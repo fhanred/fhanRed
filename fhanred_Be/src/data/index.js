@@ -2,21 +2,21 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = require("../config/envs");
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_DEPLOY } = require("../config/envs");
 //-------------------------------- CONFIGURACION PARA TRABAJAR LOCALMENTE-----------------------------------
-const sequelize = new Sequelize(
-  `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  }
-);
+// const sequelize = new Sequelize(
+//   `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+//   {
+//     logging: false, // set to console.log to see the raw SQL queries
+//     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+//   }
+// );
 // -------------------------------------CONFIGURACION PARA EL DEPLOY---------------------------------------------------------------------
-// const sequelize = new Sequelize( DB_DEPLOY, {
-//       logging: false, // set to console.log to see the raw SQL queries
-//       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//     }
-//   );
+const sequelize = new Sequelize(DB_DEPLOY , {
+      logging: false, // set to console.log to see the raw SQL queries
+      native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+    }
+  );
 
 const basename = path.basename(__filename);
 
@@ -44,42 +44,45 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Role} =
+const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation} =
   sequelize.models;
 
 // Aca vendrian las relaciones
 User.belongsTo(Role, { foreignKey: "id_role" });
 Role.hasOne(User, { foreignKey: "id_role" });
+User.belongsTo(Role, { foreignKey: "id_role" });
+Role.hasOne(User, { foreignKey: "id_role" });
 
-/* User.hasMany(Review, { foreignKey: "id_user" });
-Product.hasMany(Review, { foreignKey: "id_product" });
-Review.belongsTo(User, { foreignKey: "id_user" });
-Review.belongsTo(Product, { foreignKey: "id_product" });
-//---------------------------------------------------------------------------------//
+//contract ---> user
+Contract.belongsTo(User, { foreignKey: "n_documento" });
+User.hasMany(Contract, { foreignKey: "n_documento" });
 
-User.hasMany(Shop, { foreignKey: "id_user" });
-Shop.belongsTo(User, { foreignKey: "id_user" });
+// contract ---> plan
+Contract.belongsTo(Plan, { foreignKey: "name_plan" });
+Plan.hasOne(Contract, { foreignKey: "name_plan" });
 
-Product.hasMany(ShopDetail, { foreignKey: "id_product" });
-ShopDetail.belongsTo(Product, { foreignKey: "id_product" });
+// contract  ----> delivery
+Contract.belongsTo(Delivery, { foreignKey: "id_delivery" });
+Delivery.hasOne(Contract, { foreignKey: "id_delivery" });
+//contract ---> inventory
+Contract.belongsTo(Inventory, { foreignKey: "id_inventory" });
+Inventory.hasOne(Contract, { foreignKey: "id_inventory" });
 
-ShopDetail.belongsTo(Shop, { foreignKey: "shop_id" });
-Shop.hasMany(ShopDetail, { foreignKey: "shop_id" });
+// contract ----> deuda
+Contract.hasMany(Deuda, { foreignKey: 'id_Contract' });
+Deuda.belongsTo(Contract, { foreignKey: 'id_Contract' });
 
-//-----------------------------------------------------------------------------------//
-Type.hasMany(Product, { foreignKey: "id_type" });
-Product.belongsTo(Type, { foreignKey: "id_type" });
+// delivery ----> tipovivienda
+Delivery.belongsTo(Vivienda, { foreignKey: "id_vivienda"});
+Vivienda.hasMany(Delivery, { foreignKey: "id_vivienda"});
 
-Brand.hasMany(Product, { foreignKey: "id_brand" });
-Product.belongsTo(Brand, { foreignKey: "id_brand" });
-//-----------------------------------------------------------------------------------//
+// user ----> documentation
+User.hasMany(Documentation, { foreignKey: "n_documento" });
+Documentation.belongsTo(User, { foreignKey: 'n_documento' });
 
- User.hasMany(Favorite, { foreignKey: 'id_user' }); 
-Favorite.belongsTo(User, { foreignKey: 'id_user' });
+// contract ----> documentation
+Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
 
-Product.hasMany(Favorite, { foreignKey: 'product_id' });
-Favorite.belongsTo(Product, { foreignKey: 'product_id' });
- */
 //---------------------------------------------------------------------------------//
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

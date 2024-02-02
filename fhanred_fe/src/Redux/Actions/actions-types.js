@@ -1,3 +1,6 @@
 export const SIGNIN_USER = 'SIGNIN_USER';
+export const GET_USERS = "GET_USERS";
 export const CLEAN_DETAIL = 'CLEAN_DETAIL';
 export const CREATE_INVOICE = 'CREATE_INVOICE';
+export const CREATE_USER = "CREATE_USER";
+export const INCREMENT_NUMBER_FACT = 'INCREMENT_NUMBER_FACT';

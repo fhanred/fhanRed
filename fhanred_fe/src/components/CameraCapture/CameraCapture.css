@@ -1,0 +1,12 @@
+.camera{
+    line-height: 40px; /* Ajusta este valor según sea necesario */
+  vertical-align: middle;
+  font-size: 20px
+}
+.error-message {
+  background-color: #cf151f;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}

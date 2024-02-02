@@ -1,12 +1,35 @@
-const { User } = require('../data');
-const response = require('../utils/response');
+const { User } = require("../data");
+const response = require("../utils/response");
+const bcrypt = require("bcrypt");
 
+module.exports = async (req, res) => {
+  const user = req.body;
 
+  // Verificar si apellidos y nombres están presentes en req.body
+  if (user.apellidos && user.nombres) {
+    // Concatenar apellidos y nombres en mayúsculas con una coma en el medio
+    user.name_razonSocial = `${user.apellidos.toUpperCase().trim()}, ${user.nombres.toUpperCase().trim()}`;
+  } else if (user.razonSocial) {
+    // Si razonSocial está presente, asignar su valor en mayúsculas a name_razonSocial
+    user.name_razonSocial = user.razonSocial.toUpperCase().trim();
+  }
 
-module.exports = async (req,res) => {
+  // Convertir el email a mayúsculas antes de guardarlo
+  user.email = user.email.toUpperCase().trim();
 
-  const user = req.body
-  console.log(user)
-  await User.create(user);
-  response(res,201, "success") 
-}
+  // encriptar password
+  hash = await bcrypt.hash(user.password, 10);
+
+  await User.create({
+    name_razonSocial: user.name_razonSocial,
+    sexo: user.sexo[0],
+    tipo_persona: user.tipo_persona,
+    tipo_documento: user.tipo_documento,
+    fecha_cumple: user.fecha_cumple,
+    n_documento: user.n_documento,
+    email: user.email,
+    password: hash,
+    id_role: 1,
+  });
+  response(res, 201, "success");
+};
