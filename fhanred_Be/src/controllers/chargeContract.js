@@ -37,6 +37,8 @@ module.exports = async (req, res) => {
     'tel3',
     'marca_onu',
     'mac',
+    "descuento",
+    "retefuente",
     'reporte_c_riesgo',
     'estado_cp_correo',
     'estado_contrato',
