@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Contract",
+    'Contract',
     {
       n_contrato: {
         type: DataTypes.INTEGER,
@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
         type: DataTypes.FLOAT,
         defaultValue: 0.0,
       },
-      retefuente : {
+      retefuente: {
         type: DataTypes.FLOAT,
         defaultValue: 0.0,
       },
@@ -55,10 +55,17 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
       },
       estado_contrato: {
-        type: DataTypes.ENUM('ACTIVO', 'RETIRADO', 'CORTADO','ANULADO', 'POR INSTALAR' ),
+        type: DataTypes.ENUM(
+          'ACTIVO',
+          'ACTIVO CONGELADO',
+          'RETIRADO',
+          'CORTADO',
+          'ANULADO',
+          'POR INSTALAR'
+        ),
       },
       idStratus: {
-        type: DataTypes.ENUM("1", "2", "3", "4", "5","6")
+        type: DataTypes.ENUM('1', '2', '3', '4', '5', '6'),
       },
     },
     {
