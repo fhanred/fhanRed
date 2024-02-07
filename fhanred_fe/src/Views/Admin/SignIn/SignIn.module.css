@@ -79,7 +79,7 @@
   } 
 
   /* Estilos para el enlace dentro de la etiqueta label */
-label a {
+  label a {
     text-decoration: none; /* Elimina el subrayado */
     color: #1f2852
   }
@@ -90,9 +90,11 @@ label a {
     color: #cf151f; /* Cambia el color del enlace al pasar el cursor por encima */
     font-size: 18px;
   }
-
- 
   
+  .error {
+    color: #cf151f;
+    font-size: 16px;
+  }
   
   /* Estilos para el campo de contraseña y el ícono */
   .passwordInput {
