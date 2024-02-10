@@ -1,21 +1,18 @@
 .containerRegister {
-  display: flex;
-  margin-left: 25%;
-  max-width: 750px;
-  width: 100%;
+  max-width: 600px;
+    margin: 0 auto;
+    margin-top: 160px;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+    background-color: #f7f7f7;
+    border: 1px solid #a7a4a4;
+    border-radius: 5px;
  
-  padding: 10px;
-  align-items: center;
-  justify-content: center; /* Centrado vertical */
-  height: 100vh; /* Altura del 100% de la ventana */
-  font-family: 'Montserrat', sans-serif;
-  letter-spacing: -0.2px;
-  font-size: 14px;
-  font-weight: bold;
 }
 .divForm {
-  width: 80%;
-  margin-top: 30%;
+  margin: 20px 15;
 }
 
 .divRegister {

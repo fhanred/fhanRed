@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   SIGNIN_USER,
   CLEAN_DETAIL,
@@ -6,11 +6,13 @@ import {
   INCREMENT_NUMBER_FACT,
   CREATE_USER,
   GET_USERS,
-} from './actions-types';
+  FETCH_CONTRACT_DETAILS_SUCCESS,
+  FETCH_CONTRACT_DETAILS_FAILURE,
+} from "./actions-types";
 
 export const userInfo = (input) => async (dispatch) => {
   try {
-    const dataUser = await axios.post('http://localhost:3001/auth/login', input);
+    const dataUser = await axios.post('http://localhost:3001/login', input);
     return dispatch({ type: SIGNIN_USER, payload: dataUser.data });
   } catch (error) {}
 };
@@ -24,7 +26,7 @@ export const getUsers = () => async (dispatch) => {
 
 export const createInvoice = (input) => async (dispatch) => {
   try {
-    const { data } = await axios.post('http://localhost:3001/contract', input);
+    const { data } = await axios.post("http://localhost:3001/contract", input);
     dispatch({ type: CREATE_INVOICE, payload: data });
     return { success: true }; // Indica que la solicitud fue exitosa
   } catch (error) {
@@ -34,7 +36,10 @@ export const createInvoice = (input) => async (dispatch) => {
 
 export const createUser = (input) => async (dispatch) => {
   try {
-    const { data } = await axios.post('http://localhost:3001/auth/signup', input);
+    const { data } = await axios.post(
+      "http://localhost:3001/auth/signup",
+      input
+    );
     dispatch({ type: CREATE_USER, payload: data });
     return { success: true }; // Indica que la solicitud fue exitosa
   } catch (error) {
@@ -53,5 +58,50 @@ export const cleanDetail = () => {
     };
   } catch (error) {
     throw new Error(error);
+  }
+};
+
+export const fetchContractDetailsSuccess = (combinedData) => ({
+  type: FETCH_CONTRACT_DETAILS_SUCCESS,
+  payload: combinedData,
+});
+
+export const fetchContractDetailsFailure = (errorMessage) => ({
+  type: FETCH_CONTRACT_DETAILS_FAILURE,
+  payload: errorMessage,
+});
+
+export const fetchUserContracts = async (n_documento) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/user/${n_documento}`);
+    console.log("Response data:", response.data);
+    
+    const { Contracts, name_razonSocial } = response.data.data; // Cambio aquí: acceder a name_razonSocial
+    console.log("Contracts:", Contracts);
+    console.log("name_razonSocial:", name_razonSocial); // Cambio aquí: console.log name_razonSocial
+    
+    const activeContracts = Contracts.filter(contract => contract.estado_contrato === "ACTIVO");
+    return { contracts: activeContracts, name_razonSocial }; // Cambio aquí: devolver name_razonSocial
+  } catch (error) {
+    console.error("Error al obtener los contratos del usuario:", error);
+    return { contracts: [], name_razonSocial: null }; // Cambio aquí: devolver name_razonSocial
+  }
+};
+
+
+
+// Action para obtener los detalles de un contrato por su número de contrato
+export const fetchContractDetails = async (n_contrato) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3001/contract/${n_contrato}`
+    );
+    const { Plan, Delivery } = response.data.data; // Acceder a Plan y Delivery desde la respuesta
+
+    // Devolver un objeto con Plan, municipio y direccion
+    return { Plan, municipio: Delivery.municipio, direccion: Delivery.direccion };
+  } catch (error) {
+    console.error("Error al obtener los detalles del contrato:", error);
+    return {};
   }
 };

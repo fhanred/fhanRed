@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './Billing.css';
 import { incrementNumberFact } from '../../../Redux/Actions/actions';
 import formatDateForForm from './formatDate';
-import { options, plan } from '../../../data';
+//import { options, plan } from '../../../data';
 
 
 
@@ -278,13 +278,13 @@ function Billing() {
 
                 <div className="form-group-fact">
                   <label htmlFor="spaymentmethod">Metodo de pago</label>
-                  <Field id="spaymentmethod" name="spaymentmethod" as="select">
+                  {/* <Field id="spaymentmethod" name="spaymentmethod" as="select">
                     {options.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>
                     ))}
-                  </Field>
+                  </Field> */}
                 </div>
                 <p>
                   <ErrorMessage
@@ -534,11 +534,11 @@ function Billing() {
                             as="select"
                             name={`items[${index}].sdescription`}
                           >
-                            <option value="">Selecciona una opción</option>
+                            {/* <option value="">Selecciona una opción</option>
                             {plan.map((option) => (
                               <option key={option.value} value={option.value}>
                                 {option.label}
-                              </option>
+                              </option> */}
                             ))}
                             <option value="other">
                               Otro (Escribe tu descripción)
