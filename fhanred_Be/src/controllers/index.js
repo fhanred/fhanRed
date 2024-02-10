@@ -9,7 +9,8 @@ module.exports = {
   getContract: catchedAsync(require("./getContract")),
   forgotPassword: catchedAsync(require("./forgotPassword")),
   chargeDocumentation: catchedAsync(require("./chargeDocumentation")),
-  getDocumentation: catchedAsync(require("./getDocumentation"))
+  getDocumentation: catchedAsync(require("./getDocumentation")),
+  
 };
 
 //exportamos como una propiedad de lo que exporta  modulo  indexjs

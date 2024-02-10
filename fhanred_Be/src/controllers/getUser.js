@@ -4,8 +4,9 @@ const response = require("../utils/response");
 module.exports = async (req, res) => {
   try {
     const { n_documento } = req.params;
+    console.log(n_documento)
     const user = await User.findByPk(n_documento, { include: Contract });
-
+    console.log(user)
     if (!user) {
       return response(res, 404, "Usuario no encontrado");
     }
