@@ -9,7 +9,7 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { userInfo } from '../../../Redux/Actions/actions';
 
-function SignIn() {
+function SignIn({login}) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -70,10 +70,15 @@ function SignIn() {
       try {
         // Puedes dispatch aquí si es necesario
         // await dispatch(userInfo(input));
-        setInput({ email: '', password: '' });
-        history.push('/admin/home');
+        // setInput({ email: '', password: '' });
+        const resp = await login(input)
+        console.log('resp: ', resp.token)
+        if(resp.token){
+          history.push('/admin/home')
+        }
       } catch (error) {
         // Manejar errores si es necesario
+        console.log('se a producido un error: ', error.message)
       }
     }
   };

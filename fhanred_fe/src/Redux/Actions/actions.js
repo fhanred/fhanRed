@@ -12,9 +12,28 @@ import {
 
 export const userInfo = (input) => async (dispatch) => {
   try {
-    const dataUser = await axios.post('http://localhost:3001/login', input);
-    return dispatch({ type: SIGNIN_USER, payload: dataUser.data });
-  } catch (error) {}
+    console.log('input: ', input)
+    const dataUser = await axios.post('http://localhost:3001/auth/login', input);
+    console.log('status: ', dataUser.status);
+
+    if (!dataUser.data) {
+      return dispatch({ type: SIGNIN_USER, payload: { message: 'Respuesta inválida del servidor' } });
+    }
+
+    if (!dataUser.status) {
+      return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+    }
+
+    if (dataUser.data.data && dataUser.data.data.token) {
+      console.log('data_user: ', dataUser.data.data.token);
+      return dispatch({ type: SIGNIN_USER, payload: dataUser.data });
+    } else {
+      return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+    }
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+    return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+  }
 };
 
 export const getUsers = () => async (dispatch) => {
@@ -26,7 +45,8 @@ export const getUsers = () => async (dispatch) => {
 
 export const createInvoice = (input) => async (dispatch) => {
   try {
-    const { data } = await axios.post("http://localhost:3001/contract", input);
+    console.log('data formik: ', input)
+    const { data } = await axios.post('http://localhost:3001/contract', input);
     dispatch({ type: CREATE_INVOICE, payload: data });
     return { success: true }; // Indica que la solicitud fue exitosa
   } catch (error) {
