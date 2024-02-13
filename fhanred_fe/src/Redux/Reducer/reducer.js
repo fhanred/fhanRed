@@ -17,14 +17,12 @@ const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN_USER:
       return {
-        ...state,
         userInfo: action.payload,
       };
     case GET_USERS:
       console.log(action.payload)
       return {
-        ...state,
-        
+        ...state,        
         usersData: action.payload,
       };
     case CREATE_INVOICE:
