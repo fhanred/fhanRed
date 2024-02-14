@@ -7,10 +7,14 @@ import {
   CREATE_USER,
   GET_USERS,
 } from './actions-types';
-
+ 
+//PASO 1: DISPATCH ACTION   (en este caso userInfo)
 export const userInfo = (input) => async (dispatch) => {
   try {
-    const dataUser = await axios.post('http://localhost:3001/...', input);
+    //PASO 2: ACTION LE PEGA AL BACKEND PARA PEDIR DATA DE USUARIO, ENVIANDO CREDENCIALES EN EL OBJETO INPUT
+    const dataUser = await axios.post('http://localhost:3001/auth/login', input);
+    console.log(dataUser);
+    //PASO 3: LLAMA AL REDUCER CON EL TIPO Y LE ENVIA EL PAYLOAD PARA ACTUALIZAR EL ESTADO
     return dispatch({ type: SIGNIN_USER, payload: dataUser.data });
   } catch (error) {}
 };

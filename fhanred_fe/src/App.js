@@ -13,6 +13,7 @@ import Treasury from './Views/Admin/Treasury/Treasury';
 import Billing from './Views/Admin/Billing/Billing';
 import Perfil from './Views/Admin/Perfil/Perfil';
 import { links } from './data';
+import ChangePassword from './Views/Admin/ChangePassword/ChangePassword';
 
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
   return (
     <BrowserRouter>
       <div>
+       
         <Navbar />
+        
         {/* {isAuthenticated && <NavbarItems links={links} />} */}
         <Switch>
           <Route exact path="/">
@@ -37,6 +40,7 @@ function App() {
           <Route path="/admin">
             <div style={{ flex: 1, display: 'flex' }}>
               <div>
+              
                 <NavbarItems links={links} />
               </div>
             </div>
@@ -62,6 +66,9 @@ function App() {
                 </Route>
                 <Route path="/admin/facturacion">
                   <Billing />
+                </Route>
+                <Route path="/admin/changePassword">
+                  <ChangePassword />
                 </Route>
               </Switch>
             </div>

@@ -9,6 +9,8 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { userInfo } from '../../../Redux/Actions/actions';
 
+
+
 function SignIn() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -36,19 +38,21 @@ function SignIn() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // try {
-    //   if (input.email && input.password) {
-    //     await dispatch(userInfo(input));
-    //     setInput({ email: '', password: '' });
-    history.push('/admin/home');
-    //   }
-    // } catch (error) {}
+    try {
+      if (input.email && input.password) {
+        await dispatch(userInfo(input));
+        setInput({ email: "", password: "" });
+        history.push("/admin/home");
+      }
+    } catch (error) {}
   };
 
   return (
     <div className={style.container}>
       <div className={style.form}>
         <h1>Iniciar sesión</h1>
+
+        <NavLink to="/admin/perfil"><button>PERFIL</button></NavLink>
         <form onSubmit={submitHandler}>
           <label>
             <input
