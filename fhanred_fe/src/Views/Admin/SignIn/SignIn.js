@@ -18,6 +18,11 @@ function SignIn() {
   function handleClick1() {
     history.push('/signup');
   }
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  });
+
   const [input, setInput] = useState({
     email: '',
     password: '',
@@ -26,10 +31,34 @@ function SignIn() {
   const handleChange = (e) => {
     const value = e.target.value;
     const property = e.target.name;
-    //setError(validate({ ...input, [property]: value }));
+
+    // Validación de email
+    if (property === 'email') {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: !value
+          ? 'Este campo es obligatorio. Por favor ingrese un correo electrónico.'
+          : !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value)
+          ? 'El correo no es válido.'
+          : '',
+      }));
+    }
+
+    // Validación de password
+    if (property === 'password') {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: !value
+          ? 'Este campo es obligatorio. Por favor ingrese una contraseña válida.'
+          : !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+              value
+            )
+          ? 'La contraseña debe tener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un carácter especial.'
+          : '',
+      }));
+    }
 
     setInput({ ...input, [property]: value });
-    console.log(input);
   };
 
   const togglePasswordVisibility = () => {
@@ -38,13 +67,17 @@ function SignIn() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    try {
-      if (input.email && input.password) {
-        await dispatch(userInfo(input));
-        setInput({ email: "", password: "" });
-        history.push("/admin/home");
+    // Validar nuevamente antes de enviar al servidor si es necesario
+    if (input.email && input.password) {
+      try {
+        // Puedes dispatch aquí si es necesario
+        // await dispatch(userInfo(input));
+        setInput({ email: '', password: '' });
+        history.push('/admin/home');
+      } catch (error) {
+        // Manejar errores si es necesario
       }
-    } catch (error) {}
+    }
   };
 
   return (
@@ -62,6 +95,7 @@ function SignIn() {
               placeholder="Correo electrónico"
               onChange={(e) => handleChange(e)}
             />
+            <p className={style.error}>{errors.email}</p>
           </label>
           <label>
             <div className={style.passwordInput}>
@@ -84,6 +118,7 @@ function SignIn() {
                 />
               )}
             </div>
+            <p className={style.error}>{errors.password}</p>
           </label>
           <label>
             <NavLink to="/forgotPassword">
@@ -98,7 +133,7 @@ function SignIn() {
 
         <div className={style.register}>
           <label>
-            <span>¿Aún no estas registrado?</span>
+            <span>¿Aún no estás registrado?</span>
           </label>
 
           <button className={style.red} onClick={handleClick1}>

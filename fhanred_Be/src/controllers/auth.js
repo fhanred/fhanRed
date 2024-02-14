@@ -16,8 +16,11 @@ module.exports = async (req, res) => {
       }
       //Crear el token JWT con los datos del usuario.
       const payload = {
-        id: user.n_documento,
+        id_role: user.id_role,
+        razon_social: user.name_razonSocial,
+        n_documento: user.n_documento,
         email: user.email,
+        fecha_cumple: user.fecha_cumple,
       };
       const token = jwt.sign(payload, `${JWT_SECRET_KEY}`, {
         expiresIn: "1d",

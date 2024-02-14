@@ -44,7 +44,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation} =
+const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation, Ingreso} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -56,6 +56,11 @@ Role.hasOne(User, { foreignKey: "id_role" });
 //contract ---> user
 Contract.belongsTo(User, { foreignKey: "n_documento" });
 User.hasMany(Contract, { foreignKey: "n_documento" });
+
+//mia
+// Contract.belongsTo(User, { foreignKey: "n_documento", targetKey: "n_documento" });
+// User.hasMany(Contract, { foreignKey: "n_documento", sourceKey: "n_documento" });
+
 
 // contract ---> plan
 Contract.belongsTo(Plan, { foreignKey: "name_plan" });

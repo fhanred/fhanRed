@@ -12,6 +12,8 @@ import Register from './components/Register/Register';
 import Treasury from './Views/Admin/Treasury/Treasury';
 import Billing from './Views/Admin/Billing/Billing';
 import Perfil from './Views/Admin/Perfil/Perfil';
+import Encashment from './Views/Admin/Encashment/Encashment';
+import IncomeList from './Views/Admin/Encashment/incomeList'
 import { links } from './data';
 import ChangePassword from './Views/Admin/ChangePassword/ChangePassword';
 
@@ -69,6 +71,12 @@ function App() {
                 </Route>
                 <Route path="/admin/changePassword">
                   <ChangePassword />
+                </Route>
+                <Route path="/admin/caja">
+                  <Encashment />
+                </Route>
+                <Route path="/admin/income">
+                  <IncomeList />
                 </Route>
               </Switch>
             </div>
