@@ -4,20 +4,20 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_DEPLOY } = require("../config/envs");
 //-------------------------------- CONFIGURACION PARA TRABAJAR LOCALMENTE-----------------------------------
-// const sequelize = new Sequelize(
-//   `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
-//   {
-//     logging: false, // set to console.log to see the raw SQL queries
-//     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//   }
-// );
+const sequelize = new Sequelize(
+  `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+  {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  }
+);
 // -------------------------------------CONFIGURACION PARA EL DEPLOY---------------------------------------------------------------------
-const sequelize = new Sequelize(DB_DEPLOY , {
+/* const sequelize = new Sequelize(DB_DEPLOY , {
       logging: false, // set to console.log to see the raw SQL queries
       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
     }
   );
-
+ */
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -44,7 +44,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation} =
+const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation, Ticket} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -82,6 +82,22 @@ Documentation.belongsTo(User, { foreignKey: 'n_documento' });
 
 // contract ----> documentation
 Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
+
+//TODO: Ticket - Crear relaciones: Contrato, User(tecnico), Vivienda?
+// Contract ------> Ticket
+Contract.hasMany(Ticket, { foreignKey: "id_Contract"});
+Ticket.belongsTo(Contract, { foreignKey: "id_Contract" } );
+
+//Ticket -----------> Delivery ---> Direccion
+Delivery.hasMany(Ticket, { foreignKey: "id_Delivery" } )
+Ticket.belongsTo(Delivery, { foreignKey: "id_Delivery"})
+
+//Ticket -----------> User
+User.hasMany(Ticket, { foreignKey: "n_documento" } )
+Ticket.belongsTo(User, { foreignKey: "n_documento"})
+
+
+
 
 //---------------------------------------------------------------------------------//
 module.exports = {

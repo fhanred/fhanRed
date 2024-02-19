@@ -1,0 +1,12 @@
+.table{
+    margin-top: 6rem;
+    margin-left: 8rem;
+    width: 80%;
+    font-size: 0.7rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+input {
+    border-radius: 5px;
+    padding: 4px;
+}

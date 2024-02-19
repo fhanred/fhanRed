@@ -11,6 +11,7 @@ import ForgotPassword from './components/Forgot/ForgotPassword';
 import Register from './components/Register/Register';
 import Treasury from './Views/Admin/Treasury/Treasury';
 import Billing from './Views/Admin/Billing/Billing';
+import TicketManager from './Views/Admin/TicketManager/TicketManager';
 import { links } from './data';
 
 function App() {
@@ -57,6 +58,9 @@ function App() {
                 </Route>
                 <Route path="/admin/facturacion">
                   <Billing />
+                </Route>
+                <Route path="/admin/tickets-manager">
+                  <TicketManager />
                 </Route>
               </Switch>
             </div>
