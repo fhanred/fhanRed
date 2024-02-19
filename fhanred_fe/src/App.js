@@ -15,33 +15,35 @@ import Treasury from './Views/Admin/Treasury/Treasury';
 import Billing from './Views/Admin/Billing/Billing';
 import Encashment from './Views/Admin/Encashment/Encashment';
 import IncomeList from './Views/Admin/Encashment/incomeList'
+import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
 import { links } from './data';
+
 
 function App() {
   const dispatch = useDispatch();
   const creditials = useSelector((state) => state.userInfo);
-  
-  const handleLogin = async (userData) => {
-      const { email, password } = userData;
-      try {
-        const emailCapital = email.toUpperCase()
-        const infoUser = { email: emailCapital, password }
-        // const response = await axios.post('http://localhost:3001/auth/login', infoUser);
-        dispatch(userInfo(infoUser));
-        const data = creditials.data;
-        if(!data){
-          console.log(creditials)
-        }
-        if(data){
-          console.log('data: ', data)
-          return data;
-        }
-      } catch (error) {
-        console.error('se produjo un error: ', error)
-      }
-    }
 
-  const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
+  const handleLogin = async (userData) => {
+    const { email, password } = userData;
+    try {
+      const emailCapital = email.toUpperCase()
+      const infoUser = { email: emailCapital, password }
+      // const response = await axios.post('http://localhost:3001/auth/login', infoUser);
+      dispatch(userInfo(infoUser));
+      const data = creditials.data;
+      if(!data){
+        console.log(creditials)
+      }
+      if(data){
+        console.log('data: ', data)
+        return data;
+      }
+    } catch (error) {
+      console.error('se produjo un error: ', error)
+    }
+  }
+
+const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
 
   return (
     <BrowserRouter>
@@ -50,7 +52,7 @@ function App() {
         {/* {isAuthenticated && <NavbarItems links={links} />} */}
         <Switch>
           <Route exact path="/">
-            <SignIn login={handleLogin}/>
+          <SignIn login={handleLogin}/>
           </Route>
           <Route path="/forgotPassword">
             <ForgotPassword />
@@ -89,6 +91,9 @@ function App() {
                 </Route>
                 <Route path="/admin/income">
                   <IncomeList />
+                </Route>
+                <Route path="/admin/nrecibo">
+                  <ReceiptNumberForm />
                 </Route>
               </Switch>
             </div>

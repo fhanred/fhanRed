@@ -10,6 +10,9 @@ import {
   FETCH_CONTRACT_DETAILS_REQUEST,
   FETCH_CONTRACT_DETAILS_SUCCESS,
   FETCH_CONTRACT_DETAILS_FAILURE,
+  FETCH_LAST_RECEIPT_NUMBER,
+  FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
+  FETCH_LAST_RECEIPT_NUMBER_FAILURE
 } from '../Actions/actions-types';
 
 const initialState = {
@@ -20,7 +23,8 @@ const initialState = {
   selectedContract: null,
   planDetails: null,
   loading: false,
-  error: null
+  error: null,
+  lastReceiptNumber: null
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -44,6 +48,24 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         numberFact: state.numberFact + 1,
       };
+
+      case FETCH_LAST_RECEIPT_NUMBER_SUCCESS:
+        return {
+          ...state,
+          lastReceiptNumber: action.payload,
+        };
+      case FETCH_LAST_RECEIPT_NUMBER_FAILURE:
+        return {
+          ...state,
+          error: action.payload,
+        };
+      case FETCH_USER_CONTRACTS_REQUEST:
+      case FETCH_CONTRACT_DETAILS_REQUEST:
+        return {
+          ...state,
+          loading: true,
+          error: null
+        };
       case FETCH_USER_CONTRACTS_REQUEST:
         case FETCH_CONTRACT_DETAILS_REQUEST:
           return {
@@ -65,19 +87,21 @@ const rootReducer = (state = initialState, action) => {
             planDetails: action.payload,
             loading: false
           };
-    
-        case FETCH_USER_CONTRACTS_FAILURE:
-        case FETCH_CONTRACT_DETAILS_FAILURE:
+          case FETCH_CONTRACT_DETAILS_FAILURE:
           return {
             ...state,
             loading: false,
             error: action.payload
           };
+
+          
     default:
       return state;
   }
 };
-
+    
+       
+ 
 export default rootReducer;
 
 
