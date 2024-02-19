@@ -5,9 +5,10 @@ module.exports = (sequelize) => {
         "Cash",
         {
           receipt: {
-            type: DataTypes.INTEGER, 
+            type: DataTypes.INTEGER,
             allowNull: false,
-            unique: true
+            autoIncrement: true,
+            primaryKey: true 
           },
           contract: {
             type: DataTypes.STRING,
@@ -49,6 +50,7 @@ module.exports = (sequelize) => {
           cashierName: {
             type: DataTypes.STRING,
             allowNull: false
-          }
+          },
+          
         })
       }

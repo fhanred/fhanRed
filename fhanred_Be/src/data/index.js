@@ -44,7 +44,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation, Ingreso} =
+const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -73,10 +73,6 @@ Delivery.hasOne(Contract, { foreignKey: "id_delivery" });
 Contract.belongsTo(Inventory, { foreignKey: "id_inventory" });
 Inventory.hasOne(Contract, { foreignKey: "id_inventory" });
 
-// contract ----> deuda
-Contract.hasMany(Deuda, { foreignKey: 'id_Contract' });
-Deuda.belongsTo(Contract, { foreignKey: 'id_Contract' });
-
 // delivery ----> tipovivienda
 Delivery.belongsTo(Vivienda, { foreignKey: "id_vivienda"});
 Vivienda.hasMany(Delivery, { foreignKey: "id_vivienda"});
@@ -87,6 +83,17 @@ Documentation.belongsTo(User, { foreignKey: 'n_documento' });
 
 // contract ----> documentation
 Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
+
+// Relaciones  Summary
+Summary.belongsTo(User, { foreignKey: 'n_documento', targetKey: 'n_documento', as: 'user' });
+Summary.belongsTo(Contract, { foreignKey: 'n_contrato', targetKey: 'n_contrato', as: 'contract' });
+Summary.hasMany(Bill, { foreignKey: 'summaryId', as: 'bills' });
+Summary.hasMany(DebitN, { foreignKey: 'summaryId', as: 'debitNotes' });
+Summary.hasMany(CreditN, { foreignKey: 'summaryId', as: 'creditNotes' });
+Summary.hasMany(Receipt, { foreignKey: 'summaryId', as: 'Receipts' });
+Bill.belongsTo(User, { foreignKey: 'party_identification', targetKey: 'n_documento'});
+User.hasMany(Cash, { foreignKey: 'n_documento' }); // Un usuario puede tener muchos recibos
+Cash.belongsTo(User, { foreignKey: 'n_documento' }); // Cada recibo pertenece a un usuario específico
 
 //---------------------------------------------------------------------------------//
 module.exports = {
