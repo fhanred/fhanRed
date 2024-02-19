@@ -9,7 +9,7 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { userInfo } from '../../../Redux/Actions/actions';
 
-function SignIn() {
+function SignIn(login) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);

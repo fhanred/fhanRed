@@ -1,9 +1,11 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useLocation, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userInfo } from '../src/Redux/Actions/actions'
+import axios from 'axios';
 import SignIn from './Views/Admin/SignIn/SignIn';
 import Home from './Views/Admin/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import NavbarItems from './components/NavbarItems/NavbarItems';
-import { useSelector } from 'react-redux';
 import Customers from './Views/Admin/Customers/Customers';
 import CustomersData from './components/CustomersData/CustomersData';
 import Invoice from './components/Invoice/Invoice';
@@ -13,11 +15,35 @@ import Treasury from './Views/Admin/Treasury/Treasury';
 import Billing from './Views/Admin/Billing/Billing';
 import Encashment from './Views/Admin/Encashment/Encashment';
 import IncomeList from './Views/Admin/Encashment/incomeList'
+import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
 import { links } from './data';
 
+
 function App() {
-  const userInfo = useSelector((state) => state.userInfo);
-  const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
+  const dispatch = useDispatch();
+  const creditials = useSelector((state) => state.userInfo);
+
+  const handleLogin = async (userData) => {
+    const { email, password } = userData;
+    try {
+      const emailCapital = email.toUpperCase()
+      const infoUser = { email: emailCapital, password }
+      // const response = await axios.post('http://localhost:3001/auth/login', infoUser);
+      dispatch(userInfo(infoUser));
+      const data = creditials.data;
+      if(!data){
+        console.log(creditials)
+      }
+      if(data){
+        console.log('data: ', data)
+        return data;
+      }
+    } catch (error) {
+      console.error('se produjo un error: ', error)
+    }
+  }
+
+const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
 
   return (
     <BrowserRouter>
@@ -26,7 +52,7 @@ function App() {
         {/* {isAuthenticated && <NavbarItems links={links} />} */}
         <Switch>
           <Route exact path="/">
-            <SignIn />
+          <SignIn login={handleLogin}/>
           </Route>
           <Route path="/forgotPassword">
             <ForgotPassword />
@@ -65,6 +91,9 @@ function App() {
                 </Route>
                 <Route path="/admin/income">
                   <IncomeList />
+                </Route>
+                <Route path="/admin/nrecibo">
+                  <ReceiptNumberForm />
                 </Route>
               </Switch>
             </div>

@@ -8,13 +8,34 @@ import {
   GET_USERS,
   FETCH_CONTRACT_DETAILS_SUCCESS,
   FETCH_CONTRACT_DETAILS_FAILURE,
+  FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
+  FETCH_LAST_RECEIPT_NUMBER_FAILURE
 } from "./actions-types";
 
 export const userInfo = (input) => async (dispatch) => {
   try {
-    const dataUser = await axios.post('http://localhost:3001/login', input);
-    return dispatch({ type: SIGNIN_USER, payload: dataUser.data });
-  } catch (error) {}
+    console.log('input: ', input)
+    const dataUser = await axios.post('http://localhost:3001/auth/login', input);
+    console.log('status: ', dataUser.status);
+
+    if (!dataUser.data) {
+      return dispatch({ type: SIGNIN_USER, payload: { message: 'Respuesta inválida del servidor' } });
+    }
+
+    if (!dataUser.status) {
+      return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+    }
+
+    if (dataUser.data.data && dataUser.data.data.token) {
+      console.log('data_user: ', dataUser.data.data.token);
+      return dispatch({ type: SIGNIN_USER, payload: dataUser.data });
+    } else {
+      return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+    }
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+    return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+  }
 };
 
 export const getUsers = () => async (dispatch) => {
@@ -88,9 +109,29 @@ export const fetchUserContracts = async (n_documento) => {
   }
 };
 
+export const fetchLastReceiptNumber = () => async (dispatch) => {
+  try {
+    const response = await axios.get('http://localhost:3001/caja');
+    const lastReceiptNumber = response.data.data[response.data.data.length - 1].receipt;
+ // Obtener el último número de recibo
+    console.log(lastReceiptNumber)
+
+    const newReceipt = lastReceiptNumber + 1;
+
+    dispatch({
+      type: FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
+      payload: newReceipt
+    });
+  } catch (error) {
+    console.error("Error al generar el número de recibo:", error);
+    dispatch({
+      type: FETCH_LAST_RECEIPT_NUMBER_FAILURE,
+      payload: error.message // Puedes ajustar el payload según tus necesidades
+    });
+  }
+};
 
 
-// Action para obtener los detalles de un contrato por su número de contrato
 export const fetchContractDetails = async (n_contrato) => {
   try {
     const response = await axios.get(

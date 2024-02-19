@@ -1609,7 +1609,7 @@ function Invoice() {
                       type="button"
                       disabled={firmaGuardada}
                       onClick={async () => {
-                        const signatureImage =
+                        const signatureImage =   // coincide (base)
                           signatureCanvas.current.toDataURL();
                         const data = new FormData();
                         data.append('file', signatureImage);
@@ -1628,7 +1628,7 @@ function Invoice() {
                           const file = await response.json();
 
                           // Obtenemos la URL de la imagen
-                          const imageURL = file.secure_url;
+                          const imageURL = file.secure_url; // sería SignatureImage si coincide con base64
                           // Actualiza el valor del campo "signature" en Formik con la URL
                           setFieldValue('signature', imageURL);
                           setFirmaGuardada(true);

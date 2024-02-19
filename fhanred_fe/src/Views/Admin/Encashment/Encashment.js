@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage, ResetForm } from "formik";
 import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
@@ -11,34 +11,39 @@ import {
   fetchContractDetails,
   fetchUserContracts,
   getUsers,
+  fetchLastReceiptNumber
 } from "../../../Redux/Actions/actions";
 
 function Encashment() {
   //const userRole = useSelector((state) => state.auth.user.role); // descomentar luego de aplicar auth
   //const userName = useSelector((state) => state.auth.user.name);
-
+  const dispatch = useDispatch();
+  const lastReceiptNumber = useSelector((state) => state.lastReceiptNumber);
   const history = useHistory();
   const [selectedOption, setSelectedOption] = useState(null);
   const [showIncome, setShowIncome] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
   const [userContracts, setUserContracts] = useState([]);
   const [name_razonSocial, setNameRazonSocial] = useState("");
-  const [generatedReceipt, setGeneratedReceipt] = useState("12");
+ 
+ 
+
 
   const initialValues = {
-    receipt: "",
-    contract: "", // Cambiado a un campo de selección
+    receipt: lastReceiptNumber !== null ? lastReceiptNumber.toString() : "1", // Valor predeterminado como "1" si lastReceiptNumber es null
+    contract: "",
     paymentDate: format(new Date(), "yyyy-MM-dd"),
     paymentTime: format(new Date(), "HH:mm"),
     n_documento: "",
     username: "",
     municipio: "",
-    direccion: "", // Inicializar el campo username
+    direccion: "", 
     importe: "",
     description: "",
     paymentMethod: "",
     cashierName: "", //una vez implementado auth  userRole === 2 || userRole === 3 ? userName : ""
   };
+  console.log(lastReceiptNumber)
 
   const validationSchema = Yup.object().shape({
    
@@ -55,6 +60,11 @@ function Encashment() {
     cashierName: Yup.string().required("Este campo es obligatorio"),
   });
 
+  useEffect(() => {
+    // Obtener el último número de recibo al montar el formulario
+    dispatch(fetchLastReceiptNumber());
+  }, [dispatch]);
+
   // useEffect(() => {
   //   // Verificar el rol del usuario al cargar el componente
   //   if (userRole !== 2 && userRole !== 3) {
@@ -63,65 +73,66 @@ function Encashment() {
   //   }
   // }, [userRole, history]);
 
-  // Handler para el cambio en el documento del usuario
+  
   const handleDocumentChange = async (e, formikProps) => {
     try {
       const { value } = e.target;
-      formikProps.handleChange(e); // Manejar el cambio en el campo de Formik
-      // Obtener los contratos del usuario
+      formikProps.handleChange(e);
       const { contracts, name_razonSocial } = await fetchUserContracts(value);
-      setUserContracts(contracts);
-      // Actualizar userDetails con el nombre de usuario
+      setUserContracts(contracts);   
       formikProps.setFieldValue("username", name_razonSocial);
-      setNameRazonSocial(name_razonSocial); // Guardar name_razonSocial en el estado local
-      console.log("name_razonSocial actualizado:", name_razonSocial); // Guardar name_razonSocial en el estado local
+      setNameRazonSocial(name_razonSocial);
+      console.log("name_razonSocial actualizado:", name_razonSocial); 
     } catch (error) {
       console.error("Error al obtener los contratos del usuario:", error);
-      // Manejar el error apropiadamente
+     
     }
   };
-  // cambio en el contrato seleccionado
+ 
   const handleContractChange = async (e, formikProps) => {
     const { value } = e.target;
     console.log("Valor seleccionado del contrato:", value);
-    // Actualizar el campo de contrato sin causar cambios no deseados en otros campos
+    
     formikProps.setFieldValue("contract", value);
     try {
-      // Llamar a la acción para obtener los detalles del contrato seleccionado
+     
       const contractDetails = await fetchContractDetails(value);
       console.log("Detalles del contrato seleccionado:", contractDetails);
-      // Mapear las propiedades de los detalles del contrato a los campos del formulario
+      
       formikProps.setFieldValue("description", contractDetails.Plan.name_plan);
       const importeString = contractDetails.Plan.costo
         .replace(/\./g, "")
         .replace(",", ".");
       const importe = parseFloat(importeString);
       formikProps.setFieldValue("importe", importe);
-      // Actualizar los campos de municipio y dirección
+     
       formikProps.setFieldValue("municipio", contractDetails.municipio);
       formikProps.setFieldValue("direccion", contractDetails.direccion);
     } catch (error) {
       console.error("Error al obtener los detalles del contrato:", error);
     }
   };
-  const handleSubmit = async (values, { setSubmitting }) => {
+
+ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       // Hacer la solicitud HTTP POST al backend
       const response = await axios.post("http://localhost:3001/caja", values);
       // Manejar la respuesta del backend según sea necesario
       console.log("Respuesta del backend:", response.data);
-      // Actualizar el estado con el número de recibo generado
-      setGeneratedReceipt(response.data.newIngreso.receipt);
-      // Generar el PDF en el frontend
+      // Actualizar el estado de Redux con el nuevo número de recibo
+      dispatch(fetchLastReceiptNumber());
       setShowPDF(true);
+      // Resetear el formulario después de enviar el pago
+      resetForm();
     } catch (error) {
-      // Manejar errores de la solicitud
       console.error("Error al enviar el formulario:", error);
     }
     // Marcar el formulario como no enviado
     setSubmitting(false);
-  };
-  // Definición de la función handleShowIncome
+};
+
+
+  
   const handleShowIncome = () => {
     // Tu lógica para manejar la visualización de ingresos
   };
@@ -144,21 +155,11 @@ function Encashment() {
             <Form>
               {selectedOption === "Ingreso" && (
                 <>
-                  <div className="input">
-                    <Field
-                      type="text"
-                      id="receipt"
-                      name="receipt"
-                      placeholder="Número de recibo"
-                      value={generatedReceipt} // Mostrar el número de recibo generado
-                      readOnly
-                    />
-                    <ErrorMessage
-                      name="receipt"
-                      component="div"
-                      className="error-message"
-                    />
-                  </div>
+                <div className="input">
+              <label htmlFor="receipt">Número de Recibo:</label>
+              <Field type="text" id="receipt" name="receipt" />
+              <ErrorMessage name="receipt" component="div" className="error-message" />
+            </div>
                   <div className="input">
                     <label htmlFor="paymentDate">Fecha de Pago:</label>
                     <Field
