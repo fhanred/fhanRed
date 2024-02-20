@@ -8,6 +8,8 @@ import {
   GET_USERS,
   FETCH_CONTRACT_DETAILS_SUCCESS,
   FETCH_CONTRACT_DETAILS_FAILURE,
+  FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
+  FETCH_LAST_RECEIPT_NUMBER_FAILURE
 } from "./actions-types";
 
 export const userInfo = (input) => async (dispatch) => {
@@ -108,9 +110,29 @@ export const fetchUserContracts = async (n_documento) => {
   }
 };
 
+export const fetchLastReceiptNumber = () => async (dispatch) => {
+  try {
+    const response = await axios.get('http://localhost:3001/caja');
+    const lastReceiptNumber = response.data.data[response.data.data.length - 1].receipt;
+ // Obtener el último número de recibo
+    console.log(lastReceiptNumber)
+
+    const newReceipt = lastReceiptNumber + 1;
+
+    dispatch({
+      type: FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
+      payload: newReceipt
+    });
+  } catch (error) {
+    console.error("Error al generar el número de recibo:", error);
+    dispatch({
+      type: FETCH_LAST_RECEIPT_NUMBER_FAILURE,
+      payload: error.message // Puedes ajustar el payload según tus necesidades
+    });
+  }
+};
 
 
-// Action para obtener los detalles de un contrato por su número de contrato
 export const fetchContractDetails = async (n_contrato) => {
   try {
     const response = await axios.get(
