@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   try {
     const authToken = DATAICO_AUTHTOKEN;
     const startNumber = 0; // Número inicial del rango autorizado
-    const endNumber = 1500; // Número final del rango autorizado
+    const endNumber = 900; // Número final del rango autorizado
 
     const bills = [];
 
@@ -40,7 +40,9 @@ module.exports = async (req, res) => {
               numberI: billData.number,
               issue_date: formattedIssueDate,
               party_identification: billData.customer.party_identification,
-              qrcode: billData.qrcode
+              price: billData.items[0].price,
+              qrcode: billData.qrcode,
+              
             });
             console.log('Factura guardada en la base de datos:', createdBill.toJSON());
           } else {

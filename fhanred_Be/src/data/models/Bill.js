@@ -19,6 +19,11 @@ module.exports = (sequelize) => {
           qrcode: {
             type: DataTypes.TEXT, 
             allowNull: true, 
+          },
+          price: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+
           }
           
         });

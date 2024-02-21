@@ -1,6 +1,5 @@
-// controllers/creditNoteController.js
 const { CreditN, User } = require('../../data');
-const response = require("../../utils/response")
+const response = require("../../utils/response");
 
 module.exports = async (req, res) => {
   try {
@@ -15,9 +14,13 @@ module.exports = async (req, res) => {
     // Obtener todas las notas de crédito del usuario
     const creditNotes = await CreditN.findAll({ where: { party_identification: n_documento } });
 
-    response(res, 200, creditNotes);
+    // Filtrar las notas de crédito que tienen un número de factura asociado
+    const filteredCreditNotes = creditNotes.filter(creditNote => creditNote.invoice);
+
+    response(res, 200, filteredCreditNotes);
   } catch (error) {
     console.error('Error:', error);
     response(res, 500, 'Error interno del servidor');
   }
 };
+

@@ -57,10 +57,6 @@ Role.hasOne(User, { foreignKey: "id_role" });
 Contract.belongsTo(User, { foreignKey: "n_documento" });
 User.hasMany(Contract, { foreignKey: "n_documento" });
 
-//mia
-// Contract.belongsTo(User, { foreignKey: "n_documento", targetKey: "n_documento" });
-// User.hasMany(Contract, { foreignKey: "n_documento", sourceKey: "n_documento" });
-
 
 // contract ---> plan
 Contract.belongsTo(Plan, { foreignKey: "name_plan" });
@@ -87,13 +83,14 @@ Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
 // Relaciones  Summary
 Summary.belongsTo(User, { foreignKey: 'n_documento', targetKey: 'n_documento', as: 'user' });
 Summary.belongsTo(Contract, { foreignKey: 'n_contrato', targetKey: 'n_contrato', as: 'contract' });
-Summary.hasMany(Bill, { foreignKey: 'summaryId', as: 'bills' });
-Summary.hasMany(DebitN, { foreignKey: 'summaryId', as: 'debitNotes' });
-Summary.hasMany(CreditN, { foreignKey: 'summaryId', as: 'creditNotes' });
-Summary.hasMany(Receipt, { foreignKey: 'summaryId', as: 'Receipts' });
+// Summary.hasMany(Bill, { foreignKey: 'summaryId', as: 'bills' });
+// Summary.hasMany(DebitN, { foreignKey: 'summaryId', as: 'debitNotes' });
+// Summary.hasMany(CreditN, { foreignKey: 'summaryId', as: 'creditNotes' });
+// Summary.hasMany(Cash, { foreignKey: 'summaryId', as: 'cashReceipts' });
 Bill.belongsTo(User, { foreignKey: 'party_identification', targetKey: 'n_documento'});
-User.hasMany(Cash, { foreignKey: 'n_documento' }); // Un usuario puede tener muchos recibos
-Cash.belongsTo(User, { foreignKey: 'n_documento' }); // Cada recibo pertenece a un usuario específico
+User.hasMany(Cash, { foreignKey: 'n_documento' }); 
+Bill.hasOne(CreditN, { foreignKey: 'billId', as: 'creditNote' });
+CreditN.belongsTo(Bill, { foreignKey: 'billId', as: 'bill' });
 
 //---------------------------------------------------------------------------------//
 module.exports = {

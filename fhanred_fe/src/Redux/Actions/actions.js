@@ -1,3 +1,6 @@
+import BASE_URL from '../../Config';
+
+
 import axios from "axios";
 import {
   SIGNIN_USER,
@@ -15,7 +18,7 @@ import {
 export const userInfo = (input) => async (dispatch) => {
   try {
     console.log('input: ', input)
-    const dataUser = await axios.post('http://localhost:3001/auth/login', input);
+    const dataUser = await axios.post('${BASE_URL}/auth/login', input);
     console.log('status: ', dataUser.status);
 
     if (!dataUser.data) {
@@ -40,7 +43,7 @@ export const userInfo = (input) => async (dispatch) => {
 
 export const getUsers = () => async (dispatch) => {
   try {
-    const {data} = await axios.get('http://localhost:3001/user');
+    const {data} = await axios.get('${BASE_URL}/user');
       dispatch({ type: GET_USERS, payload: data.data.users });
   } catch (error) {}
 };
@@ -48,7 +51,7 @@ export const getUsers = () => async (dispatch) => {
 export const createInvoice = (input) => async (dispatch) => {
   try {
     console.log('data formik: ', input)
-    const { data } = await axios.post('http://localhost:3001/contract', input);
+    const { data } = await axios.post('${BASE_URL}/contract', input);
     dispatch({ type: CREATE_INVOICE, payload: data });
     return { success: true }; // Indica que la solicitud fue exitosa
   } catch (error) {
@@ -59,7 +62,7 @@ export const createInvoice = (input) => async (dispatch) => {
 export const createUser = (input) => async (dispatch) => {
   try {
     const { data } = await axios.post(
-      "http://localhost:3001/auth/signup",
+      "${BASE_URL}/auth/signup",
       input
     );
     dispatch({ type: CREATE_USER, payload: data });
@@ -95,26 +98,25 @@ export const fetchContractDetailsFailure = (errorMessage) => ({
 
 export const fetchUserContracts = async (n_documento) => {
   try {
-    const response = await axios.get(`http://localhost:3001/user/${n_documento}`);
+    const response = await axios.get(`${BASE_URL}/user/${n_documento}`);
     console.log("Response data:", response.data);
     
-    const { Contracts, name_razonSocial } = response.data.data; // Cambio aquí: acceder a name_razonSocial
+    const { Contracts, name_razonSocial } = response.data.data; 
     console.log("Contracts:", Contracts);
-    console.log("name_razonSocial:", name_razonSocial); // Cambio aquí: console.log name_razonSocial
+    console.log("name_razonSocial:", name_razonSocial); 
     
     const activeContracts = Contracts.filter(contract => contract.estado_contrato === "ACTIVO");
-    return { contracts: activeContracts, name_razonSocial }; // Cambio aquí: devolver name_razonSocial
+    return { contracts: activeContracts, name_razonSocial }; 
   } catch (error) {
     console.error("Error al obtener los contratos del usuario:", error);
-    return { contracts: [], name_razonSocial: null }; // Cambio aquí: devolver name_razonSocial
+    return { contracts: [], name_razonSocial: null }; 
   }
 };
 
 export const fetchLastReceiptNumber = () => async (dispatch) => {
   try {
-    const response = await axios.get('http://localhost:3001/caja');
+    const response = await axios.get('${BASE_URL}/caja');
     const lastReceiptNumber = response.data.data[response.data.data.length - 1].receipt;
- // Obtener el último número de recibo
     console.log(lastReceiptNumber)
 
     const newReceipt = lastReceiptNumber + 1;
@@ -127,7 +129,7 @@ export const fetchLastReceiptNumber = () => async (dispatch) => {
     console.error("Error al generar el número de recibo:", error);
     dispatch({
       type: FETCH_LAST_RECEIPT_NUMBER_FAILURE,
-      payload: error.message // Puedes ajustar el payload según tus necesidades
+      payload: error.message 
     });
   }
 };
@@ -136,11 +138,10 @@ export const fetchLastReceiptNumber = () => async (dispatch) => {
 export const fetchContractDetails = async (n_contrato) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/contract/${n_contrato}`
+      `${BASE_URL}/contract/${n_contrato}`
     );
-    const { Plan, Delivery } = response.data.data; // Acceder a Plan y Delivery desde la respuesta
+    const { Plan, Delivery } = response.data.data; 
 
-    // Devolver un objeto con Plan, municipio y direccion
     return { Plan, municipio: Delivery.municipio, direccion: Delivery.direccion };
   } catch (error) {
     console.error("Error al obtener los detalles del contrato:", error);

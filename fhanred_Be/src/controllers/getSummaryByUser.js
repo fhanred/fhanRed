@@ -11,25 +11,22 @@ module.exports = async (req, res) => {
       return response(res, 404, 'Usuario no encontrado');
     }
 
-    // Obtener todas las facturas, notas de débito y recibos asociados al usuario
-    const [bills, debitNotes, receipts] = await Promise.all([
+    // Obtener todas las facturas, notas de débito, notas de crédito y recibos asociados al usuario
+    const [bills, debitNotes, creditNotes, cash] = await Promise.all([
       Bill.findAll({ where: { party_identification: n_documento } }),
       DebitN.findAll({ where: { party_identification: n_documento } }),
-      Cash.findAll({ where: { party_identification: n_documento } })
+      CreditN.findAll({ where: { party_identification: n_documento } }),
+      Cash.findAll({ where: { n_documento } })
     ]);
-
-    // Obtener todas las notas de crédito asociadas a las facturas
-    const creditNotes = await Promise.all(bills.map(async (bill) => {
-      const creditNotes = await CreditN.findAll({ where: { bill_id: bill.id } });
-      return creditNotes;
-    }));
-
+    console.log("Bills:", bills);
+    console.log("Debit Notes:", debitNotes);
+    console.log("Credit Notes:", creditNotes);
+    console.log("Cash:", cash);
     // Calcular el saldo
-    const totalBillAmount = bills.reduce((total, bill) => total + bill.amount, 0);
-    const totalDebitNoteAmount = debitNotes.reduce((total, debitNote) => total + debitNote.amount, 0);
-    const totalCreditNoteAmount = creditNotes.reduce((total, creditNoteList) =>
-      total + creditNoteList.reduce((subTotal, creditNote) => subTotal + creditNote.amount, 0), 0);
-    const totalReceiptAmount = receipts.reduce((total, receipt) => total + receipt.amount, 0);
+    const totalBillAmount = bills.reduce((total, bill) => total + bill.price, 0);
+    const totalDebitNoteAmount = debitNotes.reduce((total, debitNote) => total + debitNote.price, 0);
+    const totalCreditNoteAmount = creditNotes.reduce((total, creditNote) => total + creditNote.price, 0);
+    const totalReceiptAmount = cash.reduce((total, receipt) => total + receipt.importe, 0);
     const saldo = totalBillAmount + totalDebitNoteAmount - totalCreditNoteAmount - totalReceiptAmount;
 
     // Construir el objeto de resumen de cuenta
@@ -39,7 +36,7 @@ module.exports = async (req, res) => {
       bills,
       debitNotes,
       creditNotes,
-      receipts
+      cash
     };
 
     response(res, 200, summary);
