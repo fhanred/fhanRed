@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   SIGNIN_USER,
+  LOGOUT_USER,
   CLEAN_DETAIL,
   CREATE_INVOICE,
   INCREMENT_NUMBER_FACT,
@@ -18,12 +19,8 @@ export const userInfo = (input) => async (dispatch) => {
     const dataUser = await axios.post('http://localhost:3001/auth/login', input);
     console.log('status: ', dataUser.status);
 
-    if (!dataUser.data) {
-      return dispatch({ type: SIGNIN_USER, payload: { message: 'Respuesta inválida del servidor' } });
-    }
-
     if (!dataUser.status) {
-      return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+      return dispatch(cleanDetail());
     }
 
     if (dataUser.data.data && dataUser.data.data.token) {
@@ -34,9 +31,19 @@ export const userInfo = (input) => async (dispatch) => {
     }
   } catch (error) {
     console.error('Error en la solicitud:', error);
-    return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+    return dispatch(cleanDetail());
   }
 };
+
+export const logout = () => async (dispatch) => {
+    try {
+      const userLogout = { message: 'User is logout' }
+      dispatch({ type: LOGOUT_USER, payload: userLogout })
+      dispatch(cleanDetail())
+    } catch (error) {
+      console.error('Error: ', error)
+    }
+}
 
 export const getUsers = () => async (dispatch) => {
   try {
