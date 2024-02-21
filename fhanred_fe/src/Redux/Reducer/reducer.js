@@ -12,7 +12,8 @@ import {
   FETCH_CONTRACT_DETAILS_FAILURE,
   FETCH_LAST_RECEIPT_NUMBER,
   FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
-  FETCH_LAST_RECEIPT_NUMBER_FAILURE
+  FETCH_LAST_RECEIPT_NUMBER_FAILURE,
+  LOGOUT_USER
 } from '../Actions/actions-types';
 
 const initialState = {
@@ -31,6 +32,12 @@ const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN_USER:
       return {
+        ...state,
+        userInfo: action.payload,
+      };
+    case LOGOUT_USER:
+      return {
+        ...state,
         userInfo: action.payload,
       };
     case GET_USERS:
@@ -43,6 +50,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
       };
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        userInfo: {}
+      }
     case INCREMENT_NUMBER_FACT:
       return {
         ...state,
