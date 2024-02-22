@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 module.exports = async (req, res) => {
   const user = req.body;
-
+  console.log(user)
   // Verificar si apellidos y nombres están presentes en req.body
   if (user.apellidos && user.nombres) {
     // Concatenar apellidos y nombres en mayúsculas con una coma en el medio
