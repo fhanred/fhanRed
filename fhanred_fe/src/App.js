@@ -1,7 +1,4 @@
-import { useLocation, BrowserRouter, Switch, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { userInfo } from '../src/Redux/Actions/actions'
-import axios from 'axios';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import SignIn from './Views/Admin/SignIn/SignIn';
 import Home from './Views/Admin/Home/Home';
 import Navbar from './components/Navbar/Navbar';
@@ -21,30 +18,6 @@ import { links } from './data';
 
 
 function App() {
-  const dispatch = useDispatch();
-  const creditials = useSelector((state) => state.userInfo);
-
-  const handleLogin = async (userData) => {
-    const { email, password } = userData;
-    try {
-      const emailCapital = email.toUpperCase()
-      const infoUser = { email: emailCapital, password }
-      // const response = await axios.post('http://localhost:3001/auth/login', infoUser);
-      dispatch(userInfo(infoUser));
-      const data = creditials.data;
-      if(!data){
-        console.log(creditials)
-      }
-      if(data){
-        console.log('data: ', data)
-        return data;
-      }
-    } catch (error) {
-      console.error('se produjo un error: ', error)
-    }
-  }
-
-const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
 
   return (
     <BrowserRouter>
@@ -53,7 +26,7 @@ const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
         {/* {isAuthenticated && <NavbarItems links={links} />} */}
         <Switch>
           <Route exact path="/">
-          <SignIn login={handleLogin}/>
+          <SignIn/>
           </Route>
           <Route path="/forgotPassword">
             <ForgotPassword />

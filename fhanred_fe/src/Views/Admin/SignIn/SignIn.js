@@ -6,16 +6,20 @@ import { BsLock } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../../../Redux/Actions/actions';
+import { handleChange, login } from './funcs';
 
-function SignIn(login) {
+function SignIn() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const credentials = useSelector((state) => state.userInfo) 
   const [showPassword, setShowPassword] = useState(false);
+
   function handleClick1() {
     history.push('/signup');
   }
+
   const [errors, setErrors] = useState({
     email: '',
     password: '',
@@ -26,37 +30,8 @@ function SignIn(login) {
     password: '',
   });
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const property = e.target.name;
-
-    // Validación de email
-    if (property === 'email') {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        email: !value
-          ? 'Este campo es obligatorio. Por favor ingrese un correo electrónico.'
-          : !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value)
-          ? 'El correo no es válido.'
-          : '',
-      }));
-    }
-
-    // Validación de password
-    if (property === 'password') {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        password: !value
-          ? 'Este campo es obligatorio. Por favor ingrese una contraseña válida.'
-          : !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-              value
-            )
-          ? 'La contraseña debe tener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un carácter especial.'
-          : '',
-      }));
-    }
-
-    setInput({ ...input, [property]: value });
+  const handleInputChange = (e) => {
+    handleChange(e, setErrors, setInput, input);
   };
 
   const togglePasswordVisibility = () => {
@@ -71,7 +46,7 @@ function SignIn(login) {
         // Puedes dispatch aquí si es necesario
         // await dispatch(userInfo(input));
         // setInput({ email: '', password: '' });
-        const resp = await login(input)
+        const resp = await login(input, dispatch, credentials, userInfo)
         console.log('resp: ', resp.token)
         if(resp.token){
           history.push('/admin/home')
@@ -94,7 +69,7 @@ function SignIn(login) {
               value={input.email}
               name="email"
               placeholder="Correo electrónico"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handleInputChange(e)}
             />
             <p className={style.error}>{errors.email}</p>
           </label>
@@ -105,7 +80,7 @@ function SignIn(login) {
                 value={input.password}
                 name="password"
                 placeholder="Contraseña"
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => handleInputChange(e)}
               />
               {showPassword ? (
                 <MdOutlineRemoveRedEye

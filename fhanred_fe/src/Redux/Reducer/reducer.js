@@ -13,7 +13,9 @@ import {
   FETCH_SUMMARY_REQUEST,
   FETCH_SUMMARY_SUCCESS,
   FETCH_SUMMARY_FAILURE,
-} from "../Actions/actions-types";
+  LOGOUT_USER
+} from '../Actions/actions-types';
+
 
 const initialState = {
   userInfo: {},
@@ -43,6 +45,12 @@ const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN_USER:
       return {
+        ...state,
+        userInfo: action.payload,
+      };
+    case LOGOUT_USER:
+      return {
+        ...state,
         userInfo: action.payload,
       };
     case GET_USERS:
@@ -55,6 +63,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userInfo: action.payload,
       };
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        userInfo: {}
+      }
     case INCREMENT_NUMBER_FACT:
       return {
         ...state,
