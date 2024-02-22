@@ -16,6 +16,7 @@ import Billing from './Views/Admin/Billing/Billing';
 import Encashment from './Views/Admin/Encashment/Encashment';
 import IncomeList from './Views/Admin/Encashment/incomeList'
 import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
+import Summary from "./Views/Admin/Summary/Summary"
 import { links } from './data';
 
 
@@ -88,6 +89,9 @@ const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
                 </Route>
                 <Route path="/admin/caja">
                   <Encashment />
+                </Route>
+                <Route path="/admin/resumen">
+                  <Summary />
                 </Route>
                 <Route path="/admin/income">
                   <IncomeList />

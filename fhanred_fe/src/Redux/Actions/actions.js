@@ -12,7 +12,11 @@ import {
   FETCH_CONTRACT_DETAILS_SUCCESS,
   FETCH_CONTRACT_DETAILS_FAILURE,
   FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
-  FETCH_LAST_RECEIPT_NUMBER_FAILURE
+  FETCH_LAST_RECEIPT_NUMBER_FAILURE,
+  FETCH_SUMMARY_REQUEST,
+  FETCH_SUMMARY_SUCCESS,
+  FETCH_SUMMARY_FAILURE
+
 } from "./actions-types";
 
 export const userInfo = (input) => async (dispatch) => {
@@ -148,3 +152,92 @@ export const fetchContractDetails = async (n_contrato) => {
     return {};
   }
 };
+
+export const fetchSummary = (n_documento) => async (dispatch) => {
+  dispatch({ type: FETCH_SUMMARY_REQUEST });
+  try {
+    const response = await axios.get(`${BASE_URL}/summary/${n_documento}`);
+    const { bills, debitNotes, creditNotes, cash, user, saldo } = response.data.data;
+   
+    console.log("Response data:", response.data)
+   
+    const formattedBills = formatBills(bills);
+    const formattedDebitNotes = formatDebitNotes(debitNotes);
+    const formattedCreditNotes = formatCreditNotes(creditNotes);
+    const formattedCash = formatCash(cash);
+    
+
+    
+    dispatch({
+      type: FETCH_SUMMARY_SUCCESS,
+      payload: {
+        user,
+        saldo,
+        formattedBills,
+        formattedDebitNotes,
+        formattedCreditNotes,
+        formattedCash
+      }
+    });
+  } catch (error) {
+    dispatch({ type: FETCH_SUMMARY_FAILURE, payload: error.message });
+  }
+};
+
+
+const formatBills = (bills) => {
+  console.log("Bills data:", bills);
+  return bills.map((bill) => ({
+    type: 'Bill',
+    date: bill.issue_date,
+    amount: bill.price,
+    qrUrl: extractQRUrl(bill.qrcode)
+  }));
+};
+
+const formatDebitNotes = (debitNotes) => {
+  console.log("DebitNotes data:", debitNotes);
+  return debitNotes.map((debitNotes) => ({
+    type: 'DebitN',
+    date: debitNotes.issue_date,
+    amount: debitNotes.price,
+    qrUrl: extractQRUrl(debitNotes.qrcode)
+    }))
+  };
+
+const formatCreditNotes = (creditNotes) => {
+  console.log("CreditNotes data:", creditNotes);
+  return creditNotes.map((creditNotes) => ({
+    type: 'CreditN',
+    date: creditNotes.issue_date,
+    amount: creditNotes.price,
+    qrUrl: extractQRUrl(creditNotes.qrcode)
+    }));
+  };
+
+const formatCash = (cash) => {
+  return cash.map((cash) => ({
+    type: 'Cash',
+    date: cash.issue_date,
+    amount: cash.price  }));
+  };
+
+  const extractQRUrl = (qrcode) => {
+    const matches = qrcode.match(/QRCode=(.*)/);
+    return matches ? matches[1] : null;
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
