@@ -12,7 +12,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_DEPLOY } = require("
 //   }
 // );
 // -------------------------------------CONFIGURACION PARA EL DEPLOY---------------------------------------------------------------------
-const sequelize = new Sequelize('postgres://fhanred_user:krA4e8Qh5jcdd1uJRDFa2Zuq3smnrXJH@dpg-cmg645la73kc73f7oka0-a/fhanred', {
+const sequelize = new Sequelize("postgres://default:vj4ZAeDJCrI1@ep-silent-limit-a433bmkv.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require", {
       logging: false, // set to console.log to see the raw SQL queries
       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
     }
