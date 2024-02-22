@@ -6,6 +6,7 @@ import { Formik, Field, Form, ErrorMessage, ResetForm } from "formik";
 import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
 import * as Yup from "yup";
 import { format } from "date-fns";
+import BASE_URL from "../../../Config"
 
 import {
   fetchContractDetails,
@@ -116,7 +117,7 @@ function Encashment() {
  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       // Hacer la solicitud HTTP POST al backend
-      const response = await axios.post("http://localhost:3001/caja", values);
+      const response = await axios.post(`${BASE_URL}/caja`, values);
       // Manejar la respuesta del backend según sea necesario
       console.log("Respuesta del backend:", response.data);
       // Actualizar el estado de Redux con el nuevo número de recibo
