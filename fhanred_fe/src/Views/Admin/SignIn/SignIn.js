@@ -16,6 +16,7 @@ function SignIn() {
   const credentials = useSelector((state) => state.userInfo) 
   const [showPassword, setShowPassword] = useState(false);
 
+
   function handleClick1() {
     history.push('/signup');
   }
@@ -47,8 +48,7 @@ function SignIn() {
         // await dispatch(userInfo(input));
         // setInput({ email: '', password: '' });
         const resp = await login(input, dispatch, credentials, userInfo)
-        console.log('resp: ', resp.token)
-        if(resp.token){
+        if(credentials.data){
           history.push('/admin/home')
         }
       } catch (error) {

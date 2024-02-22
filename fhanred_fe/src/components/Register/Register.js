@@ -1,13 +1,13 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import { RiEyeCloseLine } from 'react-icons/ri';
-import { FaUser } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import './Register.css';
-import { createUser } from '../../Redux/Actions/actions';
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import "./Register.css";
+import { createUser } from "../../Redux/Actions/actions";
 
 function Register() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function Register() {
     let errorTimeout;
 
     // Si el submissionResult es 'error', establece un temporizador para limpiar el estado después de 2 segundos
-    if (submissionResult === 'error') {
+    if (submissionResult === "error") {
       errorTimeout = setTimeout(() => {
         setSubmissionResult(null); // Limpiar el estado después de 2 segundos
       }, 2000);
@@ -39,66 +39,66 @@ function Register() {
     <div className="containerRegister">
       <Formik
         initialValues={{
-          tipo_persona: 'none',
-          razonSocial: '',
-          apellidos: '',
-          nombres: '',
-          tipo_documento: '',
-          n_documento: '',
-          fecha_cumple: '',
-          sexo: 'none',
-          email: '',
-          password: '',
+          tipo_persona: "none",
+          razonSocial: "",
+          apellidos: "",
+          nombres: "",
+          tipo_documento: "",
+          n_documento: "",
+          fecha_cumple: "",
+          sexo: "none",
+          email: "",
+          password: "",
         }}
         validate={(values) => {
           let errors = {};
           // Validación de apellidos
-          if (values.tipo_persona === 'P.NATURAL' && !values.apellidos) {
+          if (values.tipo_persona === "P.NATURAL" && !values.apellidos) {
             errors.apellidos =
-              'Este campo es obligatorio. Por favor ingrese sus apellidos';
+              "Este campo es obligatorio. Por favor ingrese sus apellidos";
           } else {
             const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
             if (!nameRegex.test(values.apellidos)) {
               errors.apellidos =
-                'Este campo solo puede contener letras y espacios';
+                "Este campo solo puede contener letras y espacios";
             }
           }
 
           // Validación de nombres
-          if (values.tipo_persona === 'P.NATURAL' && !values.nombres) {
+          if (values.tipo_persona === "P.NATURAL" && !values.nombres) {
             errors.nombres =
-              'Este campo es obligatorio. Por favor ingrese sus nombres';
+              "Este campo es obligatorio. Por favor ingrese sus nombres";
           } else {
             const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
             if (!nameRegex.test(values.nombres)) {
               errors.nombres =
-                'Este campo solo puede contener letras y espacios';
+                "Este campo solo puede contener letras y espacios";
             }
           }
 
           // Validación de email
           if (!values.email) {
             errors.email =
-              'Este campo es obligatorio. Por favor ingrese un correo electronico';
+              "Este campo es obligatorio. Por favor ingrese un correo electronico";
           } else if (
             !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
               values.email
             )
           ) {
-            errors.email = 'El correo no es valido';
+            errors.email = "El correo no es valido";
           }
 
           // validacion de password
           if (!values.password) {
             errors.password =
-              'Este campo es obligatorio. por favor ingrese una contraseña valida.';
+              "Este campo es obligatorio. por favor ingrese una contraseña valida.";
           } else if (
             !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
               values.password
             )
           ) {
             errors.password =
-              'La contraseña debe tener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un carácter especial.';
+              "La contraseña debe tener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un carácter especial.";
           }
 
           // validacion fecha cumpleaños
@@ -106,10 +106,10 @@ function Register() {
             const datePattern = /^(\d{4})-(\d{2})-(\d{2})$/;
             if (!datePattern.test(values.fecha_cumple)) {
               errors.fecha_cumple =
-                'Fecha no válida. El formato debe ser YYYY-MM-DD.';
+                "Fecha no válida. El formato debe ser YYYY-MM-DD.";
             } else {
               const [year, month, day] = values.fecha_cumple
-                .split('-')
+                .split("-")
                 .map(Number);
               if (
                 day <= 0 ||
@@ -117,65 +117,65 @@ function Register() {
                 month <= 0 ||
                 month > 12 // Mes válido entre 1 y 12
               ) {
-                errors.fecha_cumple = 'Fecha no válida. Verifique día y mes.';
+                errors.fecha_cumple = "Fecha no válida. Verifique día y mes.";
               }
             }
           } else {
             errors.fecha_cumple =
-              'Este campo es obligatorio. Por favor, ingrese una fecha.';
+              "Este campo es obligatorio. Por favor, ingrese una fecha.";
           }
 
           //validacion razonSocial
-          if (values.tipo_persona === 'P.JURIDICA' && !values.razonSocial) {
+          if (values.tipo_persona === "P.JURIDICA" && !values.razonSocial) {
             errors.razonSocial =
-              'Este campo es obligatorio. por favor ingrese el nombre de la razón social';
+              "Este campo es obligatorio. por favor ingrese el nombre de la razón social";
           }
 
           // validacion tipo de documento
-          if (values.tipo_documento === 'none') {
+          if (values.tipo_documento === "none") {
             errors.tipo_documento =
-              'Este campo es obligatorio. Por favor seleccione una opción';
+              "Este campo es obligatorio. Por favor seleccione una opción";
           }
 
           // validacion numero de documento
-          if (!values.n_documento || values.n_documento.trim() === '') {
+          if (!values.n_documento || values.n_documento.trim() === "") {
             errors.n_documento =
-              'Este campo es obligatorio. Por favor ingrese el número de identificación';
+              "Este campo es obligatorio. Por favor ingrese el número de identificación";
           } else if (!/^[a-zA-Z0-9]+$/.test(values.n_documento)) {
             errors.n_documento =
-              'El numero de documento no debe contener caracteres especiales ni espacios';
+              "El numero de documento no debe contener caracteres especiales ni espacios";
           }
 
           // validacion tipo de persona
-          if (values.tipo_persona === 'none') {
+          if (values.tipo_persona === "none") {
             errors.tipo_persona =
-              'Este campo es obligatorio. Por favor seleccione una opción';
+              "Este campo es obligatorio. Por favor seleccione una opción";
           }
 
           // validacion genero
-          if (values.sexo === 'none') {
+          if (values.sexo === "none") {
             errors.sexo =
-              'Este campo es obligatorio. Por favor seleccione una opción';
+              "Este campo es obligatorio. Por favor seleccione una opción";
           }
           return errors;
         }}
         onSubmit={async (values, { resetForm, setSubmitting }) => {
           try {
             const response = await dispatch(createUser(values));
-
+            console.log(values);
             if (response.success) {
-              setSubmissionResult('success');
+              setSubmissionResult("success");
               resetForm();
               setTimeout(() => {
                 setSubmissionResult(null); // Reinicia el estado después de un cierto tiempo
-                history.push('/');
+                history.push("/");
               }, 2000); // Tiempo en milisegundos
             } else {
-              setSubmissionResult('error');
-              console.error(response.message);
+              setSubmissionResult("error");
+              console.error(response.errorMessage);
             }
           } catch (error) {
-            console.error('Hubo un error al enviar el formulario:', error);
+            console.error("Hubo un error al enviar el formulario:", error);
             // Manejo adicional de errores si es necesario
           } finally {
             setSubmitting(false);
@@ -200,13 +200,13 @@ function Register() {
                       as="select"
                       className="select"
                     >
-                      <option value={'none'} className="option">
+                      <option value={"none"} className="option">
                         Selecciona una opción
                       </option>
-                      <option value={'P.JURIDICA'} className="option">
+                      <option value={"P.JURIDICA"} className="option">
                         Jurídica
                       </option>
-                      <option value={'P.NATURAL'} className="option">
+                      <option value={"P.NATURAL"} className="option">
                         Natural
                       </option>
                     </Field>
@@ -222,7 +222,7 @@ function Register() {
                     )}
                   />
                 </p>
-                {values.tipo_persona === 'P.NATURAL' && (
+                {values.tipo_persona === "P.NATURAL" && (
                   <div className="reg-div">
                     <div className="item9">
                       <label htmlFor="apellidos" className="label-reg">
@@ -251,7 +251,7 @@ function Register() {
                   />
                 </p>
 
-                {values.tipo_persona === 'P.NATURAL' && (
+                {values.tipo_persona === "P.NATURAL" && (
                   <div className="reg-div">
                     <div className="item9">
                       <label htmlFor="nombres" className="label-reg">
@@ -278,7 +278,7 @@ function Register() {
                   />
                 </p>
 
-                {values.tipo_persona === 'P.JURIDICA' && (
+                {values.tipo_persona === "P.JURIDICA" && (
                   <div className="reg-div">
                     <div className="item3">
                       <label htmlFor="razonSocial" className="label-reg">
@@ -320,19 +320,19 @@ function Register() {
                       as="select"
                       className="select"
                     >
-                      <option value={'none'} className="option">
+                      <option value={"none"} className="option">
                         Selecciona una opción
                       </option>
-                      <option value={'CC'} className="option">
+                      <option value={"CC"} className="option">
                         CC
                       </option>
-                      <option value={'CE'} className="option">
+                      <option value={"CE"} className="option">
                         CE
                       </option>
-                      <option value={'NIT'} className="option">
+                      <option value={"NIT"} className="option">
                         NIT
                       </option>
-                      <option value={'PP'} className="option">
+                      <option value={"PP"} className="option">
                         PP
                       </option>
                     </Field>
@@ -349,17 +349,17 @@ function Register() {
                     )}
                   />
                 </p>
-                {values.tipo_persona === 'P.JURIDICA' ||
-                values.tipo_persona === 'P.NATURAL' ? (
+                {values.tipo_persona === "P.JURIDICA" ||
+                values.tipo_persona === "P.NATURAL" ? (
                   <div className="form-div-doc">
-                    {values.tipo_documento === 'NIT' && (
+                    {values.tipo_documento === "NIT" && (
                       <p className="verification-note">
                         NO debe registrar el DV, no debe enviar caracteres
                         especiales como espacios o letras
                       </p>
                     )}
-                    {values.tipo_documento !== 'NIT' &&
-                      values.tipo_documento !== '' && (
+                    {values.tipo_documento !== "NIT" &&
+                      values.tipo_documento !== "" && (
                         <p className="verification-note">
                           NO debe enviar caracteres especiales como espacios o
                           letras
@@ -402,13 +402,13 @@ function Register() {
                   </div>
                   <div>
                     <Field id="sexo" name="sexo" as="select" className="select">
-                      <option value={'none'} className="option">
+                      <option value={"none"} className="option">
                         Selecciona una opción
                       </option>
-                      <option value={'M'} className="option">
+                      <option value={"M"} className="option">
                         Masculino
                       </option>
-                      <option value={'F'} className="option">
+                      <option value={"F"} className="option">
                         Femenino
                       </option>
                     </Field>
@@ -482,7 +482,7 @@ function Register() {
                   </div>
                   <div>
                     <Field
-                      type={showPassword ? 'text' : 'password'}
+                      type={showPassword ? "text" : "password"}
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -524,12 +524,12 @@ function Register() {
                   </label>
                 </div>
               </div>
-              {submissionResult === 'success' && (
+              {submissionResult === "success" && (
                 <div className="message-container">
                   <div className="success">El registro fue exitoso!.</div>
                 </div>
               )}
-              {submissionResult === 'error' && (
+              {submissionResult === "error" && (
                 <div className="message-container">
                   <div className="error">
                     'El registro NO fue exitoso. Inténtelo nuevamente.'

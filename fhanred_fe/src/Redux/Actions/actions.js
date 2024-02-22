@@ -23,7 +23,7 @@ import {
 export const userInfo = (input) => async (dispatch) => {
   try {
     console.log('input: ', input)
-    const dataUser = await axios.post('${BASE_URL}/auth/login', input);
+    const dataUser = await axios.post(`${BASE_URL}/auth/login`, input);
     console.log('status: ', dataUser.status);
 
     if (!dataUser.status) {
@@ -54,7 +54,7 @@ export const logout = () => async (dispatch) => {
 
 export const getUsers = () => async (dispatch) => {
   try {
-    const {data} = await axios.get('${BASE_URL}/user');
+    const {data} = await axios.get(`${BASE_URL}/user`);
       dispatch({ type: GET_USERS, payload: data.data.users });
   } catch (error) {}
 };
@@ -62,7 +62,7 @@ export const getUsers = () => async (dispatch) => {
 export const createInvoice = (input) => async (dispatch) => {
   try {
     console.log('data formik: ', input)
-    const { data } = await axios.post('${BASE_URL}/contract', input);
+    const { data } = await axios.post(`${BASE_URL}/contract`, input);
     dispatch({ type: CREATE_INVOICE, payload: data });
     return { success: true }; // Indica que la solicitud fue exitosa
   } catch (error) {
@@ -72,8 +72,8 @@ export const createInvoice = (input) => async (dispatch) => {
 
 export const createUser = (input) => async (dispatch) => {
   try {
-    const { data } = await axios.post(
-      "${BASE_URL}/auth/signup",
+    const { data } = await axios.post(      
+      `${BASE_URL}/auth/signup`,
       input
     );
     dispatch({ type: CREATE_USER, payload: data });
@@ -126,7 +126,7 @@ export const fetchUserContracts = async (n_documento) => {
 
 export const fetchLastReceiptNumber = () => async (dispatch) => {
   try {
-    const response = await axios.get('${BASE_URL}/caja');
+    const response = await axios.get(`${BASE_URL}/caja`);
     const lastReceiptNumber = response.data.data[response.data.data.length - 1].receipt;
     console.log(lastReceiptNumber)
 
