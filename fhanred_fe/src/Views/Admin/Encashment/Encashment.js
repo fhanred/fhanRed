@@ -26,13 +26,12 @@ function Encashment() {
   const [showPDF, setShowPDF] = useState(false);
   const [userContracts, setUserContracts] = useState([]);
   const [name_razonSocial, setNameRazonSocial] = useState("");
- 
+
  
 
 
   const initialValues = {
-    receipt: lastReceiptNumber !== null ? lastReceiptNumber.toString() : "1", // Valor predeterminado como "1" si lastReceiptNumber es null
-    contract: "",
+    receipt: lastReceiptNumber !== null ? lastReceiptNumber.toString() : "1", 
     paymentDate: format(new Date(), "yyyy-MM-dd"),
     paymentTime: format(new Date(), "HH:mm"),
     n_documento: "",
@@ -62,7 +61,6 @@ function Encashment() {
   });
 
   useEffect(() => {
-    // Obtener el último número de recibo al montar el formulario
     dispatch(fetchLastReceiptNumber());
   }, [dispatch]);
 
@@ -116,7 +114,7 @@ function Encashment() {
 
  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      // Hacer la solicitud HTTP POST al backend
+      
       const response = await axios.post(`${BASE_URL}/caja`, values);
       // Manejar la respuesta del backend según sea necesario
       console.log("Respuesta del backend:", response.data);
@@ -370,6 +368,7 @@ function Encashment() {
             <button
               onClick={() => {
                 if (!loading) {
+                  console.log("Botón de descarga PDF clickeado");
                   setShowPDF(false);
                 }
               }}

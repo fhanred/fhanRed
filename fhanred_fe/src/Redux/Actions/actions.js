@@ -1,6 +1,5 @@
 import BASE_URL from '../../Config';
 
-
 import axios from "axios";
 import {
   SIGNIN_USER,
@@ -127,7 +126,7 @@ export const fetchUserContracts = async (n_documento) => {
 export const fetchLastReceiptNumber = () => async (dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/caja`);
-    const lastReceiptNumber = response.data.data[response.data.data.length - 1].receipt;
+    const lastReceiptNumber = response.data.data.newIngreso.receipt;
     console.log(lastReceiptNumber)
 
     const newReceipt = lastReceiptNumber + 1;
