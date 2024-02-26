@@ -15,6 +15,7 @@ import IncomeList from './Views/Admin/Encashment/incomeList'
 import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
 import Summary from "./Views/Admin/Summary/Summary"
 import { links } from './data';
+import PDFViewer from './Views/Admin/Encashment/PDFViewer'
 
 
 function App() {
@@ -61,7 +62,10 @@ function App() {
                   <Billing />
                 </Route>
                 <Route path="/admin/caja">
-                  <Encashment />
+                  <Encashment/>
+                  </Route>
+                  <Route path="/admin/caja/pdf">
+                  <PDFViewer/>  
                 </Route>
                 <Route path="/admin/resumen">
                   <Summary />

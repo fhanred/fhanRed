@@ -1,6 +1,5 @@
 import BASE_URL from '../../Config';
 
-
 import axios from "axios";
 import {
   SIGNIN_USER,
@@ -16,7 +15,11 @@ import {
   FETCH_LAST_RECEIPT_NUMBER_FAILURE,
   FETCH_SUMMARY_REQUEST,
   FETCH_SUMMARY_SUCCESS,
-  FETCH_SUMMARY_FAILURE
+  FETCH_SUMMARY_FAILURE,
+  CLEAN_CONTRACT_DETAILS,
+  SEND_PAYMENT_REQUEST,
+  SEND_PAYMENT_SUCCESS,
+  SEND_PAYMENT_FAILURE
 
 } from "./actions-types";
 
@@ -127,14 +130,16 @@ export const fetchUserContracts = async (n_documento) => {
 export const fetchLastReceiptNumber = () => async (dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/caja`);
-    const lastReceiptNumber = response.data.data[response.data.data.length - 1].receipt;
-    console.log(lastReceiptNumber)
+    const receipts = response.data.data; // Obtener el arreglo de recibos
 
-    const newReceipt = lastReceiptNumber + 1;
+    
+    const lastReceiptNumber = receipts.reduce((maxReceipt, currentReceipt) => {
+      return Math.max(maxReceipt, currentReceipt.receipt);
+    }, 0);
 
     dispatch({
       type: FETCH_LAST_RECEIPT_NUMBER_SUCCESS,
-      payload: newReceipt
+      payload: lastReceiptNumber
     });
   } catch (error) {
     console.error("Error al generar el número de recibo:", error);
@@ -159,6 +164,9 @@ export const fetchContractDetails = async (n_contrato) => {
     return {};
   }
 };
+export const cleanContract = () => ({
+  type: CLEAN_CONTRACT_DETAILS,
+});
 
 export const fetchSummary = (n_documento) => async (dispatch) => {
   dispatch({ type: FETCH_SUMMARY_REQUEST });
@@ -173,7 +181,6 @@ export const fetchSummary = (n_documento) => async (dispatch) => {
     const formattedCreditNotes = formatCreditNotes(creditNotes);
     const formattedCash = formatCash(cash);
     
-
     
     dispatch({
       type: FETCH_SUMMARY_SUCCESS,
@@ -195,6 +202,7 @@ export const fetchSummary = (n_documento) => async (dispatch) => {
 const formatBills = (bills) => {
   console.log("Bills data:", bills);
   return bills.map((bill) => ({
+    id: bill.id,
     type: 'Bill',
     date: bill.issue_date,
     amount: bill.price,
@@ -205,6 +213,7 @@ const formatBills = (bills) => {
 const formatDebitNotes = (debitNotes) => {
   console.log("DebitNotes data:", debitNotes);
   return debitNotes.map((debitNotes) => ({
+    id: debitNotes.id,
     type: 'DebitN',
     date: debitNotes.issue_date,
     amount: debitNotes.price,
@@ -215,18 +224,25 @@ const formatDebitNotes = (debitNotes) => {
 const formatCreditNotes = (creditNotes) => {
   console.log("CreditNotes data:", creditNotes);
   return creditNotes.map((creditNotes) => ({
-    type: 'CreditN',
+    id: creditNotes.id,    type: 'CreditN',
     date: creditNotes.issue_date,
     amount: creditNotes.price,
     qrUrl: extractQRUrl(creditNotes.qrcode)
     }));
   };
 
-const formatCash = (cash) => {
-  return cash.map((cash) => ({
-    type: 'Cash',
-    date: cash.issue_date,
-    amount: cash.price  }));
+  const formatCash = (cash) => {
+    console.log("Data received in formatCash:", cash); // Verifica los datos recibidos dentro de formatCash
+  
+    const formattedCash = cash.map((cashItem) => ({
+      type: 'Cash',
+      date: cashItem.paymentDate, // Asegúrate de que el campo de fecha sea correcto
+      amount: cashItem.importe  // Asegúrate de que el campo de monto sea correcto
+    }));
+  
+    console.log("Formatted Cash:", formattedCash); // Verifica los datos formateados antes de devolverlos
+  
+    return formattedCash;
   };
 
   const extractQRUrl = (qrcode) => {
@@ -234,14 +250,40 @@ const formatCash = (cash) => {
     return matches ? matches[1] : null;
   };
 
+  export const sendPayment = (values) => {
+    return async (dispatch) => {
+      dispatch({ type: SEND_PAYMENT_REQUEST });
+      try {
+        const response = await axios.post(`${BASE_URL}/caja`, values);
+        dispatch({ type: SEND_PAYMENT_SUCCESS, payload: response.data });
+      } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+        dispatch({ type: SEND_PAYMENT_FAILURE, payload: error.message });
+      }
+    };
+  };
+  
 
 
-
-
-
-
-
-
+//   [
+//     {
+//         "receipt": 1,
+//         "contract": "60",
+//         "paymentDate": "2024-02-22T00:00:00.000Z",
+//         "paymentTime": "17:23",
+//         "username": "GUERRA TRUJILLO, NICOLAS ",
+//         "municipio": "CUMARAL",
+//         "direccion": "MANZANA A .CASA 19 ESTRATO 1",
+//         "importe": 66000,
+//         "description": "7 MG - PLATA",
+//         "paymentMethod": "Davivienda",
+//         "cashierName": "mariam",
+//         "createdAt": "2024-02-22T20:23:57.466Z",
+//         "updatedAt": "2024-02-22T20:23:57.466Z",
+//         "n_documento": "1119889568"
+//     },
+   
+// ]
 
 
 
