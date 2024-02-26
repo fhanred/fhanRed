@@ -6,13 +6,15 @@ import { Formik, Field, Form, ErrorMessage, ResetForm } from "formik";
 import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
 import * as Yup from "yup";
 import { format } from "date-fns";
-import BASE_URL from "../../../Config"
+import BASE_URL from "../../../Config";
+
 
 import {
   fetchContractDetails,
   fetchUserContracts,
   getUsers,
-  fetchLastReceiptNumber
+  fetchLastReceiptNumber,
+  
 } from "../../../Redux/Actions/actions";
 
 function Encashment() {
@@ -26,27 +28,26 @@ function Encashment() {
   const [showPDF, setShowPDF] = useState(false);
   const [userContracts, setUserContracts] = useState([]);
   const [name_razonSocial, setNameRazonSocial] = useState("");
-
- 
+  const [response, setResponse] =useState("")
+  
 
 
   const initialValues = {
-    receipt: lastReceiptNumber !== null ? lastReceiptNumber.toString() : "1", 
+    receipt: lastReceiptNumber !== null ? lastReceiptNumber.toString() : "1",
     paymentDate: format(new Date(), "yyyy-MM-dd"),
     paymentTime: format(new Date(), "HH:mm"),
     n_documento: "",
     username: "",
     municipio: "",
-    direccion: "", 
+    direccion: "",
     importe: "",
     description: "",
     paymentMethod: "",
     cashierName: "", //una vez implementado auth  userRole === 2 || userRole === 3 ? userName : ""
   };
-  console.log(lastReceiptNumber)
+  console.log(lastReceiptNumber);
 
   const validationSchema = Yup.object().shape({
-   
     contract: Yup.string().required("Este campo es obligatorio"),
     paymentDate: Yup.date().required("Este campo es obligatorio"),
     paymentTime: Yup.string().required("Este campo es obligatorio"),
@@ -72,39 +73,37 @@ function Encashment() {
   //   }
   // }, [userRole, history]);
 
-  
   const handleDocumentChange = async (e, formikProps) => {
     try {
       const { value } = e.target;
       formikProps.handleChange(e);
+
+      setUserContracts([]);
+
       const { contracts, name_razonSocial } = await fetchUserContracts(value);
-      setUserContracts(contracts);   
+      setUserContracts(contracts);
       formikProps.setFieldValue("username", name_razonSocial);
       setNameRazonSocial(name_razonSocial);
-      console.log("name_razonSocial actualizado:", name_razonSocial); 
+      console.log("name_razonSocial actualizado:", name_razonSocial);
     } catch (error) {
       console.error("Error al obtener los contratos del usuario:", error);
-     
     }
   };
- 
   const handleContractChange = async (e, formikProps) => {
     const { value } = e.target;
-    console.log("Valor seleccionado del contrato:", value);
-    
+
     formikProps.setFieldValue("contract", value);
     try {
-     
       const contractDetails = await fetchContractDetails(value);
       console.log("Detalles del contrato seleccionado:", contractDetails);
-      
+
       formikProps.setFieldValue("description", contractDetails.Plan.name_plan);
       const importeString = contractDetails.Plan.costo
         .replace(/\./g, "")
         .replace(",", ".");
       const importe = parseFloat(importeString);
       formikProps.setFieldValue("importe", importe);
-     
+
       formikProps.setFieldValue("municipio", contractDetails.municipio);
       formikProps.setFieldValue("direccion", contractDetails.direccion);
     } catch (error) {
@@ -112,29 +111,30 @@ function Encashment() {
     }
   };
 
- const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      
       const response = await axios.post(`${BASE_URL}/caja`, values);
-      // Manejar la respuesta del backend según sea necesario
+     
+      console.log(response)
+
       console.log("Respuesta del backend:", response.data);
-      // Actualizar el estado de Redux con el nuevo número de recibo
+
+      const newIngreso = response.data.newIngreso;
+      setResponse(newIngreso);
+      
       dispatch(fetchLastReceiptNumber());
       setShowPDF(true);
-      // Resetear el formulario después de enviar el pago
+     
       resetForm();
+      console.log("Generando PDF...");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
     // Marcar el formulario como no enviado
     setSubmitting(false);
-};
-
-
-  
-  const handleShowIncome = () => {
-    // Tu lógica para manejar la visualización de ingresos
   };
+
+  console.log("antes de pdf: " , response)
   return (
     <div className="container">
       {selectedOption ? null : <h2>Seleccione el tipo de movimiento:</h2>}
@@ -154,11 +154,15 @@ function Encashment() {
             <Form>
               {selectedOption === "Ingreso" && (
                 <>
-                <div className="input">
-              <label htmlFor="receipt">Número de Recibo:</label>
-              <Field type="text" id="receipt" name="receipt" />
-              <ErrorMessage name="receipt" component="div" className="error-message" />
-            </div>
+                  <div className="input">
+                    <label htmlFor="receipt">Número de Recibo:</label>
+                    <Field type="text" id="receipt" name="receipt" />
+                    <ErrorMessage
+                      name="receipt"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
                   <div className="input">
                     <label htmlFor="paymentDate">Fecha de Pago:</label>
                     <Field
@@ -207,11 +211,10 @@ function Encashment() {
                       id="contract"
                       name="contract"
                       onChange={(e) => {
-                        // Llama al manejador para el cambio en el contrato seleccionado
                         handleContractChange(e, formikProps);
                       }}
                     >
-                      <option value="">Seleccione Contrato</option>
+                      <option value="">Aplica a:</option>
                       {userContracts?.map((contract) => (
                         <option
                           key={contract.n_contrato}
@@ -338,58 +341,30 @@ function Encashment() {
                   <PDFDownloadLink
                     document={
                       <Document>
-                        <Page>
-                          <Text>Detalles del Pago:</Text>
-                          <Text>
-                            Número de Recibo: {formikProps.values.receipt}
-                          </Text>
-                          <Text>Importe: {formikProps.values.importe}</Text>
-                          <Text>contract: {formikProps.values.contract}</Text>
-                          <Text>
-                            paymentDate: {formikProps.values.paymentDate}
-                          </Text>
-                          <Text>
-                            paymentTime: {formikProps.values.paymentTime}
-                          </Text>
-                          <Text>username: {formikProps.values.username}</Text>
-                          <Text>importe: {formikProps.values.importe}</Text>
-                          <Text>
-                            description: {formikProps.values.description}
-                          </Text>
-                          <Text>
-                            paymentMethod: {formikProps.values.paymentMethod}
-                          </Text>
-                        </Page>
-                      </Document>
+      <Page>
+        <Text>Detalles del Pago:</Text>
+        <Text>Número de Recibo: {response && response.receipt}</Text>
+        <Text>Fecha de Pago: {response && response.paymentDate}</Text>
+        <Text>Usuario: {response && response.username}</Text>
+        <Text>Importe: {response && response.importe}</Text>
+        <Text>Descripción: {response && response.description}</Text>
+        <Text>Método de Pago: {response && response.paymentMethod}</Text>
+        <Text>Cajero: {response && response.cashierName}</Text>
+        <Text>Contrato: {response && response.contract}</Text>
+      </Page>
+    </Document>
                     }
                     fileName="recibo_pago.pdf"
                   >
-                   {({ loading }) => (
-            <button
-              onClick={() => {
-                if (!loading) {
-                  console.log("Botón de descarga PDF clickeado");
-                  setShowPDF(false);
-                }
-              }}
-            >
-              {loading ? "Generando PDF..." : "Descargar PDF"}
-            </button>
-          )}
-        </PDFDownloadLink>
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Generando PDF..." : "Descargar PDF"
+                    }
+                  </PDFDownloadLink>
                 )}
               </div>
             </Form>
           )}
         </Formik>
-      )}
-      {!selectedOption && !showIncome && (
-        <button onClick={handleShowIncome}>Ver Movimientos de Ingresos</button>
-      )}
-      {showIncome && (
-        <div className="ingresos-section">
-          {/* <IncomeList ingresos={income} /> */}
-        </div>
       )}
     </div>
   );

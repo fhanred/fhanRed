@@ -13,7 +13,12 @@ import {
   FETCH_SUMMARY_REQUEST,
   FETCH_SUMMARY_SUCCESS,
   FETCH_SUMMARY_FAILURE,
-  LOGOUT_USER
+  LOGOUT_USER,
+  CLEAN_CONTRACT_DETAILS,
+  SEND_PAYMENT_REQUEST, 
+  SEND_PAYMENT_SUCCESS, 
+  SEND_PAYMENT_FAILURE
+
 } from '../Actions/actions-types';
 
 
@@ -37,6 +42,7 @@ const initialState = {
       error: null,
     
   },
+  paymentDetails: null,
   loading: false,
   error: null,
 };
@@ -129,6 +135,20 @@ const rootReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+      case CLEAN_CONTRACT_DETAILS:
+  return {
+    ...state,
+    contractDetails: null, 
+  };
+  case SEND_PAYMENT_REQUEST:
+    
+      return { ...state, loading: true, error: null, paymentDetails: null };
+    case SEND_PAYMENT_SUCCESS:
+      console.log('SEND_PAYMENT_SUCCESS action:', action);
+      return { ...state, loading: false, paymentDetails: action.payload.newIngreso };
+    case SEND_PAYMENT_FAILURE:
+      console.log('SEND_PAYMENT_FAILURE action:', action);
+      return { ...state, loading: false, error: action.payload };
 
     default:
       return state;

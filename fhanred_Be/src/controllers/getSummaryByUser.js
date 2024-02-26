@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
       return response(res, 404, 'Usuario no encontrado');
     }
 
-    // Obtener todas las facturas, notas de débito, notas de crédito y recibos asociados al usuario
+    
     const [bills, debitNotes, creditNotes, cash] = await Promise.all([
       Bill.findAll({ where: { party_identification: n_documento } }),
       DebitN.findAll({ where: { party_identification: n_documento } }),
@@ -22,14 +22,14 @@ module.exports = async (req, res) => {
     console.log("Debit Notes:", debitNotes);
     console.log("Credit Notes:", creditNotes);
     console.log("Cash:", cash);
-    // Calcular el saldo
+   
     const totalBillAmount = bills.reduce((total, bill) => total + bill.price, 0);
     const totalDebitNoteAmount = debitNotes.reduce((total, debitNote) => total + debitNote.price, 0);
     const totalCreditNoteAmount = creditNotes.reduce((total, creditNote) => total + creditNote.price, 0);
     const totalReceiptAmount = cash.reduce((total, receipt) => total + receipt.importe, 0);
     const saldo = totalBillAmount + totalDebitNoteAmount - totalCreditNoteAmount - totalReceiptAmount;
 
-    // Construir el objeto de resumen de cuenta
+
     const summary = {
       user,
       saldo,
