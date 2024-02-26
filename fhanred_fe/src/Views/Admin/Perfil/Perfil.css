@@ -1,0 +1,51 @@
+.profile-container-all {
+    width: 80%;
+    margin-left: 10rem;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+  }
+  
+  
+  
+  .profile-container-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    /* gap: 30px; */
+    /* border: rgb(194, 7, 7) 8px solid; */
+    margin-top: 100px;
+    height: 20rem;
+  }
+  
+  .profile-container-2 {
+    display: flex;
+  
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* border: rgb(24, 16, 16) 8px solid; */
+    height: 8rem;
+  }
+  
+  
+  .profile-container-img {
+    
+    /*  max-width: 620px;
+        
+       /*  margin-left: 350px; 
+        margin-bottom: 20px; 
+        padding: 50px; */
+    
+    border: rgb(233, 228, 228) 8px ;
+    height: 18rem;
+    width: 18rem;
+    border-radius: 100%;
+    background-image: url("https://cdn.sanity.io/images/xmpcmhrn/production/f363771ad3c072ec71f1ea5e8f3868d18de231a6-1200x800.jpg");
+    background-position:center;
+    background-size:cover;
+    background-repeat: no-repeat;
+  }
+  
+  

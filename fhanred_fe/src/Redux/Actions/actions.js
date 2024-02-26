@@ -15,7 +15,9 @@ import {
   FETCH_LAST_RECEIPT_NUMBER_FAILURE,
   FETCH_SUMMARY_REQUEST,
   FETCH_SUMMARY_SUCCESS,
-  FETCH_SUMMARY_FAILURE
+  FETCH_SUMMARY_FAILURE,
+  FETCH_USER_CONTRACTS_REQUEST,
+  FETCH_USER_CONTRACTS_SUCCESS
 
 } from "./actions-types";
 
@@ -120,6 +122,29 @@ export const fetchUserContracts = async (n_documento) => {
   } catch (error) {
     console.error("Error al obtener los contratos del usuario:", error);
     return { contracts: [], name_razonSocial: null }; 
+  }
+};
+
+export const fetchUserContractsAction = (n_documento) => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/user/${n_documento}`);
+    console.log("Response data:", response.data);
+    
+    const { Contracts, name_razonSocial} = response.data.data; // Cambio aquí: acceder a name_razonSocial
+    
+    const { Delivery } = Contracts[0]
+    console.log(Delivery)
+    console.log("Contracts:", Contracts);
+    console.log("name_razonSocial:", name_razonSocial); // Cambio aquí: console.log name_razonSocial
+    
+    const activeContracts = Contracts.filter(contract => contract.estado_contrato === "ACTIVO");
+    console.log({activeContracts})
+
+    dispatch({ type: FETCH_USER_CONTRACTS_SUCCESS, payload: activeContracts });
+     // Cambio aquí: devolver name_razonSocial
+  } catch (error) {
+    console.error("Error al obtener los contratos del usuario:", error);
+    return { contracts: [], name_razonSocial: null }; // Cambio aquí: devolver name_razonSocial
   }
 };
 

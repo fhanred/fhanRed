@@ -71,9 +71,6 @@ const Summary = () => {
         <DataGrid
           rows={bills}
           columns={columns}
-          components={{
-            Toolbar: GridToolbar,
-          }}
         />
         
       </div>
