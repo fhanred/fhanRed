@@ -16,7 +16,8 @@ import {
   FETCH_SUMMARY_REQUEST,
   FETCH_SUMMARY_SUCCESS,
   FETCH_SUMMARY_FAILURE,
-  FETCH_USER_CONTRACTS_REQUEST
+  FETCH_USER_CONTRACTS_REQUEST,
+  FETCH_USER_CONTRACTS_SUCCESS
 
 } from "./actions-types";
 
@@ -137,8 +138,9 @@ export const fetchUserContractsAction = (n_documento) => async (dispatch) => {
     console.log("name_razonSocial:", name_razonSocial); // Cambio aquí: console.log name_razonSocial
     
     const activeContracts = Contracts.filter(contract => contract.estado_contrato === "ACTIVO");
+    console.log({activeContracts})
 
-    dispatch({ type: FETCH_CONTRACT_DETAILS_SUCCESS, payload: activeContracts });
+    dispatch({ type: FETCH_USER_CONTRACTS_SUCCESS, payload: activeContracts });
      // Cambio aquí: devolver name_razonSocial
   } catch (error) {
     console.error("Error al obtener los contratos del usuario:", error);

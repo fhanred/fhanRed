@@ -51,7 +51,7 @@ table {
   width: 100%;
 }
 
-th {
+.table th {
   background-color: #1f2852;
   color: white;
   border:  rgb(233, 228, 228) 6px outset;
@@ -59,39 +59,39 @@ th {
   padding: 0.5%;
 }
 
-th:hover {
+.table th:hover {
   background-color: #22c4cf;
 }
 
-th:active {
+.table th:active {
   background-color: #ebecf0;
 }
 
-th:focus {
+.table th:focus {
   outline: none;
 }
 
-th:focus:not(:focus-visible) {
+.table th:focus:not(:focus-visible) {
   outline: none;
 }
 
-tr {
+.table tr {
   border: 1px solid #ccc;
 }
 
-td {
+.table td {
   border:  rgb(233, 228, 228) 3px outset;
   padding: 0.3%;
 }
 
 /* Estilos para la celda de ordenamiento activa */
-th[aria-sort]::before {
+.table th[aria-sort]::before {
   content: attr(aria-sort);
   padding-left: 0.5%
 }
 
 /* Estilos para el resaltado de búsqueda */
-tr.highlight {
+.table tr.highlight {
   background-color: #f4eb4d;
 }
 

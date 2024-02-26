@@ -18,9 +18,18 @@ const Contract = () => {
   const contractsData = useSelector((state) => state.userContracts);
   const userInfo = useSelector(state => state.userInfo)
 
-  //aca se despacha la action que carga los contratos desde la base de datos, a partir del n de documento
-  dispatch(fetchUserContractsAction(1119889568)); //aca tiene que ir el n de documento
 
+  useEffect(() => {  
+    //aca se despacha la action que carga los contratos desde la base de datos, a partir del n de documento
+    dispatch(fetchUserContractsAction(1119889568)); //aca tiene que ir el n de documento
+
+  }, [])
+  
+  
+  
+
+
+  
   return (
     <div className="contract-container">
       <h2>Contratos del cliente</h2>
@@ -42,9 +51,9 @@ const Contract = () => {
                 <TableCell component="th" scope="row">
                   {row.n_contrato}
                 </TableCell>
-                <TableCell align="right">{"calle falsa 123"}</TableCell>
+                <TableCell align="right">{row.Delivery.direccion}</TableCell>
                 <TableCell align="right">{row.name_plan}</TableCell>
-                <TableCell align="right">{"no se sabe"}</TableCell>
+                <TableCell align="right">{row.Plan.costo}</TableCell>
                 <TableCell align="right">{row.init_date}</TableCell>
                 <TableCell align="right">{row.ultimo_pago}</TableCell>
               </TableRow>
