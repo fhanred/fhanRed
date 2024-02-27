@@ -19,7 +19,10 @@ import {
   CLEAN_CONTRACT_DETAILS,
   SEND_PAYMENT_REQUEST,
   SEND_PAYMENT_SUCCESS,
-  SEND_PAYMENT_FAILURE
+  SEND_PAYMENT_FAILURE,
+  FETCH_USER_CONTRACTS_REQUEST,
+  FETCH_USER_CONTRACTS_SUCCESS
+
 
 } from "./actions-types";
 
@@ -124,6 +127,29 @@ export const fetchUserContracts = async (n_documento) => {
   } catch (error) {
     console.error("Error al obtener los contratos del usuario:", error);
     return { contracts: [], name_razonSocial: null }; 
+  }
+};
+
+export const fetchUserContractsAction = (n_documento) => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/user/${n_documento}`);
+    console.log("Response data:", response.data);
+    
+    const { Contracts, name_razonSocial} = response.data.data; // Cambio aquí: acceder a name_razonSocial
+    
+    const { Delivery } = Contracts[0]
+    console.log(Delivery)
+    console.log("Contracts:", Contracts);
+    console.log("name_razonSocial:", name_razonSocial); // Cambio aquí: console.log name_razonSocial
+    
+    const activeContracts = Contracts.filter(contract => contract.estado_contrato === "ACTIVO");
+    console.log({activeContracts})
+
+    dispatch({ type: FETCH_USER_CONTRACTS_SUCCESS, payload: activeContracts });
+     // Cambio aquí: devolver name_razonSocial
+  } catch (error) {
+    console.error("Error al obtener los contratos del usuario:", error);
+    return { contracts: [], name_razonSocial: null }; // Cambio aquí: devolver name_razonSocial
   }
 };
 
@@ -264,26 +290,6 @@ const formatCreditNotes = (creditNotes) => {
   };
   
 
-
-//   [
-//     {
-//         "receipt": 1,
-//         "contract": "60",
-//         "paymentDate": "2024-02-22T00:00:00.000Z",
-//         "paymentTime": "17:23",
-//         "username": "GUERRA TRUJILLO, NICOLAS ",
-//         "municipio": "CUMARAL",
-//         "direccion": "MANZANA A .CASA 19 ESTRATO 1",
-//         "importe": 66000,
-//         "description": "7 MG - PLATA",
-//         "paymentMethod": "Davivienda",
-//         "cashierName": "mariam",
-//         "createdAt": "2024-02-22T20:23:57.466Z",
-//         "updatedAt": "2024-02-22T20:23:57.466Z",
-//         "n_documento": "1119889568"
-//     },
-   
-// ]
 
 
 
