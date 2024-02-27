@@ -3,9 +3,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSummary } from "../../../Redux/Actions/actions";
+import { useHistory } from "react-router-dom";
 
 const Summary = () => {
-  
+  const history = useHistory();
   const [nDocumento, setNDocumento] = useState("");
   const [rows, setRows] = useState([]);
   const [saldoTotal, setSaldoTotal] = useState(0);
@@ -126,7 +127,7 @@ const Summary = () => {
 
   // Renderizar el componente
   return (
-    <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
+    <div className="containerRegister" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
       {/* Contenedor para el TextField y el Button */}
       <div style={{ marginBottom: 10 }}>
         <TextField
@@ -140,7 +141,7 @@ const Summary = () => {
           }}
           style={{ marginRight: 10 }}
         />
-
+ <button type="button" onClick={() => history.push("/admin/caja")}>Volver</button>
 
       </div>
 
