@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Formik, Field, Form, ErrorMessage, ResetForm } from "formik";
+import { Formik, Field, Form, ErrorMessage} from "formik";
 import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
 import * as Yup from "yup";
 import { format } from "date-fns";
@@ -12,9 +12,7 @@ import BASE_URL from "../../../Config";
 import {
   fetchContractDetails,
   fetchUserContracts,
-  getUsers,
   fetchLastReceiptNumber,
-  
 } from "../../../Redux/Actions/actions";
 
 function Encashment() {
@@ -24,7 +22,6 @@ function Encashment() {
   const lastReceiptNumber = useSelector((state) => state.lastReceiptNumber);
   const history = useHistory();
   const [selectedOption, setSelectedOption] = useState(null);
-  const [showIncome, setShowIncome] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
   const [userContracts, setUserContracts] = useState([]);
   const [name_razonSocial, setNameRazonSocial] = useState("");
@@ -73,6 +70,8 @@ function Encashment() {
   //   }
   // }, [userRole, history]);
 
+
+  
   const handleDocumentChange = async (e, formikProps) => {
     try {
       const { value } = e.target;
@@ -110,33 +109,51 @@ function Encashment() {
       console.error("Error al obtener los detalles del contrato:", error);
     }
   };
+ 
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      // Hacer la solicitud HTTP POST al backend
-      const response = await axios.post(`${BASE_URL}/caja`, values);
-      // Manejar la respuesta del backend según sea necesario
-
-      console.log("Respuesta del backend:", response.data);
-
-      const newIngreso = response.data.newIngreso;
-      setResponse(newIngreso);
-      
-      dispatch(fetchLastReceiptNumber());
-      setShowPDF(true);
-     
-      resetForm();
-      console.log("Generando PDF...");
+      const response = await axios.post(`${BASE_URL}/caja`, values);    ;
+      const newIngreso = response.data.data.newIngreso;
+      console.log("Valor de newIngreso:", newIngreso);
+  
+      if (newIngreso) {
+        setResponse(newIngreso);
+        dispatch(fetchLastReceiptNumber());
+        setShowPDF(true);
+        resetForm();
+      } else {
+        console.error("No se encontró 'newIngreso' en la respuesta del backend.");
+      }
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
-    // Marcar el formulario como no enviado
     setSubmitting(false);
   };
+  const styles = {
+    page: {
+      fontFamily: 'Helvetica',
+      backgroundColor: 'white',
+      padding: 20,
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+    title: {
+      fontSize: 30,
+      marginBottom: 20,
+      color: 'black',
+    },
+    text: {
+      marginBottom: 5, // Espacio entre cada texto
+    },
+  };
+  
 
-  console.log("antes de pdf: " , response)
   return (
-    <div className="container">
+    <div className="containerRegister">
       {selectedOption ? null : <h2>Seleccione el tipo de movimiento:</h2>}
       {!selectedOption && (
         <>
@@ -145,7 +162,8 @@ function Encashment() {
         </>
       )}
       {selectedOption && (
-        <Formik
+        
+        <Formik 
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -231,9 +249,12 @@ function Encashment() {
                       id="username"
                       name="username"
                       placeholder="Nombre de Usuario"
-                      value={name_razonSocial || ""} // Cambiar a name_razonSocial
+                      value={name_razonSocial || ""} 
                       readOnly
+
+                      
                     />
+                    <button type="button" onClick={() => history.push("/admin/resumen")}>Ver Resumen</button>
                     <ErrorMessage
                       name="username"
                       component="div"
@@ -338,30 +359,35 @@ function Encashment() {
               <div className="submit-button">
                 <button type="submit">Enviar Pago</button>
                 {showPDF && (
-                  <PDFDownloadLink
-                    document={
-                      <Document>
-      <Page>
-        <Text>Detalles del Pago:</Text>
-        <Text>Número de Recibo: {response && response.receipt}</Text>
-        <Text>Fecha de Pago: {response && response.paymentDate}</Text>
-        <Text>Usuario: {response && response.username}</Text>
-        <Text>Importe: {response && response.importe}</Text>
-        <Text>Descripción: {response && response.description}</Text>
-        <Text>Método de Pago: {response && response.paymentMethod}</Text>
-        <Text>Cajero: {response && response.cashierName}</Text>
-        <Text>Contrato: {response && response.contract}</Text>
+  <PDFDownloadLink 
+    document={
+      <Document>
+        <Page style={styles.page}>
+        <Text style={styles.title}>Detalles de Pago</Text>
+        <Text style={styles.text}>Número de Recibo: {response && response.receipt}</Text>
+        <Text style={styles.text}>Fecha de Pago: {response && response.paymentDate}</Text>
+        <Text style={styles.text}>Usuario: {response && response.username}</Text>
+        <Text style={styles.text}>Importe: {response && response.importe}</Text>
+        <Text style={styles.text}>Descripción: {response && response.description}</Text>
+        <Text style={styles.text}>Método de Pago: {response && response.paymentMethod}</Text>
+        <Text style={styles.text}>Cajero: {response && response.cashierName}</Text>
+        <Text style={styles.text}>Contrato: {response && response.contract}</Text>
       </Page>
-    </Document>
-                    }
-                    fileName="recibo_pago.pdf"
-                  >
-                    {({ blob, url, loading, error }) =>
-                      loading ? "Generando PDF..." : "Descargar PDF"
-                    }
-                  </PDFDownloadLink>
-                )}
+      </Document>
+    }
+    fileName="recibo_pago.pdf"
+  >
+    {({ blob, url, loading, error }) =>
+      <button type="button">
+      {loading ? "Generando PDF..." : "Descargar PDF"}
+    </button>
+    }
+    
+  </PDFDownloadLink>
+)}
+ <button type="button" onClick={() => history.push("/admin/caja", { forceRefresh: true })}>Volver</button>
               </div>
+              
             </Form>
           )}
         </Formik>
