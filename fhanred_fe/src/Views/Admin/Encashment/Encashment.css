@@ -1,15 +1,16 @@
-/* your-form-styles.css */
-.container {
+
+  .containerRegister {
     max-width: 600px;
-    margin: 0 auto;
-    margin-top: 160px;
-    padding: 20px;
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: -0.2px;
-    font-size: 16px;
-    background-color: #f7f7f7;
-    border: 1px solid #a7a4a4;
-    border-radius: 5px;
+      margin: 0 auto;
+      margin-top: 160px;
+      padding: 20px;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: -0.2px;
+      font-size: 16px;
+      background-color: #f7f7f7;
+      border: 1px solid #a7a4a4;
+      border-radius: 5px;
+   
   }
   
   .formSection {
