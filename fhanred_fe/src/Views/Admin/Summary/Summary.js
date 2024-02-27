@@ -140,13 +140,6 @@ const Summary = () => {
           }}
           style={{ marginRight: 10 }}
         />
-        <Button onClick={handleSubmit}>Buscar</Button>
-      </div>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={bills}
-          columns={columns}
-        />
 
 
       </div>

@@ -1,7 +1,6 @@
-import { useLocation, BrowserRouter, Switch, Route } from 'react-router-dom';
+import {BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../src/Redux/Actions/actions'
-import axios from 'axios';
 import SignIn from './Views/Admin/SignIn/SignIn';
 import Home from './Views/Admin/Home/Home';
 import Navbar from './components/Navbar/Navbar';
@@ -100,9 +99,6 @@ const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
                 <Route path="/admin/caja">
                   <Encashment/>
                   </Route>
-                  <Route path="/admin/caja/pdf">
-                  <PDFViewer/>  
-                </Route>
                 <Route path="/admin/resumen">
                   <Summary />
                 </Route>
