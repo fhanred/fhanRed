@@ -141,7 +141,7 @@ const Summary = () => {
           }}
           style={{ marginRight: 10 }}
         />
- <button type="button" onClick={() => history.push("/admin/caja")}>Volver</button>
+ <button type="button" onClick={() => history.push("/admin/home")}>Volver</button>
 
       </div>
 
