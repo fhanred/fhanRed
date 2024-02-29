@@ -7,7 +7,7 @@ const sendNotifications = require('./src/controllers/sendNotifications.js')
 
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(async () => {
+conn.sync({ alter: true }).then(async () => {
   app.listen(PORT, () => {
     console.log(`🚀 listening on port: ${PORT} 🚀`);
   });
@@ -16,7 +16,7 @@ conn.sync({ force: true }).then(async () => {
   await helpers.chargeVivienda();
   await helpers.chargeUsers();
   await helpers.chargeVivienda();
-  await helpers.chargeContratos();
-  
+  //await helpers.chargeContratos();
+
   // await sendNotifications(); CUIDADO NO DESCOMENTAR HASTA QUE SE ENVIEN LOS DATOS
 });
