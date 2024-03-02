@@ -49,12 +49,12 @@ function Perfil() {
 
           <div className="profile-container-2">
            
-            <NavLink to="/admin/contracts">
+            <NavLink to="/contracts">
             <button >Ir a Contrato</button>{" "}
             {/* </NavLink> */}
             </NavLink>
             <NavLink
-              to={`/admin/resumen`}
+              to={`/resumen`}
               className={({ isActive }) =>
                 isActive ? "ActiveOption" : "Option"
               }
@@ -63,7 +63,7 @@ function Perfil() {
               <button>Ver Resumen</button>{" "}
             </NavLink>
             <NavLink
-              to={`/admin/changePassword`}
+              to={`/changePassword`}
               className={({ isActive }) =>
                 isActive ? "ActiveOption" : "Option"
               }

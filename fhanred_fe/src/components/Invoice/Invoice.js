@@ -366,7 +366,7 @@ function Invoice() {
               resetForm();
               setTimeout(() => {
                 setSubmissionResult(null); // Reinicia el estado después de un cierto tiempo
-                history.push('/admin/clientes');
+                history.push('/clientes');
               }, 3000); // Tiempo en milisegundos
             } else {
               setSubmissionResult('error');
