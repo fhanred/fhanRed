@@ -20,30 +20,31 @@ import {
   SEND_PAYMENT_REQUEST,
   SEND_PAYMENT_SUCCESS,
   SEND_PAYMENT_FAILURE,
-  FETCH_USER_CONTRACTS_REQUEST,
-  FETCH_USER_CONTRACTS_SUCCESS
-
-
+  FETCH_USER_CONTRACTS_SUCCESS,
 } from "./actions-types";
+
+
+export const signInUser = (token, user) => ({
+  type: 'SIGNIN_USER',
+  payload: { token, user },
+});
 
 export const userInfo = (input) => async (dispatch) => {
   try {
-    console.log('input: ', input)
-    const dataUser = await axios.post(`${BASE_URL}/auth/login`, input);
-    console.log('status: ', dataUser.status);
+    const response = await axios.post(`${BASE_URL}/auth/login`, input);
 
-    if (!dataUser.status) {
-      return dispatch(cleanDetail());
-    }
-
-    if (dataUser.data.data && dataUser.data.data.token) {
-      console.log('data_user: ', dataUser.data.data.token);
-      return dispatch({ type: SIGNIN_USER, payload: dataUser.data });
+    if (response.data.data && response.data.data.token) {
+      const { token, user } = response.data.data;
+      
+      // Almacenar el token en el estado global de Redux
+      dispatch(signInUser(token, user));
     } else {
-      return dispatch({ type: SIGNIN_USER, payload: { message: 'Error al Iniciar Sesión' } });
+      
     }
+    console.log('Resultado de la solicitud:', response.data);
   } catch (error) {
     console.error('Error en la solicitud:', error);
+    
     return dispatch(cleanDetail());
   }
 };
@@ -53,6 +54,8 @@ export const logout = () => async (dispatch) => {
       const userLogout = { message: 'User is logout' }
       dispatch({ type: LOGOUT_USER, payload: userLogout })
       dispatch(cleanDetail())
+      console.log('Mensaje de cierre de sesión:', userLogout);
+
     } catch (error) {
       console.error('Error: ', error)
     }

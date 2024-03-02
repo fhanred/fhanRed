@@ -13,9 +13,9 @@ import { handleChange, login } from './funcs';
 function SignIn() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const credentials = useSelector((state) => state.userInfo) 
+  const credentials = useSelector((state) => state.userInfo);
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
   const [showPassword, setShowPassword] = useState(false);
-
 
   function handleClick1() {
     history.push('/signup');
@@ -44,19 +44,20 @@ function SignIn() {
     // Validar nuevamente antes de enviar al servidor si es necesario
     if (input.email && input.password) {
       try {
-        // Puedes dispatch aquí si es necesario
-        // await dispatch(userInfo(input));
-        // setInput({ email: '', password: '' });
-        const resp = await login(input, dispatch, credentials, userInfo)
-        if(credentials.data){
-          history.push('/admin/home')
+        // Llamar a la función login para iniciar sesión
+        await login(input, dispatch, credentials, userInfo);
+        
+        // Verificar si el usuario está autenticado y redirigir a /home si lo está
+        if (isAuthenticated) {
+          history.push('/home');
         }
       } catch (error) {
         // Manejar errores si es necesario
-        console.log('se a producido un error: ', error.message)
+        console.error('Se produjo un error:', error.message);
       }
     }
   };
+
 
   return (
     <div className={style.container}>
