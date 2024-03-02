@@ -37,3 +37,15 @@ module.exports = async (req, res) => {
     return response(res, 500, "Error interno del servidor");
   }
 };
+
+
+
+
+// {
+//   "Plan": {
+//       "name_plan": "5 MG - BRONCE",
+//       "costo": "56.000,00"
+//   },
+//   "municipio": "CUMARAL",
+//   "direccion": "KILOMETRO 4 LOTE 3"
+// }

@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   user.email = user.email.toUpperCase().trim();
 
   // encriptar password
-  hash = await bcrypt.hash(user.password, 10);
+  const hash = await bcrypt.hash(user.password, 10); // <--- Aquí se corrige
 
   await User.create({
     name_razonSocial: user.name_razonSocial,

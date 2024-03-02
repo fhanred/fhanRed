@@ -3,18 +3,18 @@ const { Role } = require("../data");
 module.exports = async () => {
   const roles = await Role.findAll();
   const list = [
-    { id: 0, name: "cliente" },
+    { id: 1, name: "cliente" },
 
     {
-      id: 1,
+      id: 2,
       name: "tecnico",
     },
     {
-      id: 2,
+      id: 3,
       name: "cajero",
     },
     {
-      id: 3,
+      id: 4,
       name: 'admin' 
     },
   ];
