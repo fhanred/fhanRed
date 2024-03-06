@@ -19,6 +19,8 @@ import ChangePassword from './Views/Admin/ChangePassword/ChangePassword';
 import Contract from './components/Contract/Contract';
 import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
 import Summary from "./Views/Admin/Summary/Summary"
+import ManagerDesigningTask from './components/ManagerDesigningTask/ManagerDesigningTask';
+import Task from './components/Tasks/Tasks';
 
 
 function App() {
@@ -84,6 +86,13 @@ const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
                 <Route path="/contracts">
                     <Contract/>
                 </Route>
+                <Route path="/managerDesigningTask">
+                    <ManagerDesigningTask/>
+                </Route>
+                <Route path="/task">
+                    <Task/>
+                </Route>
+
               </Switch>
             </div>
           </Route>

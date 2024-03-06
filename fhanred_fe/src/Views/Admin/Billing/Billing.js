@@ -17,6 +17,7 @@ function Billing() {
   const currentDate = new Date();
   const numberFact = useSelector((state) => state.numberFact);
   const [tissuedate, setTissuedate] = useState(formatDateForForm(currentDate));
+  const history = useHistory();//agregue esta constante porque me marcaba un error, carla
   
   if (!isAuthenticated || userRole !== 4) {
     // Redireccionar a una página de acceso no autorizado

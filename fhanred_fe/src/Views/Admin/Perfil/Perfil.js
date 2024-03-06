@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContractDetails } from "../../../Redux/Actions/actions";
 import { mockContrato } from "./mockContrato";
+import Task from "../../../components/Tasks/Tasks";
 
 
 
@@ -43,7 +44,10 @@ function Perfil() {
             </div>
 
             <div className="profile-button-tarea">
-              <button>Tareas</button>
+            <NavLink to="/Task">
+            <button >Tareas</button>{" "}
+            {/* </NavLink> */}
+            </NavLink>
             </div>
           </div>
 
