@@ -1,17 +1,19 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
 import * as Yup from "yup";
 import { format } from "date-fns";
 import BASE_URL from "../../../Config";
 
+
 import {
   fetchContractDetails,
   fetchUserContracts,
   fetchLastReceiptNumber,
+  sendPayment, addReceipt
 } from "../../../Redux/Actions/actions";
 
 function Encashment() {
@@ -22,7 +24,8 @@ function Encashment() {
   const userName = useSelector(
     (state) => state.authentication.user.razon_social
   );
-  const token = useSelector((state) => state.authentication.token);
+
+  console.log('Valor de userName:', userName); // Agregar este console.log
   const dispatch = useDispatch();
   const lastReceiptNumber = useSelector((state) => state.lastReceiptNumber);
   const history = useHistory();
@@ -43,9 +46,8 @@ function Encashment() {
     importe: "",
     description: "",
     paymentMethod: "",
-    cashierName: "",
+    cashierName: userRole === 2 || userRole === 3 ? userName : ""
   };
- 
 
   const validationSchema = Yup.object().shape({
     contract: Yup.string().required("Este campo es obligatorio"),
@@ -58,22 +60,21 @@ function Encashment() {
     importe: Yup.number().required("Este campo es obligatorio"),
     description: Yup.string().required("Este campo es obligatorio"),
     paymentMethod: Yup.string().required("Selecciona una Opción"),
-    
+  
   });
 
   useEffect(() => {
-    
-    if (!isAuthenticated || (userRole !== 2 && userRole !== 3 && userRole !== 4)) {
-      
-      history.push("/home"); // Redirigir a la página de inicio
+    if (
+      !isAuthenticated ||
+      (userRole !== 2 && userRole !== 3 && userRole !== 4)
+    ) {
+      history.push("/home");
     }
   }, [isAuthenticated, userRole, history]);
 
   useEffect(() => {
     dispatch(fetchLastReceiptNumber());
   }, [dispatch]);
-
-
 
   const handleDocumentChange = async (e, formikProps) => {
     try {
@@ -115,19 +116,32 @@ function Encashment() {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/caja`, values, {
-        headers: {
-          Authorization: `Bearer ${token}` 
-        }
-      });
+      values.cashierName = userName;
+      const response = await axios.post(`${BASE_URL}/caja`, values);
       const newIngreso = response.data.data.newIngreso;
       console.log("Valor de newIngreso:", newIngreso);
-
+  
       if (newIngreso) {
+        console.log("estoy acá");
         setResponse(newIngreso);
         dispatch(fetchLastReceiptNumber());
         setShowPDF(true);
         resetForm();
+  
+        // Llamar a addReceipt con los datos del recibo
+        dispatch(addReceipt({
+          receipt: newIngreso.receipt,
+          paymentDate: newIngreso.paymentDate,
+          paymentTime: newIngreso.paymentTime,
+          n_documento: newIngreso.n_documento,
+          username: newIngreso.username,
+          importe: newIngreso.importe,
+          description: newIngreso.description,
+          paymentMethod: newIngreso.paymentMethod,
+          cashierName: newIngreso.cashierName,
+          contract: newIngreso.contract,
+          
+        }));
       } else {
         console.error(
           "No se encontró 'newIngreso' en la respuesta del backend."
@@ -138,7 +152,7 @@ function Encashment() {
     }
     setSubmitting(false);
   };
-
+  console.log('Valor de initialValues.cashierName antes de pasar como prop:', initialValues.cashierName);
   return (
     <div className="containerRegister">
       {userRole !== 1 && (
@@ -149,14 +163,16 @@ function Encashment() {
               <button onClick={() => setSelectedOption("Ingreso")}>
                 Ingresos
               </button>
-              <button onClick={() => setSelectedOption("Egreso")}>
-                Egresos
+
+              <button onClick={() => history.push("/movements-detail")}>
+                Ver Movimientos
               </button>
             </>
           )}
         </>
       )}
       {selectedOption && userRole !== 1 && (
+        <>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -350,7 +366,7 @@ function Encashment() {
                       id="cashierName"
                       name="cashierName"
                       placeholder="Tu Nombre"
-                      value={userName} 
+                      value={userName}
                       readOnly
                     />
                     <ErrorMessage
@@ -401,6 +417,7 @@ function Encashment() {
             </Form>
           )}
         </Formik>
+        </>
       )}
     </div>
   );

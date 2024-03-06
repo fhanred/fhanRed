@@ -6,11 +6,8 @@ import { useHistory } from 'react-router-dom';
 import { incrementNumberFact } from '../../../Redux/Actions/actions';
 import formatDateForForm from './formatDate';
 
-
-
-
- 
 function Billing() {
+  const history = useHistory()
   const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
   const userRole = useSelector(state => state.authentication.user.id_role);
   const dispatch = useDispatch();
