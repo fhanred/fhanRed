@@ -409,7 +409,9 @@ function Encashment() {
                     fileName="recibo_pago.pdf"
                   >
                     {({ blob, url, loading, error }) =>
-                      loading ? "Generando PDF..." : "Descargar PDF"
+                    <button type="button">
+                        {loading ? "Generando PDF..." : "Descargar PDF"}
+                      </button>
                     }
                   </PDFDownloadLink>
                 )}

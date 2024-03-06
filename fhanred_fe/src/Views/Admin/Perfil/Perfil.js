@@ -21,7 +21,6 @@ function Perfil() {
   return (
     <div className="profile-container-all">
       <div className="profile-container-1">
-        {/* Contenido del perfil */}
         <div className="profile-container-img"></div>
         <div className="profile-data">
           <h3>{user.name_razonSocial}</h3>
@@ -38,7 +37,7 @@ function Perfil() {
       </div>
 
       <div className="profile-container-2">
-        {/* Lógica para mostrar botones según el rol del usuario */}
+       
         {userRole === 0 && (
           <p>Aun no eres cliente. Por favor, contacta con el administrador.</p>
         )}
