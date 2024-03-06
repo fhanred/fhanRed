@@ -37,3 +37,6 @@ module.exports = async (req, res) => {
     return response(res, 500, "Error interno del servidor");
   }
 };
+
+
+

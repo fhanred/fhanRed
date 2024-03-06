@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { Formik, Field, Form, ErrorMessage} from "formik";
+import { useHistory, Link } from "react-router-dom";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
 import * as Yup from "yup";
 import { format } from "date-fns";
@@ -13,11 +13,19 @@ import {
   fetchContractDetails,
   fetchUserContracts,
   fetchLastReceiptNumber,
+  sendPayment, addReceipt
 } from "../../../Redux/Actions/actions";
 
 function Encashment() {
-  //const userRole = useSelector((state) => state.auth.user.role); // descomentar luego de aplicar auth
-  //const userName = useSelector((state) => state.auth.user.name);
+  const userRole = useSelector((state) => state.authentication.user.id_role);
+  const isAuthenticated = useSelector(
+    (state) => state.authentication.isAuthenticated
+  );
+  const userName = useSelector(
+    (state) => state.authentication.user.razon_social
+  );
+
+  console.log('Valor de userName:', userName); // Agregar este console.log
   const dispatch = useDispatch();
   const lastReceiptNumber = useSelector((state) => state.lastReceiptNumber);
   const history = useHistory();
@@ -25,9 +33,7 @@ function Encashment() {
   const [showPDF, setShowPDF] = useState(false);
   const [userContracts, setUserContracts] = useState([]);
   const [name_razonSocial, setNameRazonSocial] = useState("");
-  const [response, setResponse] =useState("")
-  
-
+  const [response, setResponse] = useState("");
 
   const initialValues = {
     receipt: lastReceiptNumber !== null ? lastReceiptNumber.toString() : "1",
@@ -40,9 +46,8 @@ function Encashment() {
     importe: "",
     description: "",
     paymentMethod: "",
-    cashierName: "", //una vez implementado auth  userRole === 2 || userRole === 3 ? userName : ""
+    cashierName: userRole === 2 || userRole === 3 ? userName : ""
   };
-  console.log(lastReceiptNumber);
 
   const validationSchema = Yup.object().shape({
     contract: Yup.string().required("Este campo es obligatorio"),
@@ -55,23 +60,22 @@ function Encashment() {
     importe: Yup.number().required("Este campo es obligatorio"),
     description: Yup.string().required("Este campo es obligatorio"),
     paymentMethod: Yup.string().required("Selecciona una Opción"),
-    cashierName: Yup.string().required("Este campo es obligatorio"),
+  
   });
+
+  useEffect(() => {
+    if (
+      !isAuthenticated ||
+      (userRole !== 2 && userRole !== 3 && userRole !== 4)
+    ) {
+      history.push("/home");
+    }
+  }, [isAuthenticated, userRole, history]);
 
   useEffect(() => {
     dispatch(fetchLastReceiptNumber());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // Verificar el rol del usuario al cargar el componente
-  //   if (userRole !== 2 && userRole !== 3) {
-  //     // Si el usuario no tiene el rol adecuado, redirigir a otra página o mostrar un mensaje de error
-  //     history.push("/home"); // Por ejemplo, redirigir a una página de acceso no autorizado
-  //   }
-  // }, [userRole, history]);
-
-
-  
   const handleDocumentChange = async (e, formikProps) => {
     try {
       const { value } = e.target;
@@ -109,61 +113,67 @@ function Encashment() {
       console.error("Error al obtener los detalles del contrato:", error);
     }
   };
- 
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/caja`, values);    ;
+      values.cashierName = userName;
+      const response = await axios.post(`${BASE_URL}/caja`, values);
       const newIngreso = response.data.data.newIngreso;
       console.log("Valor de newIngreso:", newIngreso);
   
       if (newIngreso) {
+        console.log("estoy acá");
         setResponse(newIngreso);
         dispatch(fetchLastReceiptNumber());
         setShowPDF(true);
         resetForm();
+  
+        // Llamar a addReceipt con los datos del recibo
+        dispatch(addReceipt({
+          receipt: newIngreso.receipt,
+          paymentDate: newIngreso.paymentDate,
+          paymentTime: newIngreso.paymentTime,
+          n_documento: newIngreso.n_documento,
+          username: newIngreso.username,
+          importe: newIngreso.importe,
+          description: newIngreso.description,
+          paymentMethod: newIngreso.paymentMethod,
+          cashierName: newIngreso.cashierName,
+          contract: newIngreso.contract,
+          
+        }));
       } else {
-        console.error("No se encontró 'newIngreso' en la respuesta del backend.");
+        console.error(
+          "No se encontró 'newIngreso' en la respuesta del backend."
+        );
       }
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
     setSubmitting(false);
   };
-  const styles = {
-    page: {
-      fontFamily: 'Helvetica',
-      backgroundColor: 'white',
-      padding: 20,
-    },
-    section: {
-      margin: 10,
-      padding: 10,
-      flexGrow: 1,
-    },
-    title: {
-      fontSize: 30,
-      marginBottom: 20,
-      color: 'black',
-    },
-    text: {
-      marginBottom: 5, // Espacio entre cada texto
-    },
-  };
-  
-
+  console.log('Valor de initialValues.cashierName antes de pasar como prop:', initialValues.cashierName);
   return (
     <div className="containerRegister">
-      {selectedOption ? null : <h2>Seleccione el tipo de movimiento:</h2>}
-      {!selectedOption && (
+      {userRole !== 1 && (
         <>
-          <button onClick={() => setSelectedOption("Ingreso")}>Ingresos</button>
-          <button onClick={() => setSelectedOption("Egreso")}>Egresos</button>
+          {selectedOption ? null : <h2>Seleccione el tipo de movimiento:</h2>}
+          {!selectedOption && (
+            <>
+              <button onClick={() => setSelectedOption("Ingreso")}>
+                Ingresos
+              </button>
+
+              <button onClick={() => history.push("/movements-detail")}>
+                Ver Movimientos
+              </button>
+            </>
+          )}
         </>
       )}
-      {selectedOption && (
-        
-        <Formik 
+      {selectedOption && userRole !== 1 && (
+        <>
+        <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -174,7 +184,13 @@ function Encashment() {
                 <>
                   <div className="input">
                     <label htmlFor="receipt">Número de Recibo:</label>
-                    <Field type="text" id="receipt" name="receipt" />
+
+                    <Field
+                      type="text"
+                      id="receipt"
+                      name="receipt"
+                      value={lastReceiptNumber}
+                    />
                     <ErrorMessage
                       name="receipt"
                       component="div"
@@ -249,12 +265,15 @@ function Encashment() {
                       id="username"
                       name="username"
                       placeholder="Nombre de Usuario"
-                      value={name_razonSocial || ""} 
+                      value={name_razonSocial || ""}
                       readOnly
-
-                      
                     />
-                    <button type="button" onClick={() => history.push("/admin/resumen")}>Ver Resumen</button>
+                    <button
+                      type="button"
+                      onClick={() => history.push("/resumen")}
+                    >
+                      Ver Resumen
+                    </button>
                     <ErrorMessage
                       name="username"
                       component="div"
@@ -347,6 +366,8 @@ function Encashment() {
                       id="cashierName"
                       name="cashierName"
                       placeholder="Tu Nombre"
+                      value={userName}
+                      readOnly
                     />
                     <ErrorMessage
                       name="cashierName"
@@ -359,38 +380,44 @@ function Encashment() {
               <div className="submit-button">
                 <button type="submit">Enviar Pago</button>
                 {showPDF && (
-  <PDFDownloadLink 
-    document={
-      <Document>
-        <Page style={styles.page}>
-        <Text style={styles.title}>Detalles de Pago</Text>
-        <Text style={styles.text}>Número de Recibo: {response && response.receipt}</Text>
-        <Text style={styles.text}>Fecha de Pago: {response && response.paymentDate}</Text>
-        <Text style={styles.text}>Usuario: {response && response.username}</Text>
-        <Text style={styles.text}>Importe: {response && response.importe}</Text>
-        <Text style={styles.text}>Descripción: {response && response.description}</Text>
-        <Text style={styles.text}>Método de Pago: {response && response.paymentMethod}</Text>
-        <Text style={styles.text}>Cajero: {response && response.cashierName}</Text>
-        <Text style={styles.text}>Contrato: {response && response.contract}</Text>
-      </Page>
-      </Document>
-    }
-    fileName="recibo_pago.pdf"
-  >
-    {({ blob, url, loading, error }) =>
-      <button type="button">
-      {loading ? "Generando PDF..." : "Descargar PDF"}
-    </button>
-    }
-    
-  </PDFDownloadLink>
-)}
- <button type="button" onClick={() => history.push("/admin/caja", { forceRefresh: true })}>Volver</button>
+                  <PDFDownloadLink
+                    document={
+                      <Document>
+                        <Page>
+                          <Text>Detalles del Pago:</Text>
+                          <Text>
+                            Número de Recibo: {response && response.receipt}
+                          </Text>
+                          <Text>
+                            Fecha de Pago: {response && response.paymentDate}
+                          </Text>
+                          <Text>Usuario: {response && response.username}</Text>
+                          <Text>Importe: {response && response.importe}</Text>
+                          <Text>
+                            Descripción: {response && response.description}
+                          </Text>
+                          <Text>
+                            Método de Pago: {response && response.paymentMethod}
+                          </Text>
+                          <Text>
+                            Cajero: {response && response.cashierName}
+                          </Text>
+                          <Text>Contrato: {response && response.contract}</Text>
+                        </Page>
+                      </Document>
+                    }
+                    fileName="recibo_pago.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Generando PDF..." : "Descargar PDF"
+                    }
+                  </PDFDownloadLink>
+                )}
               </div>
-              
             </Form>
           )}
         </Formik>
+        </>
       )}
     </div>
   );

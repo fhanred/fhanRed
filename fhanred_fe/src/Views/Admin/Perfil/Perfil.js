@@ -1,81 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Perfil.css";
-import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchContractDetails } from "../../../Redux/Actions/actions";
-import { mockContrato } from "./mockContrato";
-
-
+import { NavLink, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { showNoContractsModal } from "../../../Redux/Actions/actions"; 
+import Swal from "sweetalert2";
 
 function Perfil() {
-  const [showContract, setShowContract] = useState(false);
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
+  const user = useSelector((state) => state.authentication.user);
+  const userRole = user ? user.id_role : null;
 
-  //cambios hechos por carla
-  const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile);
+  if (!isAuthenticated) {
+    return <Redirect to="/login" />;
+  }
 
-  /*  const handleContract = () => {
-    dispatch(fetchContractDetails({
-      name: 'este es el contrato'
-      // Otros campos del perfil
-    }));
-  }; */
+  const handleTasksButtonClick = () => {
+    // No es necesario hacer nada aquí si el usuario no tiene permisos
+  };
 
   return (
     <div className="profile-container-all">
-      {showContract ? (
-        <div className="contract-container">
-          <button onClick={() => setShowContract(false)}>
-            Ocultar contrato
-          </button>{" "}
-          <h1>Contrato prueba</h1>
-          <h3>Ultimo pago realizado: {mockContrato.data.ultimo_pago} </h3>
+      <div className="profile-container-1">
+        {/* Contenido del perfil */}
+        <div className="profile-container-img"></div>
+        <div className="profile-data">
+          <h3>{user.name_razonSocial}</h3>
+          <h3>{getRolName(userRole)}</h3>
+          <h3>{user.email}</h3>
         </div>
-      ) : (
-        <>
-          <div className="profile-container-1">
-            <div className="profile-container-img"></div>
+        <div className="profile-button-tarea">
+          {(userRole === 0 || userRole === 1) ? (
+            null // No renderizar el botón "Tareas" si el usuario no tiene permisos
+          ) : (
+            <button onClick={handleTasksButtonClick}>Tareas</button>
+          )}
+        </div>
+      </div>
 
-            <div className="profile-data">
-              <h3>Natalia Viuche</h3>
-              <h3>Super Administrador</h3>
-              <h3>natalia.viuche@fhanred.com</h3>
-            </div>
-
-            <div className="profile-button-tarea">
-              <button>Tareas</button>
-            </div>
-          </div>
-
-          <div className="profile-container-2">
-           
-            <NavLink to="/admin/contracts">
-            <button >Ir a Contrato</button>{" "}
-            {/* </NavLink> */}
+      <div className="profile-container-2">
+        {/* Lógica para mostrar botones según el rol del usuario */}
+        {userRole === 0 && (
+          <p>Aun no eres cliente. Por favor, contacta con el administrador.</p>
+        )}
+        {userRole !== 0 && (
+          <>
+            <NavLink to="/contracts">
+              <button>Ir a Contrato</button>{" "}
             </NavLink>
-            <NavLink
-              to={`/admin/resumen`}
-              className={({ isActive }) =>
-                isActive ? "ActiveOption" : "Option"
-              }
-            >
-              {" "}
+            <NavLink to={`/resumen`} className={({ isActive }) => isActive ? "ActiveOption" : "Option"}>
               <button>Ver Resumen</button>{" "}
             </NavLink>
-            <NavLink
-              to={`/admin/changePassword`}
-              className={({ isActive }) =>
-                isActive ? "ActiveOption" : "Option"
-              }
-            >
-              {" "}
+            <NavLink to={`/changePassword`} className={({ isActive }) => isActive ? "ActiveOption" : "Option"}>
               <button>Cambiar contraseña</button>{" "}
             </NavLink>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
+}
+
+function getRolName(rol) {
+  switch (rol) {
+    case 0:
+      return "Usuario no cliente";
+    case 1:
+      return "Cliente";
+    case 2:
+      return "Técnico";
+    case 3:
+      return "Cajero";
+    case 4:
+      return "Administrador";
+    default:
+      return "Rol desconocido";
+  }
 }
 
 export default Perfil;

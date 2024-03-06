@@ -5,16 +5,15 @@ const { DATAICO_AUTHTOKEN } = require("../../config/envs");
 const moment = require('moment');
 const { Op } = require("sequelize");
 
-
 module.exports = async (req, res) => {
   try {
     const authToken = DATAICO_AUTHTOKEN;
-    const startNumber = 0; // Número inicial del rango autorizado
-    const endNumber = 900; // Número final del rango autorizado
+    const startNumber = 0; 
+    const endNumber =5000; 
+    const successfulBills = [];
+    const failedBills = [];
 
-    const bills = [];
-
-    // Realiza peticiones para cada número dentro del rango autorizado
+    
     for (let i = startNumber; i <= endNumber; i++) {
       try {
         const response = await axios.get(`https://api.dataico.com/dataico_api/v2/invoices?number=FHA${i}`, {
@@ -26,7 +25,7 @@ module.exports = async (req, res) => {
         if (response.status === 200) {
           const billData = response.data.invoice;
 
-          // Verificar si la factura ya existe en la base de datos
+          
           const existingBill = await Bill.findOne({
             where: {
               numberI: billData.number
@@ -34,7 +33,7 @@ module.exports = async (req, res) => {
           });
 
           if (!existingBill) {
-            // Convertir el formato de fecha y guardar la factura en la base de datos
+            
             const formattedIssueDate = moment(billData.issue_date, 'DD/MM/YYYY HH:mm:ss').toDate();
             const createdBill = await Bill.create({
               numberI: billData.number,
@@ -44,23 +43,23 @@ module.exports = async (req, res) => {
               qrcode: billData.qrcode,
               
             });
-            console.log('Factura guardada en la base de datos:', createdBill.toJSON());
+            successfulBills.push(createdBill);
           } else {
             console.log(`La factura ${billData.number} ya existe en la base de datos. No se guarda.`);
           }
         } else {
-          console.error(`Error al obtener la factura FHA${i}`);
+          failedBills.push({ number: `FHA${i}`, error: `Error al obtener la factura FHA${i}: Status ${response.status}` });
         }
       } catch (error) {
-        console.error(`Error al obtener la factura FHA${i}:`, error.message);
+        failedBills.push({ number: `FHA${i}`, error: `Error al obtener la factura FHA${i}: ${error.message}` });
       }
     }
 
-    // Utilizar el módulo de respuesta para enviar la respuesta
-    response(res, 200, bills);
+   
+    response(res, 200, { successfulBills, failedBills });
   } catch (error) {
     console.error('Error:', error);
-    // Utilizar el módulo de respuesta para enviar la respuesta de error
+  
     response(res, 500, 'Error interno del servidor');
   }
 };

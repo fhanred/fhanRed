@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import './Billing.css';
+import { useHistory } from 'react-router-dom';
 import { incrementNumberFact } from '../../../Redux/Actions/actions';
 import formatDateForForm from './formatDate';
-//import { options, plan } from '../../../data';
 
-
-
- 
 function Billing() {
+  const history = useHistory()
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
+  const userRole = useSelector(state => state.authentication.user.id_role);
   const dispatch = useDispatch();
   const currentDate = new Date();
   const numberFact = useSelector((state) => state.numberFact);
   const [tissuedate, setTissuedate] = useState(formatDateForForm(currentDate));
   
-
+  if (!isAuthenticated || userRole !== 4) {
+    // Redireccionar a una página de acceso no autorizado
+    history.push('/home');
+    return null; // O mostrar un mensaje de error, etc.
+  }
 
   return (
     <div className="container-factura">

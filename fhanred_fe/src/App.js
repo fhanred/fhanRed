@@ -1,3 +1,5 @@
+
+import { useEffect } from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../src/Redux/Actions/actions'
@@ -14,49 +16,29 @@ import Treasury from './Views/Admin/Treasury/Treasury';
 import Billing from './Views/Admin/Billing/Billing';
 import Perfil from './Views/Admin/Perfil/Perfil';
 import Encashment from './Views/Admin/Encashment/Encashment';
-import IncomeList from './Views/Admin/Encashment/incomeList';
 import { links } from './data';
 import ChangePassword from './Views/Admin/ChangePassword/ChangePassword';
 import Contract from './components/Contract/Contract';
 import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
-import Summary from "./Views/Admin/Summary/Summary"
+import Summary from "./Views/Admin/Summary/Summary";
+import MovementsDetail  from './Views/Admin/Encashment/MovementsDetail';
 
 
 function App() {
-
   const dispatch = useDispatch();
-  const creditials = useSelector((state) => state.userInfo);
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
 
-  const handleLogin = async (userData) => {
-    const { email, password } = userData;
-    try {
-      const emailCapital = email.toUpperCase()
-      const infoUser = { email: emailCapital, password }
-      // const response = await axios.post('http://localhost:3001/auth/login', infoUser);
-      dispatch(userInfo(infoUser));
-      const data = creditials.data;
-      if(!data){
-        console.log(creditials)
-      }
-      if(data){
-        console.log('data: ', data)
-        return data;
-      }
-    } catch (error) {
-      console.error('se produjo un error: ', error)
-    }
-  }
-
-const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
+  useEffect(() => {
+    localStorage.clear(); // Limpiar el almacenamiento local al cargar la aplicación
+  }, []);
 
   return (
     <BrowserRouter>
       <div>
         <Navbar />
-        {/* {isAuthenticated && <NavbarItems links={links} />} */}
         <Switch>
           <Route exact path="/">
-          <SignIn />
+            <SignIn />
           </Route>
           <Route path="/forgotPassword">
             <ForgotPassword />
@@ -64,7 +46,7 @@ const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
           <Route path="/signup">
             <Register />
           </Route>
-          <Route path="/admin">
+          <Route path="">
             <div style={{ flex: 1, display: 'flex' }}>
               <div>
                 <NavbarItems links={links} />
@@ -72,43 +54,43 @@ const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
             </div>
             <div style={{ flex: 3 }}>
               <Switch>
-                <Route path="/admin/home">
+                <Route path="/home">
                   <Home />
                 </Route>
-                <Route path="/admin/perfil">
+                <Route path="/perfil">
                   <Perfil />
                 </Route>
-                <Route path="/admin/clientes">
+                <Route path="/clientes">
                   <Customers />
                 </Route>
-                <Route path="/admin/tesoreria">
+                <Route path="/tesoreria">
                   <Treasury />
                 </Route>
-                <Route path="/admin/datosClientes">
+                <Route path="/datosClientes">
                   <CustomersData />
                 </Route>
-                <Route path="/admin/clientesContratos">
+                <Route path="/clientesContratos">
                   <Invoice />
                 </Route>
-                <Route path="/admin/facturacion">
+                <Route path="/facturacion">
                   <Billing />
                 </Route>
-                <Route path="/admin/changePassword">
+                <Route path="/changePassword">
                   <ChangePassword />
                 </Route>
-                <Route path="/admin/caja">
+                <Route path="/caja">
                   <Encashment/>
                   </Route>
-                <Route path="/admin/resumen">
+                  <Route path="/movements-detail">
+                  <MovementsDetail/>
+                  </Route>
+                <Route path="/resumen">
                   <Summary />
                 </Route>
-                <Route path="/admin/income">
-                  <IncomeList />
-                </Route>
-                <Route path="/admin/nrecibo">
+                <Route path="/nrecibo">
                   <ReceiptNumberForm />
                 </Route>
-                <Route path="/admin/contracts">
+                <Route path="/contracts">
                     <Contract/>
                 </Route>
               </Switch>
