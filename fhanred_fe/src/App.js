@@ -1,3 +1,5 @@
+
+import { useEffect } from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../src/Redux/Actions/actions'
@@ -18,21 +20,25 @@ import { links } from './data';
 import ChangePassword from './Views/Admin/ChangePassword/ChangePassword';
 import Contract from './components/Contract/Contract';
 import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
-import Summary from "./Views/Admin/Summary/Summary"
+import Summary from "./Views/Admin/Summary/Summary";
+import MovementsDetail  from './Views/Admin/Encashment/MovementsDetail';
 
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
 
-const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
+  useEffect(() => {
+    localStorage.clear(); // Limpiar el almacenamiento local al cargar la aplicación
+  }, []);
 
   return (
     <BrowserRouter>
       <div>
         <Navbar />
-        {isAuthenticated && <NavbarItems links={links} />}
         <Switch>
           <Route exact path="/">
-          <SignIn />
+            <SignIn />
           </Route>
           <Route path="/forgotPassword">
             <ForgotPassword />
@@ -74,6 +80,9 @@ const isAuthenticated = Boolean(userInfo && userInfo.name && userInfo.rol);
                 </Route>
                 <Route path="/caja">
                   <Encashment/>
+                  </Route>
+                  <Route path="/movements-detail">
+                  <MovementsDetail/>
                   </Route>
                 <Route path="/resumen">
                   <Summary />

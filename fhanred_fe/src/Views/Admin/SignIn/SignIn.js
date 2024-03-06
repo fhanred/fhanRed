@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import style from './SignIn.module.css';
@@ -41,23 +41,24 @@ function SignIn() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // Validar nuevamente antes de enviar al servidor si es necesario
     if (input.email && input.password) {
       try {
-        // Llamar a la función login para iniciar sesión
         await login(input, dispatch, credentials, userInfo);
-        
-        // Verificar si el usuario está autenticado y redirigir a /home si lo está
         if (isAuthenticated) {
           history.push('/home');
         }
       } catch (error) {
-        // Manejar errores si es necesario
         console.error('Se produjo un error:', error.message);
       }
     }
   };
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      alert('Aún no eres usuario de Fhanred.');
+      history.push('/');
+    }
+  }, [isAuthenticated, history]);
 
   return (
     <div className={style.container}>
