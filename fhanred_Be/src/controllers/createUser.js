@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   user.email = user.email.toUpperCase().trim();
 
   // encriptar password
-  hash = await bcrypt.hash(user.password, 10);
+  const hash = await bcrypt.hash(user.password, 10); // <--- Aquí se corrige
 
   await User.create({
     name_razonSocial: user.name_razonSocial,
@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     n_documento: user.n_documento,
     email: user.email,
     password: hash,
-    id_role: user.id_role || 1,
+    id_role: user.id_role || 0,
   });
   response(res, 201, "success");
 };

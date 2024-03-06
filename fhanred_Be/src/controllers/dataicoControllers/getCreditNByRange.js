@@ -7,12 +7,12 @@ const moment = require('moment');
 module.exports = async (req, res) => {
   try {
     const authToken = DATAICO_AUTHTOKEN;
-    const startNumber = 1; // Número inicial del rango autorizado
-    const endNumber = 200; // Número final del rango autorizado
+    const startNumber = 1; 
+    const endNumber = 200; 
 
     const creditNotes = [];
 
-    // Realiza peticiones para cada número dentro del rango autorizado
+   
     for (let i = startNumber; i <= endNumber; i++) {
       try {
         const response = await axios.get(`https://api.dataico.com/dataico_api/v2/credit_notes?number=FHA${i}`, {
@@ -29,11 +29,9 @@ module.exports = async (req, res) => {
           const creditNote = await CreditN.create({
             numberCN: creditNoteData.number,
             issue_date: formattedIssueDate,
-            // Agregar otros campos de la nota de crédito que desees guardar en la base de datos
+            
           });
 
-          // Aquí deberías guardar la nota de crédito en la base de datos
-          // Pero en el código actual no veo la lógica para guardarla
 
           creditNotes.push(creditNoteData);
           console.log('Nota de crédito obtenida:', creditNoteData);
@@ -45,11 +43,11 @@ module.exports = async (req, res) => {
       }
     }
 
-    // Utilizar el módulo de respuesta para enviar la respuesta
+   
     response(res, 200, creditNotes);
   } catch (error) {
     console.error('Error:', error);
-    // Utilizar el módulo de respuesta para enviar la respuesta de error
+    
     response(res, 500, 'Error interno del servidor');
   }
 };

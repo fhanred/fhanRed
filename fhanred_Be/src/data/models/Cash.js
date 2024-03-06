@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
         "Cash",
         {
           receipt: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true 
