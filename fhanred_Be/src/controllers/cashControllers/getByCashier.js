@@ -1,6 +1,7 @@
 const { Cash } = require('../../data'); 
 const response = require("../../utils/response");
 
+
 module.exports = async (req, res) => {
     const { cashierName } = req.params;
     try {

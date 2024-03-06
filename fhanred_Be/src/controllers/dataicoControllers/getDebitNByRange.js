@@ -5,8 +5,8 @@ const { DATAICO_AUTHTOKEN } = require("../../config/envs");
 module.exports = async (req, res) => {
   try {
     const authToken = DATAICO_AUTHTOKEN
-    const startNumber = 1; // Número inicial del rango autorizado
-    const endNumber = 1; // Número final del rango autorizado
+    const startNumber = 1; 
+    const endNumber = 1500; 
 
     const debitNotes = [];
 
