@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     n_documento: user.n_documento,
     email: user.email,
     password: hash,
-    id_role: user.id_role || 0,
+    id_role: user.id_role || 3,
   });
   response(res, 201, "success");
 };
