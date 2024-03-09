@@ -7,7 +7,7 @@ import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
 import * as Yup from "yup";
 import { format } from "date-fns";
 import BASE_URL from "../../../Config";
-
+import './Encashment.css';
 
 import {
   fetchContractDetails,
@@ -154,7 +154,7 @@ function Encashment() {
   };
   console.log('Valor de initialValues.cashierName antes de pasar como prop:', initialValues.cashierName);
   return (
-    <div className="containerRegister">
+    <div className="container">
       {userRole !== 1 && (
         <>
           {selectedOption ? null : <h2>Seleccione el tipo de movimiento:</h2>}
@@ -246,6 +246,18 @@ function Encashment() {
                       name="contract"
                       onChange={(e) => {
                         handleContractChange(e, formikProps);
+                      }}
+                      style={{
+                        // Estilos para el select
+                        padding: '8px',
+                        marginBottom: 10,
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                        backgroundColor: '#ebecf0',
+                        fontSize: '16px',
+                        width: '25%',
+                        boxSizing: 'border-box',
+                        fontFamily: 'sans-serif' ,
                       }}
                     >
                       <option value="">Aplica a:</option>
@@ -342,6 +354,18 @@ function Encashment() {
                       id="paymentMethod"
                       name="paymentMethod"
                       placeholder="Ingrese Método de Pago"
+                      style={{
+                        // Estilos para el select
+                        padding: '8px',
+                        marginBottom: 10,
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                        backgroundColor: '#ebecf0',
+                        fontSize: '16px',
+                        width: '35%',
+                        boxSizing: 'border-box',
+                        fontFamily: 'sans-serif' ,
+                      }}
                     >
                       <option value="" label="Seleccionar Método de Pago" />
                       <option
@@ -413,6 +437,7 @@ function Encashment() {
                   >
                     {({ blob, url, loading, error }) =>
                     <button type="button">
+
                         {loading ? "Generando PDF..." : "Descargar PDF"}
                       </button>
                     }

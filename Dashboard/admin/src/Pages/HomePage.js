@@ -1,12 +1,19 @@
 // HomePage.js
 import React from 'react';
-import Loguin from '../components/Loguin.js';
+import MovementsCash from './MovementsCash';
+import TaskPage from './TaskPage';
+import Vouchers from './Vouchers';
+import Worker from './Worker';
+
+
 
 const HomePage = () => {
   return (
     <div>
-     
-      <Loguin />
+     <MovementsCash/>
+     <TaskPage/>
+     <Vouchers/>
+    <Worker/>    
     </div>
   );
 };

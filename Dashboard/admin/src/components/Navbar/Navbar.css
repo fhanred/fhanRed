@@ -1,0 +1,101 @@
+body {
+  margin: 0; /* Elimina el margen del cuerpo */
+}
+
+/* Estilos para el Navbar (pantallas grandes) */
+.navbar {
+  margin: 0; /* Elimina el margen de la barra de navegación */
+  background: linear-gradient(
+    to right,
+    #1f2852 20%,
+    #22c4cf,
+    #d25037,
+    #f0ed46,
+    #cf151f
+  );
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  font-size: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+  border-bottom: 8px outset; /* Ancho del borde y estilo */
+  border-image: linear-gradient(to right, #1f2852 20%, #22c4cf) 1;
+}
+
+/* Estilos para el logo (pantallas grandes) */
+.navbar-logo {
+  height: 100%;
+}
+
+/* Estilo para el logo de la compañía (pantallas grandes) */
+.logo-image {
+  height: 100%;
+  margin-left: 0px;
+}
+
+/* Estilos para la información del usuario, avatar y icono de cierre de sesión (pantallas grandes) */
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.user-avatar {
+  margin-left: 60px;
+  font-size: 34px;
+}
+
+.logout-icon {
+  margin-left: 60px;
+  margin-right: 40px;
+  cursor: pointer;
+  font-size: 34px;
+}
+
+/* Estilos para pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+  .navbar {
+    font-size: 16px;
+    height: 60px;
+  }
+
+  .user-avatar,
+  .logout-icon {
+    margin-left: 20px;
+    font-size: 20px;
+  }
+}
+
+/* Estilos para pantallas pequeñas (teléfonos móviles) */
+@media (max-width: 768px) {
+  .navbar {
+    font-size: 14px;
+    height: 50px;
+  }
+
+  .user-avatar,
+  .logout-icon {
+    margin-left: 10px;
+  }
+}
+
+/* Estilos para celulares (pantallas muy pequeñas) */
+@media (max-width: 480px) {
+  .navbar {
+    font-size: 12px; /* Ajusta el tamaño de fuente en pantallas de celulares */
+    height: 40px; /* Ajusta la altura en pantallas de celulares */
+  }
+
+  .user-avatar,
+  .logout-icon {
+    margin-left: 5px; /* Ajusta el espacio en pantallas de celulares */
+  }
+}

@@ -1,6 +1,6 @@
 const { catchedAsync } = require("../utils");
 const cashControllers = require("../controllers/cashControllers")
-
+const assignmentController = require("../controllers/dashboardControllers")
 module.exports = {
   createUser: catchedAsync(require("./createUser")),
   listUsers: catchedAsync(require("./listUsers")),
@@ -22,7 +22,12 @@ module.exports = {
   getAllCash:catchedAsync(require("./cashControllers/getAllCash")),
   getReceiptsByUser:catchedAsync(require("./cashControllers/getReceiptsByUser")),
   getSummaryByUser:catchedAsync(require("./getSummaryByUser")),
+  getAllTasks:catchedAsync(require("./dashboardControllers/getAllTasks")),
+  createTask:catchedAsync(require("./dashboardControllers/createTask")),
+  assignTask:catchedAsync(require("./dashboardControllers/assignTask")),
+  getTasksForUser:catchedAsync(require("./dashboardControllers/getTasksForUser")),
   getByPaymentMethod:catchedAsync(require("./cashControllers/getByPaymentMethod")),
+
 };
 
 //exportamos como una propiedad de lo que exporta  modulo  indexjs
