@@ -42,9 +42,11 @@ const initialState = {
   lastReceiptNumber: null,
   isNoContractsModalOpen: false,
   movements: {
-    movementsByCashier:[],
-    loadingMovementsByCashier: false,
-    errorMovementsByCashier: null,
+    cashierName: null, 
+    paymentMethod: null, 
+    data: [], 
+    loading: false,
+    error: null,
   },
 
   summary: {
@@ -202,28 +204,27 @@ const rootReducer = (state = initialState, action) => {
         console.log("Fetching movements by cashier...");
         return {
           ...state,
-          loadingMovementsByCashier: true,
-          errorMovementsByCashier: null,
+          loading: true,
+          error: null,
         };
   
         case FETCH_MOVEMENTS_BY_CASHIER_SUCCESS:
-          console.log("Movements by cashier fetched successfully:", action.payload);
-          return {
-            ...state,
-            movementsByCashier: action.payload,
-            loadingMovementsByCashier: false,
-            errorMovementsByCashier: null,
-          };
+  console.log("Movements by cashier fetched successfully:", action.payload);
+  return {
+    ...state,
+    data: action.payload, // Cambiado de movementsByCashier a data
+    loading: false, // Cambiado de loadingMovementsByCashier a loading
+    error: null,
+  };
     
-        case FETCH_MOVEMENTS_BY_CASHIER_FAILURE:
-          console.error("Error fetching movements by cashier:", action.error);
-          return {
-            ...state,
-            movementsByCashier: [],
-            loadingMovementsByCashier: false,
-            errorMovementsByCashier: action.payload,
-          };
-    
+  case FETCH_MOVEMENTS_BY_CASHIER_FAILURE:
+    console.error("Error fetching movements by cashier:", action.error);
+    return {
+      ...state,
+      data: [], // Cambiado de movementsByCashier a data
+      loading: false, // Cambiado de loadingMovementsByCashier a loading
+      error: action.payload,
+    };
         default:
           return state;
       }
