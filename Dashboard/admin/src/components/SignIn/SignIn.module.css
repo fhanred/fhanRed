@@ -1,0 +1,118 @@
+
+
+
+/* Estilos para el contenedor principal */
+.container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrado horizontal */
+    justify-content: center; /* Centrado vertical */
+    height: 100vh; /* Altura del 100% de la ventana */
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+    /* color: #121144e5; */
+  }
+  
+  /* Estilos para el formulario */
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; 
+    width: 320px; /*  ancho del formulario  */
+    text-align: center; /* Opcional, para centrar el texto dentro de los elementos */
+  }
+
+  .register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; 
+    width: 280px; /* ancho del formulario  */
+    text-align: center; /* Opcional, para centrar el texto dentro de los elementos */
+  }
+  
+  /* Estilos para los campos de entrada */
+   
+
+   input {
+    display:flex;
+    border: 2px solid #ccc; /* Añade un borde */
+    outline: none;
+    font-size: 16px;
+    border-radius: 16px;
+    padding: 15px; 
+    background-color: #EBECF0;
+    text-shadow: 1px 1px 0 #FFF;
+    margin-bottom: 10px; /*  separación vertical entre campos */
+    margin-right:16px/2;
+    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+  
+    &:focus {
+      box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+    }
+  }
+
+  
+  
+  /* Estilos para las etiquetas (labels) */
+  label {
+    display: block;
+    margin-bottom: 30px; /* Añade separación vertical entre etiquetas */
+    width: 100%;
+    color:#1f2852
+    
+  }
+  label span {
+    margin-top: 80px; /* Agrega un margen superior para separación vertical */
+    margin-left: 10px;
+    color:#1f2852
+  } 
+
+  /* Estilos para el enlace dentro de la etiqueta label */
+  label a {
+    text-decoration: none; /* Elimina el subrayado */
+    color: #1f2852
+  }
+  
+  /* estilo específico cuando se coloca el cursor sobre el enlace */
+  label a:hover {
+    text-decoration: underline; /* Agrega subrayado al pasar el cursor por encima del enlace */
+    color: #cf151f; /* Cambia el color del enlace al pasar el cursor por encima */
+    font-size: 18px;
+  }
+  
+  .error {
+    color: #cf151f;
+    font-size: 16px;
+  }
+  
+  /* Estilos para el campo de contraseña y el ícono */
+  .passwordInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 16px;
+  }
+  
+  .passwordInput input {
+    flex: 1;
+    border: none;
+  }
+  
+  .passwordInput .eyeIcon {
+    cursor: pointer;
+    font-size: 20px;
+  }
+  

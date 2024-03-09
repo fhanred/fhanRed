@@ -1,26 +1,74 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import SignIn from './components/SignIn/SignIn';
+import { userInfo } from './Redux/Actions/actions';
+import Navbar from './components/Navbar/Navbar';
+import NavbarItems from './components/NavbarItems/NavbarItems'
+import Register from './components/Register/Register';
+import { links } from './data';
 import HomePage from './Pages/HomePage';
+import Vouchers from './Pages/Vouchers';
+import MovementsCash from './Pages/MovementsCash';
 import TaskPage from './Pages/TaskPage';
-import CreateUserPage from './Pages/CreateUserPage';
+import Worker from './Pages/Worker';
 
 const App = () => {
-  return (
-    <Router>
-      <Layout>
-        <Routes>
-        <Route path="/" element={<HomePage />} />
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
 
-          <Route exact path="/tasks" component={TaskPage} />
-          <Route exact path="/create-user" component={CreateUserPage} />
-        </Routes>
-      </Layout>
-    </Router>
+  useEffect(() => {
+    localStorage.clear(); // Limpiar el almacenamiento local al cargar la aplicación
+  }, []);
+
+  return (
+    <BrowserRouter>
+      <div>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <SignIn />
+          </Route>
+          <Route path="/signup">
+            <Register />
+          </Route>
+          <Route path="/tareas">
+            <TaskPage />
+          </Route>
+          <Route path="/comprobantes">
+            <Vouchers />
+            <Route path="/empleados">
+            <Worker />
+          </Route>
+          <Route path="/caja">
+            <MovementsCash />
+          </Route>
+          </Route>
+          <Route>
+           
+              <div style={{ flex: 1, display: 'flex' }}>
+                <div>
+                  <NavbarItems links={links} />
+                </div>
+              </div>
+              <div style={{ flex: 3 }}>
+                <Switch>
+                  <Route path="/homePage">
+                    <HomePage />
+                  </Route>
+                </Switch>
+              </div>
+            
+          </Route>
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 };
 
 export default App;
+
 
 
 
