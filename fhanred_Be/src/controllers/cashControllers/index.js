@@ -7,6 +7,7 @@ const getReceiptsByUser = require("./getReceiptsByUser")
 const getBillByUser= require("./getBillByUser")
 const getCreditNByUser= require("./getCreditNByUser")
 const getDebitNByUser= require("./getDebitNByUser")
+const getByPaymentMethod= require("./getByPaymentMethod")
 
 
 module.exports = {
@@ -18,6 +19,7 @@ module.exports = {
   getReceiptsByUser,
   getBillByUser,
   getCreditNByUser,
-  getDebitNByUser
+  getDebitNByUser,
+  getByPaymentMethod
 
 };

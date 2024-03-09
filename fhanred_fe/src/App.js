@@ -21,7 +21,7 @@ import ChangePassword from './Views/Admin/ChangePassword/ChangePassword';
 import Contract from './components/Contract/Contract';
 import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
 import Summary from "./Views/Admin/Summary/Summary";
-import MovementsDetail  from './Views/Admin/Encashment/MovementsDetail';
+import MovementsDetail  from './Views/Admin/MovementsDetails/MovementsDetail';
 
 
 function App() {
@@ -81,7 +81,7 @@ function App() {
                 <Route path="/caja">
                   <Encashment/>
                   </Route>
-                  <Route path="/movements-detail">
+                  <Route path="/movements">
                   <MovementsDetail/>
                   </Route>
                 <Route path="/resumen">

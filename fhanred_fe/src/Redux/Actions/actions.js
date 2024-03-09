@@ -327,12 +327,11 @@ export const fetchMovementsByCashier = (cashierName) => {
     dispatch({ type: FETCH_MOVEMENTS_BY_CASHIER_REQUEST });
 
     try {
-      // Agregar console.log para verificar la solicitud al backend
+      //
       console.log('Solicitud al backend:', `${BASE_URL}/caja/porCajero/${cashierName}`);
 
       const response = await axios.get(`${BASE_URL}/caja/porCajero/${cashierName}`);
       
-      // Agregar console.log para verificar la respuesta del backend
       console.log('Respuesta del backend:', response.data);
 
       dispatch({
@@ -340,7 +339,7 @@ export const fetchMovementsByCashier = (cashierName) => {
         payload: response.data,
       });
     } catch (error) {
-      // Agregar console.log para manejar errores
+      
       console.error('Error al obtener los movimientos:', error);
 
       dispatch({

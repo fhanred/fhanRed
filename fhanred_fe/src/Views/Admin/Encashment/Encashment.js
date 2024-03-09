@@ -164,8 +164,8 @@ function Encashment() {
                 Ingresos
               </button>
 
-              <button onClick={() => history.push("/movements-detail")}>
-                Ver Movimientos
+              <button onClick={() => history.push("/movements")}>
+                Cierre de Caja
               </button>
             </>
           )}
@@ -379,6 +379,9 @@ function Encashment() {
               )}
               <div className="submit-button">
                 <button type="submit">Enviar Pago</button>
+                <button onClick={() => history.push("/movements")}>
+                Cierre de Caja
+              </button>
                 {showPDF && (
                   <PDFDownloadLink
                     document={

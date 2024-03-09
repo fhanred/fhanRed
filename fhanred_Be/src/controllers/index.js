@@ -21,8 +21,8 @@ module.exports = {
   getAllReceipt:catchedAsync(require("./getAllReceipt")),
   getAllCash:catchedAsync(require("./cashControllers/getAllCash")),
   getReceiptsByUser:catchedAsync(require("./cashControllers/getReceiptsByUser")),
-  getSummaryByUser:catchedAsync(require("./getSummaryByUser"))
-
+  getSummaryByUser:catchedAsync(require("./getSummaryByUser")),
+  getByPaymentMethod:catchedAsync(require("./cashControllers/getByPaymentMethod")),
 };
 
 //exportamos como una propiedad de lo que exporta  modulo  indexjs
