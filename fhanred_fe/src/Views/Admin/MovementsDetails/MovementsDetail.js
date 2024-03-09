@@ -85,7 +85,7 @@ export default MovementsDetail;
 
 
 
-
+// para subir 
 
 
 
