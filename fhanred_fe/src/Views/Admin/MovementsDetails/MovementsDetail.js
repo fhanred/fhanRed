@@ -33,7 +33,7 @@ const MovementsDetail = () => {
 
   return (
     <div className="container">
-      <h3>Detalles de Movimientos del Cajero</h3>
+      <Typography variant="h6">Detalles de Movimientos del Cajero</Typography>
       <Typography variant="body1">Fecha: {formattedDate}</Typography>
       {filteredMovements.length > 0 ? (
         <>
@@ -75,6 +75,7 @@ const MovementsDetail = () => {
       ) : (
         <Typography variant="body1">No hay movimientos disponibles para hoy.</Typography>
       )}
+      
     </div>
   );
 }
