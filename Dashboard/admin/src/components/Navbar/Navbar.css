@@ -29,6 +29,22 @@ body {
   border-bottom: 8px outset; /* Ancho del borde y estilo */
   border-image: linear-gradient(to right, #1f2852 20%, #22c4cf) 1;
 }
+.navbar-user {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.logout-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
 
 /* Estilos para el logo (pantallas grandes) */
 .navbar-logo {
@@ -42,14 +58,13 @@ body {
 }
 
 /* Estilos para la información del usuario, avatar y icono de cierre de sesión (pantallas grandes) */
-.user-info {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
+
 
 .user-avatar {
   margin-left: 60px;
+  margin-right: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
   font-size: 34px;
 }
 

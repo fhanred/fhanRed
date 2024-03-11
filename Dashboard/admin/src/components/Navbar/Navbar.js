@@ -20,16 +20,15 @@ function Navbar() {
 
   return (
     <nav className="navbar">
+      
       <div className="navbar-logo">
         <img src={Logo} alt="Logo de la compañía" className="logo-image" />
       </div>
       {userInfo ? ( // Si hay un usuario conectado, muestra la información del usuario
         <div className="navbar-user">
-          <div className="user-avatar">
-            <FaUserCircle />
-          </div>
+          
           <div className="user-info">
-            <span>Hola, {userInfo.name}</span>
+           
             <div
               className="logout-icon"
               title="Cerrar Sesión"
