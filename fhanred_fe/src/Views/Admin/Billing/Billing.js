@@ -1,3 +1,14 @@
+import React from 'react'
+
+export default function Billing() {
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+
 // import React, { useState } from 'react';
 // import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 // import { useDispatch, useSelector } from 'react-redux';

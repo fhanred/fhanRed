@@ -24,7 +24,10 @@ import {
   ADD_RECEIPT,
   FETCH_MOVEMENTS_BY_CASHIER_REQUEST,
   FETCH_MOVEMENTS_BY_CASHIER_SUCCESS,
-  FETCH_MOVEMENTS_BY_CASHIER_FAILURE
+  FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
+  ASSIGN_TASK_REQUEST,
+  ASSIGN_TASK_SUCCESS,
+  ASSIGN_TASK_FAILURE,
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -42,9 +45,9 @@ const initialState = {
   lastReceiptNumber: null,
   isNoContractsModalOpen: false,
   movements: {
-    cashierName: null, 
-    paymentMethod: null, 
-    data: [], 
+    cashierName: null,
+    paymentMethod: null,
+    data: [],  // Cambia 'data' a 'movements'
     loading: false,
     error: null,
   },
@@ -60,7 +63,7 @@ const initialState = {
     loading: false,
     error: null,
   },
-  paymentDetails: null,
+  paymentDetails:[],
   loading: false,
   error: null,
 };
@@ -212,8 +215,7 @@ const rootReducer = (state = initialState, action) => {
   console.log("Movements by cashier fetched successfully:", action.payload);
   return {
     ...state,
-    data: action.payload, // Cambiado de movementsByCashier a data
-    loading: false, // Cambiado de loadingMovementsByCashier a loading
+    data: action.payload, 
     error: null,
   };
     
@@ -221,10 +223,28 @@ const rootReducer = (state = initialState, action) => {
     console.error("Error fetching movements by cashier:", action.error);
     return {
       ...state,
-      data: [], // Cambiado de movementsByCashier a data
-      loading: false, // Cambiado de loadingMovementsByCashier a loading
+      data: [], 
+      loading: false, 
       error: action.payload,
     };
+
+    case ASSIGN_TASK_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case ASSIGN_TASK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case ASSIGN_TASK_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
         default:
           return state;
       }

@@ -25,7 +25,8 @@ const MovementsDetail = () => {
   const today = new Date();
   const formattedDate = today.toISOString().split('T')[0];
 
-  const filteredMovements = movements ? movements.filter(movement => movement.paymentDate === formattedDate) : [];;
+
+  const filteredMovements = movements ? movements.filter(movement => movement.paymentDate === formattedDate) : [];
 
   const sumByPaymentMethod = filteredMovements.reduce((acc, movement) => {
     acc[movement.paymentMethod] = (acc[movement.paymentMethod] || 0) + movement.importe;

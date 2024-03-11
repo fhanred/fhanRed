@@ -27,7 +27,11 @@ import {
   ADD_RECEIPT,
   FETCH_MOVEMENTS_BY_CASHIER_REQUEST,
   FETCH_MOVEMENTS_BY_CASHIER_SUCCESS,
-  FETCH_MOVEMENTS_BY_CASHIER_FAILURE
+  FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
+  ASSIGN_TASK_REQUEST,
+  ASSIGN_TASK_SUCCESS,
+  ASSIGN_TASK_FAILURE,
+
 } from "./actions-types";
 
 export const signInUser = (token, user) => ({
@@ -41,8 +45,6 @@ export const userInfo = (input) => async (dispatch) => {
 
     if (response.data.data && response.data.data.token) {
       const { token, user } = response.data.data;
-      
-      // Almacenar el token en el estado global de Redux
       dispatch(signInUser(token, user));
     } else {
       
@@ -348,4 +350,22 @@ export const fetchMovementsByCashier = (cashierName) => {
       });
     }
   };
+};
+
+export const assignTask = (taskId, userId, turno) => async (dispatch) => {
+  dispatch({ type: ASSIGN_TASK_REQUEST });
+
+  try {
+    const response = await axios.post(`${BASE_URL}/asignarTarea`, {
+      taskId,
+      userId,
+      turno,
+    });
+
+    dispatch({ type: ASSIGN_TASK_SUCCESS, payload: response.data });
+  } catch (error) {
+    console.error('Error al asignar la tarea:', error);
+
+    dispatch({ type: ASSIGN_TASK_FAILURE, payload: error.message });
+  }
 };

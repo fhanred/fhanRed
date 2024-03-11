@@ -117,6 +117,9 @@ function Encashment() {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       values.cashierName = userName;
+      console.log("Fecha de pago enviada:", values.paymentDate);
+      console.log("Hora de pago enviada:", values.paymentTime);
+
       const response = await axios.post(`${BASE_URL}/caja`, values);
       const newIngreso = response.data.data.newIngreso;
       console.log("Valor de newIngreso:", newIngreso);
