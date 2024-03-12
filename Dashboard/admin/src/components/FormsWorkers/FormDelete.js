@@ -2,7 +2,7 @@ import React from 'react'
 
 function FormDelete() {
   return (
-    <div>FormDelete</div>
+    <div className='container'>FormDelete</div>
   )
 }
 

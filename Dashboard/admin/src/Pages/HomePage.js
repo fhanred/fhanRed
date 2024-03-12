@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <div className='container'>
      <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Link to="/gestion-empleados" className="link">
+        <Link to="/empleados" className="link">
           <Button>GESTION DE EMPLEADOS</Button>
         </Link>
         <Link to="/clientes" className="link">
