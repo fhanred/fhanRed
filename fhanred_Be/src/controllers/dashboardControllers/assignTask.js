@@ -3,10 +3,10 @@ const { TaskAsign } = require('../../data');
 
 module.exports = async (req, res) => {
     try {
-        const { taskId, n_documento, turno } = req.body;
+        const { taskId, n_documento, turno , taskDate } = req.body;
         
         // Asignar una tarea a un usuario con los datos proporcionados
-        const newAssignment = await TaskAsign.create({ taskId, n_documento, turno });
+        const newAssignment = await TaskAsign.create({ taskId, n_documento, turno, taskDate });
 
         // Responder con la asignación creada
         response(res, 200, { newAssignment: newAssignment });

@@ -13,6 +13,7 @@ import Vouchers from './Pages/Vouchers';
 import MovementsCash from './Pages/MovementsCash';
 import TaskPage from './Pages/TaskPage';
 import Worker from './Pages/Worker';
+import Calendary from './components/Calendary/Calendary';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const App = () => {
           </Route>
           <Route path="/tareas">
             <TaskPage />
+          </Route>
+          <Route path="/calendario">
+            <Calendary/>
+
           </Route>
           <Route path="/comprobantes">
             <Vouchers />

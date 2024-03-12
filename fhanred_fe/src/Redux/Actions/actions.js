@@ -28,9 +28,7 @@ import {
   FETCH_MOVEMENTS_BY_CASHIER_REQUEST,
   FETCH_MOVEMENTS_BY_CASHIER_SUCCESS,
   FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
-  ASSIGN_TASK_REQUEST,
-  ASSIGN_TASK_SUCCESS,
-  ASSIGN_TASK_FAILURE,
+
 
 } from "./actions-types";
 
@@ -352,20 +350,3 @@ export const fetchMovementsByCashier = (cashierName) => {
   };
 };
 
-export const assignTask = (taskId, userId, turno) => async (dispatch) => {
-  dispatch({ type: ASSIGN_TASK_REQUEST });
-
-  try {
-    const response = await axios.post(`${BASE_URL}/asignarTarea`, {
-      taskId,
-      userId,
-      turno,
-    });
-
-    dispatch({ type: ASSIGN_TASK_SUCCESS, payload: response.data });
-  } catch (error) {
-    console.error('Error al asignar la tarea:', error);
-
-    dispatch({ type: ASSIGN_TASK_FAILURE, payload: error.message });
-  }
-};

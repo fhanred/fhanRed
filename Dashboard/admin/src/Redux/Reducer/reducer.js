@@ -4,6 +4,9 @@ import {
   GET_USERS,
   CLEAN_DETAIL,
   LOGOUT_USER,
+  ASSIGN_TASK_REQUEST,
+  ASSIGN_TASK_SUCCESS,
+  ASSIGN_TASK_FAILURE,
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -14,6 +17,8 @@ const initialState = {
   },
   userInfo: {},
   usersData: [],
+  assign:[],
+  loading:false,
  
 };
 
@@ -51,6 +56,23 @@ const rootReducer = (state = initialState, action) => {
         userInfo: {},
         loginError: false,
       };
+      case ASSIGN_TASK_REQUEST:
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      case ASSIGN_TASK_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+        };
+      case ASSIGN_TASK_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
     
         default:
           return state;

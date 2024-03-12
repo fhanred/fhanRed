@@ -2,13 +2,24 @@ import React from "react";
 import { Calendar, dayjsLocalizer} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import dayjs from 'dayjs'
-import './calendary.css'
+import {assignTask} from '../../Redux/Actions/actions'
+import {useSelector, useDispatch} from 'react-redux';
+import { useEffect } from "react";
+//
+
 
 const localizer = dayjsLocalizer(dayjs)
 
-function Calendary(props){
+function Calendary(){
+
+    const dispatch = useDispatch()
+    const assing = useSelector(state=>state.assing)
+    console.log("data asssing",assing)
+
+   // handelAssignTasl=()
+
     return(
-<div className="containerCalendary">
+<div className="container">
     <Calendar
      localizer={localizer}
    

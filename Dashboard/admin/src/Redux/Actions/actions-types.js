@@ -3,6 +3,8 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const GET_USERS = "GET_USERS";
 export const CLEAN_DETAIL = 'CLEAN_DETAIL';
 export const CREATE_USER = "CREATE_USER";
-
+export const ASSIGN_TASK_REQUEST = 'ASSIGN_TASK_REQUEST';
+export const ASSIGN_TASK_SUCCESS = 'ASSIGN_TASK_SUCCESS';
+export const ASSIGN_TASK_FAILURE = 'ASSIGN_TASK_FAILURE';
 
 

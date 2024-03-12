@@ -7,6 +7,9 @@ import {
   CLEAN_DETAIL,
   CREATE_USER,
   GET_USERS,
+  ASSIGN_TASK_REQUEST,
+  ASSIGN_TASK_SUCCESS,
+  ASSIGN_TASK_FAILURE,
   
 } from "./actions-types";
 
@@ -75,6 +78,26 @@ export const cleanDetail = () => {
     throw new Error(error);
   }
 };
+
+export const assignTask = (taskId, userId, turno, taskDate) => async (dispatch) => {
+  dispatch({ type: ASSIGN_TASK_REQUEST });
+
+  try {
+    const response = await axios.post(`${BASE_URL}task/asignar`, {
+      taskId,
+      userId,
+      turno,
+      taskDate,
+    });
+
+    dispatch({ type: ASSIGN_TASK_SUCCESS, payload: response.data });
+  } catch (error) {
+    console.error('Error al asignar la tarea:', error);
+
+    dispatch({ type: ASSIGN_TASK_FAILURE, payload: error.message });
+  }
+};
+
 
 
  
