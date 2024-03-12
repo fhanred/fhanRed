@@ -1,0 +1,132 @@
+.container {
+  max-width: 800px;
+  margin: 120px auto 0;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.2px;
+  display: flex;
+  flex-direction: column; /* Alinear elementos en columna */
+  align-items: center; /* Centrar elementos horizontalmente */
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold; /* Texto en negrita */
+  font-size: 24px; /* Tamaño de letra más grande */
+
+}
+
+.table-container {
+  margin-bottom: 20px;
+}
+
+/* Estilos para resaltar los títulos de la tabla */
+.table-header-cell {
+  color: black;
+  background-color: #f0f0f0; /* Fondo gris claro */
+}
+.summary {
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    font-size: 12px;
+  }
+}
+
+
+/* 
+  .formSection {
+    margin: 20px 15;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .error-message {
+    color: #cf151f;
+    margin-top: 5px;
+  }
+  
+  .label {
+    display: block;
+    margin: 1px 0;
+    font-weight: bold;
+  }
+  
+  .input,
+  .phone-input,
+  .select,
+  [type="number"],
+  [type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1x;
+  }
+  
+  .previous-button,
+  .next-button,
+  .submit-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .previous-button {
+    background-color: #1f2852;
+  } */
+  
+  /* Estilos para el mensaje de éxito */
+  .success-message {
+    background-color: #4CAF50; /* Color de fondo verde */
+    color: white; /* Texto en color blanco */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 10px; /* Espacio en la parte inferior */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  
+  /* Estilos para el mensaje de error */
+  .error-message {
+    background-color: white; /* Color de fondo rojo */
+    color: red; /* Texto en color blanco */
+    padding: 5px; /* Espaciado interno */
+    margin-bottom: 10px; /* Espacio en la parte inferior */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  

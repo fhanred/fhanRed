@@ -40,12 +40,3 @@ module.exports = async (req, res) => {
 
 
 
-
-// {
-//   "Plan": {
-//       "name_plan": "5 MG - BRONCE",
-//       "costo": "56.000,00"
-//   },
-//   "municipio": "CUMARAL",
-//   "direccion": "KILOMETRO 4 LOTE 3"
-// }

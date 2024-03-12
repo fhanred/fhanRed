@@ -18,6 +18,14 @@ import {
   SEND_PAYMENT_REQUEST,
   SEND_PAYMENT_SUCCESS,
   SEND_PAYMENT_FAILURE,
+  CLEAN_USER_CONTRACTS,
+  SHOW_NO_CONTRACTS_MODAL,
+  CLOSE_MODAL,
+  ADD_RECEIPT,
+  FETCH_MOVEMENTS_BY_CASHIER_REQUEST,
+  FETCH_MOVEMENTS_BY_CASHIER_SUCCESS,
+  FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
+
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -33,19 +41,27 @@ const initialState = {
   selectedContract: null,
   planDetails: null,
   lastReceiptNumber: null,
-  summary: {
-    
-      userInfo: {},
-      saldo: null,
-      bills: [],
-      debitNotes: [],
-      creditNotes: [],
-      cash: [],
-      loading: false,
-      error: null,
-    
+  isNoContractsModalOpen: false,
+  movements: {
+    cashierName: null,
+    paymentMethod: null,
+    data: [],  // Cambia 'data' a 'movements'
+    loading: false,
+    error: null,
   },
-  paymentDetails: null,
+
+  summary: {
+    userInfo: {},
+    saldo: null,
+    bills: [],
+    debitNotes: [],
+    creditNotes: [],
+    cash: [],
+    formattedCash: [],
+    loading: false,
+    error: null,
+  },
+  paymentDetails:[],
   loading: false,
   error: null,
 };
@@ -53,7 +69,7 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN_USER:
-      console.log('Usuario logueado:', action.payload.user);
+      console.log("Usuario logueado:", action.payload.user);
       return {
         ...state,
         authentication: {
@@ -61,12 +77,12 @@ const rootReducer = (state = initialState, action) => {
           user: action.payload.user,
           isAuthenticated: true,
         },
-      
+        cashierName: action.payload.user.cashierName,
       };
     case LOGOUT_USER:
       return {
         ...state,
-        userInfo: action.payload,
+        userInfo: {}, 
       };
     case GET_USERS:
       return {
@@ -126,6 +142,22 @@ const rootReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+    case CLEAN_USER_CONTRACTS:
+      console.log("CLEAN_USER_CONTRACTS action dispatched");
+      return {
+        ...state,
+        userContracts: [],
+      };
+    case SHOW_NO_CONTRACTS_MODAL:
+      return {
+        ...state,
+        isNoContractsModalOpen: true,
+      };
+    case CLOSE_MODAL:
+      return {
+        ...state,
+        isNoContractsModalOpen: false,
+      };
     case FETCH_SUMMARY_REQUEST:
       return {
         ...state,
@@ -158,12 +190,46 @@ const rootReducer = (state = initialState, action) => {
         loading: false,
         paymentDetails: action.payload.newIngreso,
       };
+      
     case SEND_PAYMENT_FAILURE:
       return { ...state, loading: false, error: action.payload };
-     
-    default: 
-      return state;
-  }
-};
+    case ADD_RECEIPT:
+      return {
+        ...state,
+        summary: {
+          ...state.summary,
+          cash: [...state.summary.cash, action.payload],
+        },
+      };
+      case FETCH_MOVEMENTS_BY_CASHIER_REQUEST:
+        console.log("Fetching movements by cashier...");
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+  
+        case FETCH_MOVEMENTS_BY_CASHIER_SUCCESS:
+  console.log("Movements by cashier fetched successfully:", action.payload);
+  return {
+    ...state,
+    data: action.payload, 
+    error: null,
+  };
+    
+  case FETCH_MOVEMENTS_BY_CASHIER_FAILURE:
+    console.error("Error fetching movements by cashier:", action.error);
+    return {
+      ...state,
+      data: [], 
+      loading: false, 
+      error: action.payload,
+    };
+
+   
+        default:
+          return state;
+      }
+    };
 
 export default rootReducer;

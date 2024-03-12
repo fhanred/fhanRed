@@ -2,6 +2,7 @@ const Router = require("express");
 const cashControllers = require("../controllers/cashControllers/");
 const { passport, authenticate } = require("../passport.js");
 
+
 const router = Router();
  
 router.post("/", cashControllers.createCash);
@@ -13,8 +14,10 @@ router.get('/porUser/:n_documento', cashControllers.getReceiptsByUser)
 router.get('/porUser/factura/:n_documento', cashControllers.getBillByUser)
 router.get('/porUser/creditN/:n_documento', cashControllers.getCreditNByUser)
 router.get('/porUser/debitN/:n_documento', cashControllers.getDebitNByUser)
+router.get('/porUser/debitN/:n_documento', cashControllers.getDebitNByUser)
+router.get('/porMetodo/:paymentMethod', cashControllers.getByPaymentMethod)
 
-//router.get("/lastReceiptNumber", cashControllers.getLastReceiptNumber);
+
 module.exports = router;
 
 

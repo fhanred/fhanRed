@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   try {
     const authToken = DATAICO_AUTHTOKEN;
     const startNumber = 0; 
-    const endNumber = 900; 
+    const endNumber =5000; 
     const successfulBills = [];
     const failedBills = [];
 

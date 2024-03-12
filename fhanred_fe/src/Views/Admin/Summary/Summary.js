@@ -166,7 +166,7 @@ useEffect(() => {
             initialState={{
               pagination: {
                 paginationModel: {
-                  pageSize: 5,
+                  pageSize: 10,
                 },
               },
             }}
@@ -177,7 +177,7 @@ useEffect(() => {
           <div style={{ marginTop: 10 }}>
             Saldo Total: {saldoTotal}
           </div>
-          <button style={{ marginTop: 10}}  type="button" onClick={() => history.push("/admin/home")}>Volver</button>
+          <button style={{ marginTop: 10}}  type="button" onClick={() => history.push("/home")}>Volver</button>
           </Box>
         
       )}
@@ -185,4 +185,4 @@ useEffect(() => {
   );
 };
 
-export default Summary;
+export default Summary
