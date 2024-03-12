@@ -2,12 +2,9 @@ import React from 'react'
 
 export default function Billing() {
   return (
-    <div>
-      
-    </div>
+    <div>Billing</div>
   )
 }
-
 
 // import React, { useState } from 'react';
 // import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
