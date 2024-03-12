@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import style from './SignIn.module.css';
@@ -6,28 +6,33 @@ import { BsLock } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../../../Redux/Actions/actions';
+import { handleChange, login } from './funcs';
 
 function SignIn() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const credentials = useSelector((state) => state.userInfo);
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
   const [showPassword, setShowPassword] = useState(false);
+
   function handleClick1() {
     history.push('/signup');
   }
+
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  });
+
   const [input, setInput] = useState({
     email: '',
     password: '',
   });
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const property = e.target.name;
-    //setError(validate({ ...input, [property]: value }));
-
-    setInput({ ...input, [property]: value });
-    console.log(input);
+  const handleInputChange = (e) => {
+    handleChange(e, setErrors, setInput, input);
   };
 
   const togglePasswordVisibility = () => {
@@ -36,14 +41,24 @@ function SignIn() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // try {
-    //   if (input.email && input.password) {
-    //     await dispatch(userInfo(input));
-    //     setInput({ email: '', password: '' });
-    history.push('/admin/home');
-    //   }
-    // } catch (error) {}
+    if (input.email && input.password) {
+      try {
+        await login(input, dispatch, credentials, userInfo);
+        if (isAuthenticated) {
+          history.push('/home');
+        }
+      } catch (error) {
+        console.error('Se produjo un error:', error.message);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      alert('Aún no eres usuario de Fhanred.');
+      history.push('/');
+    }
+  }, [isAuthenticated, history]);
 
   return (
     <div className={style.container}>
@@ -56,8 +71,9 @@ function SignIn() {
               value={input.email}
               name="email"
               placeholder="Correo electrónico"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handleInputChange(e)}
             />
+            <p className={style.error}>{errors.email}</p>
           </label>
           <label>
             <div className={style.passwordInput}>
@@ -66,7 +82,7 @@ function SignIn() {
                 value={input.password}
                 name="password"
                 placeholder="Contraseña"
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => handleInputChange(e)}
               />
               {showPassword ? (
                 <MdOutlineRemoveRedEye
@@ -80,6 +96,7 @@ function SignIn() {
                 />
               )}
             </div>
+            <p className={style.error}>{errors.password}</p>
           </label>
           <label>
             <NavLink to="/forgotPassword">
@@ -94,7 +111,7 @@ function SignIn() {
 
         <div className={style.register}>
           <label>
-            <span>¿Aún no estas registrado?</span>
+            <span>¿Aún no estás registrado?</span>
           </label>
 
           <button className={style.red} onClick={handleClick1}>

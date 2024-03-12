@@ -1,18 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import { TfiPowerOff } from 'react-icons/tfi';
 import Logo from '../../assets/Logo/Logo.jpg';
 import './Navbar.css';
-import { cleanDetail } from '../../Redux/Actions/actions';
+import { logout } from '../../Redux/Actions/actions';
 
 function Navbar() {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.userInfo); 
+  const userInfo = useSelector((state) => state.userInfo);
+  const history = useHistory()
 
   // Función para cerrar la sesión del usuario
   const handleLogout = () => {
-    dispatch(cleanDetail()); // Borra la información del usuario al cerrar sesión
+    dispatch(logout()); // Borra la información del usuario al cerrar sesión
+    history.push('/')
   };
 
   return (

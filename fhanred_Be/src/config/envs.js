@@ -7,5 +7,7 @@ module.exports = {
     DB_HOST : process.env.DB_HOST,
     DB_PORT : process.env.DB_PORT,
     PORT : process.env.PORT,
-    DB_DEPLOY: process.env.DB_DEPLOY
+    DB_DEPLOY: process.env.DB_DEPLOY,
+    JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
+    DATAICO_AUTHTOKEN: process.env.DATAICO_AUTHTOKEN
 }  

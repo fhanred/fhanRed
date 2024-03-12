@@ -3,6 +3,8 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_DEPLOY } = require("../config/envs");
+
+
 //-------------------------------- CONFIGURACION PARA TRABAJAR LOCALMENTE-----------------------------------
 const sequelize = new Sequelize(
   `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
@@ -15,6 +17,12 @@ const sequelize = new Sequelize(
 /* const sequelize = new Sequelize(DB_DEPLOY , {
       logging: false, // set to console.log to see the raw SQL queries
       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        }
+      },
     }
   );
  */
@@ -44,7 +52,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
+<<<<<<< HEAD
 const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation, Ticket} =
+=======
+const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash, Task, TaskAsign} =
+>>>>>>> 3815e969f439c21e561a5737a197af0db605e680
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -53,9 +65,15 @@ Role.hasOne(User, { foreignKey: "id_role" });
 User.belongsTo(Role, { foreignKey: "id_role" });
 Role.hasOne(User, { foreignKey: "id_role" });
 
+TaskAsign.belongsTo(Task, { foreignKey: "taskId" });
+TaskAsign.belongsTo(User, { foreignKey: "n_documento" });
+
+
+
 //contract ---> user
 Contract.belongsTo(User, { foreignKey: "n_documento" });
 User.hasMany(Contract, { foreignKey: "n_documento" });
+
 
 // contract ---> plan
 Contract.belongsTo(Plan, { foreignKey: "name_plan" });
@@ -68,10 +86,6 @@ Delivery.hasOne(Contract, { foreignKey: "id_delivery" });
 Contract.belongsTo(Inventory, { foreignKey: "id_inventory" });
 Inventory.hasOne(Contract, { foreignKey: "id_inventory" });
 
-// contract ----> deuda
-Contract.hasMany(Deuda, { foreignKey: 'id_Contract' });
-Deuda.belongsTo(Contract, { foreignKey: 'id_Contract' });
-
 // delivery ----> tipovivienda
 Delivery.belongsTo(Vivienda, { foreignKey: "id_vivienda"});
 Vivienda.hasMany(Delivery, { foreignKey: "id_vivienda"});
@@ -83,6 +97,7 @@ Documentation.belongsTo(User, { foreignKey: 'n_documento' });
 // contract ----> documentation
 Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
 
+<<<<<<< HEAD
 //TODO: Ticket - Crear relaciones: Contrato, User(tecnico), Vivienda?
 // Contract ------> Ticket
 Contract.hasMany(Ticket, { foreignKey: "id_Contract"});
@@ -98,6 +113,19 @@ Ticket.belongsTo(User, { foreignKey: "n_documento"})
 
 
 
+=======
+// Relaciones  Summary
+Summary.belongsTo(User, { foreignKey: 'n_documento', targetKey: 'n_documento', as: 'user' });
+Summary.belongsTo(Contract, { foreignKey: 'n_contrato', targetKey: 'n_contrato', as: 'contract' });
+// Summary.hasMany(Bill, { foreignKey: 'summaryId', as: 'bills' });
+// Summary.hasMany(DebitN, { foreignKey: 'summaryId', as: 'debitNotes' });
+// Summary.hasMany(CreditN, { foreignKey: 'summaryId', as: 'creditNotes' });
+// Summary.hasMany(Cash, { foreignKey: 'summaryId', as: 'cashReceipts' });
+Bill.belongsTo(User, { foreignKey: 'party_identification', targetKey: 'n_documento'});
+User.hasMany(Cash, { foreignKey: 'n_documento' }); 
+Bill.hasOne(CreditN, { foreignKey: 'billId', as: 'creditNote' });
+CreditN.belongsTo(Bill, { foreignKey: 'billId', as: 'bill' });
+>>>>>>> 3815e969f439c21e561a5737a197af0db605e680
 
 //---------------------------------------------------------------------------------//
 module.exports = {

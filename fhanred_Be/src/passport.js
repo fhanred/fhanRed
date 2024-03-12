@@ -1,7 +1,7 @@
+const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-var passport = require("passport");
 const bcrypt = require("bcrypt");
-const { User } = require("./data");
+const { User, Role } = require("./data");
 // Estrategia Local
 
 passport.use(
@@ -13,17 +13,18 @@ passport.use(
     async (email, password, done) => {
 
       try {
-        const user = await User.findOne({ where: { email } });
-        // console.log(user)
+        const user = await User.findOne({ where: { email }, include: Role });
+        // console.log('User: ', user)
         if (!user) {
-          return done(null, false);
+          return done(null, false, { message: "Usuario no encontrado" });
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-          return done(null, false);
+          return done(null, false, { message: "Contraseña incorrecta" });
         }
         return done(null, user);
       } catch (error) {
+        console.error("Error en estrategia local:", error);
         return done(error);
       }
     }
@@ -36,8 +37,13 @@ passport.use(
   });
 
   // Deserialización del usuario
-  passport.deserializeUser(async (user, done) => {
-    done(null, user);
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findByPk(id);
+      done(null, user);
+    } catch (error) {
+      done(error);
+    }
   });
   module.exports = {passport };
 
