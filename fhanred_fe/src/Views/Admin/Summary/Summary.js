@@ -155,6 +155,8 @@ useEffect(() => {
           style={{ marginRight: 10 }}
         />
        )}
+      <button type="button" onClick={() => history.push("/home")}>Volver</button>
+
       </div>
 
       {rows.length > 0 && (
