@@ -52,11 +52,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-<<<<<<< HEAD
-const { User, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Deuda, Documentation, Ticket} =
-=======
-const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash, Task, TaskAsign} =
->>>>>>> 3815e969f439c21e561a5737a197af0db605e680
+const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash, Task, TaskAsign, Ticket} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -97,7 +93,6 @@ Documentation.belongsTo(User, { foreignKey: 'n_documento' });
 // contract ----> documentation
 Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
 
-<<<<<<< HEAD
 //TODO: Ticket - Crear relaciones: Contrato, User(tecnico), Vivienda?
 // Contract ------> Ticket
 Contract.hasMany(Ticket, { foreignKey: "id_Contract"});
@@ -113,7 +108,6 @@ Ticket.belongsTo(User, { foreignKey: "n_documento"})
 
 
 
-=======
 // Relaciones  Summary
 Summary.belongsTo(User, { foreignKey: 'n_documento', targetKey: 'n_documento', as: 'user' });
 Summary.belongsTo(Contract, { foreignKey: 'n_contrato', targetKey: 'n_contrato', as: 'contract' });
@@ -125,7 +119,6 @@ Bill.belongsTo(User, { foreignKey: 'party_identification', targetKey: 'n_documen
 User.hasMany(Cash, { foreignKey: 'n_documento' }); 
 Bill.hasOne(CreditN, { foreignKey: 'billId', as: 'creditNote' });
 CreditN.belongsTo(Bill, { foreignKey: 'billId', as: 'bill' });
->>>>>>> 3815e969f439c21e561a5737a197af0db605e680
 
 //---------------------------------------------------------------------------------//
 module.exports = {
