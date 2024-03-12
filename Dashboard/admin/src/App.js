@@ -12,8 +12,10 @@ import HomePage from './Pages/HomePage';
 import Vouchers from './Pages/Vouchers';
 import MovementsCash from './Pages/MovementsCash';
 import TaskPage from './Pages/TaskPage';
-import Worker from './Pages/Worker';
+import Worker from './Pages/Worker.js';
 import Calendary from './components/Calendary/Calendary';
+import FormCreateWorker from './components/FormsWorkers/FormCreateWorker.js';
+import FormDelete from './components/FormsWorkers/FormDelete.js';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,33 +40,40 @@ const App = () => {
             <TaskPage />
           </Route>
           <Route path="/calendario">
-            <Calendary/>
+            <Calendary />
 
           </Route>
           <Route path="/comprobantes">
             <Vouchers />
-            <Route path="/empleados">
-            <Worker />
-          </Route>
-          <Route path="/caja">
-            <MovementsCash />
-          </Route>
+
+            <Route path="/caja">
+              <MovementsCash />
+            </Route>
           </Route>
           <Route>
-           
-              <div style={{ flex: 1, display: 'flex' }}>
-                <div>
-                  <NavbarItems links={links} />
-                </div>
+
+            <div style={{ flex: 1, display: 'flex' }}>
+              <div>
+                <NavbarItems links={links} />
               </div>
-              <div style={{ flex: 3 }}>
-                <Switch>
-                  <Route path="/homePage">
-                    <HomePage />
-                  </Route>
-                </Switch>
-              </div>
-            
+            </div>
+            <div style={{ flex: 3 }}>
+              <Switch>
+                <Route path="/homePage">
+                  <HomePage />
+                </Route>
+                <Route path="/empleados">
+                  <Worker />
+                </Route>
+                <Route path='/altaEmpleado'>
+                  <FormCreateWorker/>
+                </Route>
+                <Route path='/eliminarEmpleado'>
+                  <FormDelete/>
+                </Route>
+              </Switch>
+            </div>
+
           </Route>
         </Switch>
       </div>

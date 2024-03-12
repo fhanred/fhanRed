@@ -1,6 +1,6 @@
 // TaskPage.js
 import React from 'react';
-
+import '../Pages/Style/styles.css';
 
 const TaskPage = () => {
   return (
