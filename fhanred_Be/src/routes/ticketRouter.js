@@ -4,7 +4,7 @@ const controllers = require("../controllers");
 
 const router = Router();
 
-router.post("/charge-ticket", controllers.chargeTicket);
+router.post("/charge-ticket-test", controllers.chargeTicket);
 
 
 module.exports = router;
