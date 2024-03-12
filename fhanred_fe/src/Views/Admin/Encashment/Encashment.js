@@ -162,7 +162,7 @@ function Encashment() {
         <>
           {selectedOption ? null : <h2>Seleccione el tipo de movimiento:</h2>}
           {!selectedOption && (
-            <>
+            <div className="form-buttons">
               <button onClick={() => setSelectedOption("Ingreso")}>
                 Ingresos
               </button>
@@ -170,7 +170,7 @@ function Encashment() {
               <button onClick={() => history.push("/movements")}>
                 Cierre de Caja
               </button>
-            </>
+            </div>
           )}
         </>
       )}
@@ -283,7 +283,7 @@ function Encashment() {
                       value={name_razonSocial || ""}
                       readOnly
                     />
-                    <button
+                    <button className="form-buttonsResumen"
                       type="button"
                       onClick={() => history.push("/resumen")}
                     >
@@ -365,12 +365,12 @@ function Encashment() {
                         borderRadius: '5px',
                         backgroundColor: '#ebecf0',
                         fontSize: '16px',
-                        width: '35%',
+                        width: '40%',
                         boxSizing: 'border-box',
                         fontFamily: 'sans-serif' ,
                       }}
                     >
-                      <option value="" label="Seleccionar Método de Pago" />
+                      <option value="" label="Método de Pago" />
                       <option
                         value="Davivienda"
                         label="PSE - Davivienda"
