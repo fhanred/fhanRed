@@ -8,6 +8,7 @@ const router = Router();
 router.get('/', taskController.getAllTasks);
 router.post('/',taskController.createTask);
 router.post('/asignar',taskController.assignTask);
-router.get('/listarTareas',taskController.getTasksForUser)
+router.get('/listarTareas/:n_documento',taskController.getTasksForUser)
+router.get('/listarTareas', taskController.getAllAssignments)
 
 module.exports = router;

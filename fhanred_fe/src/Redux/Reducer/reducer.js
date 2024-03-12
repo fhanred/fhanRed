@@ -68,7 +68,7 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SIGNIN_USER":
+    case SIGNIN_USER:
       console.log("Usuario logueado:", action.payload.user);
       return {
         ...state,
