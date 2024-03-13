@@ -60,17 +60,10 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM('INSTALACION CABLE E INTERNET','MANTENIMIENTO', 'FALLA','FALLA MASIVA'),//TODO: ARMAR ENUM
         allowNull: false, // TODO: PREGUNTAR CRITERIO DE ALLOW NULL
       },
-      ticket_date: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
       reception_datetime: {
         type: DataTypes.DATE,
       },
       served_by: {
-        type: DataTypes.STRING,
-      },
-      technician: {
         type: DataTypes.STRING,
       },
       observations: {
