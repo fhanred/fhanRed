@@ -15,7 +15,12 @@ module.exports = (sequelize) => {
             turno: {
                 type: DataTypes.ENUM('Mañana', 'Tarde'),
                 allowNull: false
-            }
+            },
+            taskDate: {
+                type: DataTypes.DATEONLY,
+                allowNull: false,
+              }, 
+
         }
     );
 };

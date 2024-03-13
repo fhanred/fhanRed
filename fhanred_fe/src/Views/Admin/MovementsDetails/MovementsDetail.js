@@ -3,13 +3,14 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { useSelector, useDispatch } from "react-redux";
 import "./MovementsDetail.css";
 import { fetchMovementsByCashier } from "../../../Redux/Actions/actions";
+import { useHistory } from "react-router-dom";
 
 const MovementsDetail = () => {
   const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
   const dispatch = useDispatch();
   const userName = useSelector((state) => state.authentication.user.razon_social);
   const movements = useSelector((state) => state.data);
-
+  const history = useHistory();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -35,25 +36,25 @@ const MovementsDetail = () => {
 
   
   return (
-    <div className="container">
-      <div>
+    <div className="container" >
+      <div className="header">
         <Typography variant="h6">Detalles de Movimientos del Cajero</Typography>
         <Typography variant="body1">Fecha: {formattedDate}</Typography>
       </div>
-      
+      <div className="content">
       {filteredMovements.length > 0 ? (
         <>
-          <div>
-            <TableContainer component={Paper}>
+          <div  >
+            <TableContainer  component={Paper} className="table-container">
               <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Número de Recibo</TableCell>
-                    <TableCell>Fecha de Pago</TableCell>
-                    <TableCell>Usuario</TableCell>
-                    <TableCell>Importe</TableCell>
-                    <TableCell>Contrato</TableCell>
-                    <TableCell>Método de Pago</TableCell>
+                <TableHead >
+                  <TableRow >
+                    <TableCell className="table-header-cell" >Número de Recibo</TableCell>
+                    <TableCell className="table-header-cell" >Fecha de Pago</TableCell>
+                    <TableCell className="table-header-cell">Usuario</TableCell>
+                    <TableCell className="table-header-cell">Importe</TableCell>
+                    <TableCell className="table-header-cell">Contrato</TableCell>
+                    <TableCell className="table-header-cell">Método de Pago</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -71,7 +72,7 @@ const MovementsDetail = () => {
               </Table>
             </TableContainer>
           </div>
-          <div>
+          <div className="summary">
             <Typography variant="body1">Total por tipo de pago:</Typography>
             <ul>
               {Object.keys(sumByPaymentMethod).map(paymentMethod => (
@@ -80,12 +81,13 @@ const MovementsDetail = () => {
                 </li>
               ))}
             </ul>
+            <button style={{ marginTop: 10}}  type="button" onClick={() => history.push("/caja")}>Volver</button>
           </div>
         </>
       ) : (
         <Typography variant="body1">No hay movimientos disponibles para hoy.</Typography>
       )}
-      
+      </div>
     </div>
   );
 }

@@ -1,17 +1,55 @@
- .container {
-    max-width: 800px;
-      margin: 0 auto;
-      margin-top: 160px;
-      padding: 20px;
-      font-family: 'Montserrat', sans-serif;
-      letter-spacing: -0.2px;
-      font-size: 16px;
-      background-color: #f7f7f7;
-      border: 1px solid #a7a4a4;
-      border-radius: 5px;
-   
+.container {
+  max-width: 800px;
+  margin: 120px auto 0;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.2px;
+  display: flex;
+  flex-direction: column; /* Alinear elementos en columna */
+  align-items: center; /* Centrar elementos horizontalmente */
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold; /* Texto en negrita */
+  font-size: 24px; /* Tamaño de letra más grande */
+
+}
+
+.table-container {
+  margin-bottom: 20px;
+}
+
+/* Estilos para resaltar los títulos de la tabla */
+.table-header-cell {
+  color: black;
+  background-color: #f0f0f0; /* Fondo gris claro */
+}
+.summary {
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    font-size: 16px;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .container {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    font-size: 12px;
+  }
+}
+
+
+/* 
   .formSection {
     margin: 20px 15;
   }
@@ -72,7 +110,7 @@
   
   .previous-button {
     background-color: #1f2852;
-  }
+  } */
   
   /* Estilos para el mensaje de éxito */
   .success-message {

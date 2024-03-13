@@ -4,6 +4,13 @@ import {
   GET_USERS,
   CLEAN_DETAIL,
   LOGOUT_USER,
+  FETCH_ASSIGNED_TASKS_REQUEST,
+  FETCH_ASSIGNED_TASKS_SUCCESS,
+  FETCH_ASSIGNED_TASKS_FAILURE,
+  ASSIGN_TASK_TO_USER_REQUEST,
+  ASSIGN_TASK_TO_USER_SUCCESS,
+  ASSIGN_TASK_TO_USER_FAILURE,
+
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -14,12 +21,14 @@ const initialState = {
   },
   userInfo: {},
   usersData: [],
- 
+  assign: [], 
+  loading: false,
+  error: null, 
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SIGNIN_USER":
+    case SIGNIN_USER:
       console.log("Usuario logueado:", action.payload.user);
       return {
         ...state,
@@ -51,10 +60,44 @@ const rootReducer = (state = initialState, action) => {
         userInfo: {},
         loginError: false,
       };
-    
-        default:
-          return state;
-      }
-    };
+      case FETCH_ASSIGNED_TASKS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_ASSIGNED_TASKS_SUCCESS:
+      return {
+        ...state,
+        assign: action.payload,
+        loading: false,
+      };
+    case FETCH_ASSIGNED_TASKS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case ASSIGN_TASK_TO_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case ASSIGN_TASK_TO_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case ASSIGN_TASK_TO_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
 
+    default:
+      return state;
+  }
+};
 export default rootReducer;

@@ -25,9 +25,7 @@ import {
   FETCH_MOVEMENTS_BY_CASHIER_REQUEST,
   FETCH_MOVEMENTS_BY_CASHIER_SUCCESS,
   FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
-  ASSIGN_TASK_REQUEST,
-  ASSIGN_TASK_SUCCESS,
-  ASSIGN_TASK_FAILURE,
+
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -70,7 +68,7 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SIGNIN_USER":
+    case SIGNIN_USER:
       console.log("Usuario logueado:", action.payload.user);
       return {
         ...state,
@@ -228,23 +226,7 @@ const rootReducer = (state = initialState, action) => {
       error: action.payload,
     };
 
-    case ASSIGN_TASK_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    case ASSIGN_TASK_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
-    case ASSIGN_TASK_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
+   
         default:
           return state;
       }

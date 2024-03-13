@@ -1,27 +1,28 @@
-import { useEffect } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { userInfo } from "../src/Redux/Actions/actions";
-import SignIn from "./Views/Admin/SignIn/SignIn";
-import Home from "./Views/Admin/Home/Home";
-import Navbar from "./components/Navbar/Navbar";
-import NavbarItems from "./components/NavbarItems/NavbarItems";
-import Customers from "./Views/Admin/Customers/Customers";
-import CustomersData from "./components/CustomersData/CustomersData";
-import Invoice from "./components/Invoice/Invoice";
-import ForgotPassword from "./components/Forgot/ForgotPassword";
-import Register from "./components/Register/Register";
-import Treasury from "./Views/Admin/Treasury/Treasury";
-import Billing from "./Views/Admin/Billing/Billing";
-import TicketManager from "./Views/Admin/TicketManager/TicketManager";
-import Perfil from "./Views/Admin/Perfil/Perfil";
-import Encashment from "./Views/Admin/Encashment/Encashment";
-import { links } from "./data";
-import ChangePassword from "./Views/Admin/ChangePassword/ChangePassword";
-import Contract from "./components/Contract/Contract";
-import ReceiptNumberForm from "./Views/Admin/Encashment/ReceiptNumberForm";
-import Summary from "./Views/Admin/Summary/Summary";
-import MovementsDetail from "./Views/Admin/MovementsDetails/MovementsDetail";
+
+import { useEffect } from 'react';
+import {BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userInfo } from '../src/Redux/Actions/actions'
+import SignIn from './Views/Admin/SignIn/SignIn';
+import Home from './Views/Admin/Home/Home';
+import Navbar from './components/Navbar/Navbar';
+import NavbarItems from './components/NavbarItems/NavbarItems';
+import Customers from './Views/Admin/Customers/Customers';
+import CustomersData from './components/CustomersData/CustomersData';
+import Invoice from './components/Invoice/Invoice';
+import ForgotPassword from './components/Forgot/ForgotPassword';
+import Register from './components/Register/Register';
+import Treasury from './Views/Admin/Treasury/Treasury';
+import Billing from './Views/Admin/Billing/Billing';
+import Perfil from './Views/Admin/Perfil/Perfil';
+import Encashment from './Views/Admin/Encashment/Encashment';
+import { links } from './data';
+import ChangePassword from './Views/Admin/ChangePassword/ChangePassword';
+import Contract from './components/Contract/Contract';
+import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
+import Summary from "./Views/Admin/Summary/Summary"
+import MovementsDetail  from './Views/Admin/MovementsDetails/MovementsDetail';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -97,6 +98,7 @@ function App() {
                 <Route path="/contracts">
                   <Contract />
                 </Route>
+          
               </Switch>
             </div>
           </Route>
