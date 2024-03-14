@@ -41,17 +41,17 @@ export const userInfo = (input) => async (dispatch) => {
   try {
     const response = await axios.post(`${BASE_URL}/auth/login`, input);
 
-    if (response.data.data && response.data.data.token) {
+    if (response.data.data && response.data.data.token && response.data.data.user) {
       const { token, user } = response.data.data;
-      dispatch(signInUser(token, user));
+      dispatch(signInUser(token, user)); 
     } else {
       
     }
+
     console.log('Resultado de la solicitud:', response.data);
   } catch (error) {
     console.error('Error en la solicitud:', error);
-    
-    return dispatch(cleanDetail());
+    dispatch(cleanDetail());
   }
 };
 
