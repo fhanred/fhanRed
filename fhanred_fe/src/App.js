@@ -22,6 +22,8 @@ import Contract from './components/Contract/Contract';
 import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
 import Summary from "./Views/Admin/Summary/Summary";
 import MovementsDetail  from './Views/Admin/MovementsDetails/MovementsDetail';
+import ContractForm from './components/Contratos2/ContractForm';
+
 
 
 function App() {
@@ -71,6 +73,9 @@ function App() {
                 </Route>
                 <Route path="/clientesContratos">
                   <Invoice />
+                </Route>
+                <Route path="/generarContrato">
+                  <ContractForm />
                 </Route>
                 <Route path="/facturacion">
                   <Billing />
