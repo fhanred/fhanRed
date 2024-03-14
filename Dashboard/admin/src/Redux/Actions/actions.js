@@ -13,6 +13,12 @@ import {
   ASSIGN_TASK_TO_USER_REQUEST,
   ASSIGN_TASK_TO_USER_SUCCESS,
   ASSIGN_TASK_TO_USER_FAILURE,
+  // DELETE_USER_FAILURE,
+  // DELETE_USER_SUCCESS,
+  // DELETE_USER_REQUEST,
+  UPDATE_USER_FAILURE,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
   
 } from "./actions-types";
 
@@ -55,6 +61,7 @@ export const logout = () => async (dispatch) => {
 export const getUsers = () => async (dispatch) => {
   try {
     const { data } = await axios.get(`${BASE_URL}/user`);
+    
     dispatch({ type: GET_USERS, payload: data.data.users });
   } catch (error) {}
 };
@@ -67,6 +74,35 @@ export const createUser = (input) => async (dispatch) => {
     dispatch({ type: CREATE_USER, payload: data });
     return { success: true }; 
   } catch (error) {
+    return { success: false, errorMessage: error.message };
+  }
+};
+
+// Acción para eliminar un usuario
+// export const deleteUser = (n_documento) => async (dispatch) => {
+//   try {
+//     dispatch({ type: DELETE_USER_REQUEST });
+//     await axios.delete(`${BASE_URL}/user/${n_documento}`);
+//     dispatch({ type: DELETE_USER_SUCCESS });
+//     return { success: true }; 
+//   } catch (error) {
+//     dispatch({ type: DELETE_USER_FAILURE, payload: error.message });
+//     return { success: false, errorMessage: error.message };
+//   }
+// };
+
+// Acción para actualizar un usuario
+export const updateUser = (n_documento, user) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+    const { data } = await axios.put(`${BASE_URL}/user/${n_documento}`, user);
+   
+    dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
+    dispatch(getUsers(n_documento));
+    console.log(data,"probando updateAccion")
+    return { success: true }; 
+  } catch (error) {
+    dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
     return { success: false, errorMessage: error.message };
   }
 };
