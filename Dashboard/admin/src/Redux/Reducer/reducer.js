@@ -10,7 +10,12 @@ import {
   ASSIGN_TASK_TO_USER_REQUEST,
   ASSIGN_TASK_TO_USER_SUCCESS,
   ASSIGN_TASK_TO_USER_FAILURE,
-
+  // DELETE_USER_REQUEST,
+  // DELETE_USER_SUCCESS,
+  // DELETE_USER_FAILURE,
+  UPDATE_USER_FAILURE,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_REQUEST,
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -23,6 +28,7 @@ const initialState = {
   usersData: [],
   assign: [], 
   loading: false,
+  updating: false,
   error: null, 
 };
 
@@ -53,6 +59,40 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload,
+      };
+    //   case DELETE_USER_REQUEST:
+    //   return {
+    //     ...state,
+    //     deleting: true,
+    //     error: null
+    //   };
+    // case DELETE_USER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     deleting: false,
+    //   };
+    // case DELETE_USER_FAILURE:
+    //   return {
+    //     ...state,
+    //     deleting: false,
+    //     error: action.payload
+    //   };
+    case UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        updating: true,
+        error: null
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        updating: false,
+      };
+    case UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        updating: false,
+        error: action.payload
       };
     case CLEAN_DETAIL:
       return {

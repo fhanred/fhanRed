@@ -8,10 +8,10 @@ export default function Worker() {
     <div className='container'>
       <ButtonGroup variant="contained" aria-label="Basic button group">
         <Link to="/altaEmpleado" className="link">
-          <Button>Alta Empleado</Button>
+          <Button>Crear Empleado</Button>
         </Link>
         <Link to="/eliminarEmpleado" className="link">
-          <Button>Eliminar Empleado</Button>
+          <Button>ABM Empleado</Button>
         </Link>
        
       </ButtonGroup>

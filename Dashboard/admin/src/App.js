@@ -15,7 +15,7 @@ import TaskPage from './Pages/TaskPage';
 import Worker from './Pages/Worker.js';
 import Calendary from './components/Calendary/Calendary';
 import FormCreateWorker from './components/FormsWorkers/FormCreateWorker.js';
-import FormDelete from './components/FormsWorkers/FormDelete.js';
+import FormUpdateUser from './components/FormsWorkers/FormUpdateUser.js';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,7 +69,7 @@ const App = () => {
                   <FormCreateWorker/>
                 </Route>
                 <Route path='/eliminarEmpleado'>
-                  <FormDelete/>
+                  <FormUpdateUser/>
                 </Route>
               </Switch>
             </div>
