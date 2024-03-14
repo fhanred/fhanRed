@@ -20,7 +20,7 @@ const App = () => {
   const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
 
   useEffect(() => {
-    localStorage.clear(); // Limpiar el almacenamiento local al cargar la aplicación
+    localStorage.clear(); 
   }, []);
 
   return (
