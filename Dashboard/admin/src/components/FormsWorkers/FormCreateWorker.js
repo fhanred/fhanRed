@@ -6,7 +6,7 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../Redux/Actions/actions";
-
+import './Forms.css'
 
 function FormCreateWorker() {
   const dispatch = useDispatch();
@@ -14,6 +14,8 @@ function FormCreateWorker() {
   const [submissionResult, setSubmissionResult] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
+
+  
   return (
     <div >
       <Formik
@@ -77,6 +79,18 @@ function FormCreateWorker() {
                       name="tipo_persona"
                       as="select"
                       className="select"
+                      style={{
+                        // Estilos para el select
+                        padding: '8px',
+                        marginBottom: 10,
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                        backgroundColor: '#ebecf0',
+                        fontSize: '16px',
+                        width: '50%',
+                        boxSizing: 'border-box',
+                        fontFamily: 'sans-serif' ,
+                      }}
                     >
                       <option value={""} className="option">
                         Selecciona una opción
@@ -160,6 +174,18 @@ function FormCreateWorker() {
                       name="tipo_documento"
                       as="select"
                       className="select"
+                      style={{
+                        // Estilos para el select
+                        padding: '8px',
+                        marginBottom: 10,
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                        backgroundColor: '#ebecf0',
+                        fontSize: '16px',
+                        width: '50%',
+                        boxSizing: 'border-box',
+                        fontFamily: 'sans-serif' ,
+                      }}
                     >
                       <option value={""} className="option">
                         Selecciona una opción
@@ -225,6 +251,18 @@ function FormCreateWorker() {
                       name="sexo"
                       as="select"
                       className="select"
+                      style={{
+                        // Estilos para el select
+                        padding: '8px',
+                        marginBottom: 10,
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                        backgroundColor: '#ebecf0',
+                        fontSize: '16px',
+                        width: '50%',
+                        boxSizing: 'border-box',
+                        fontFamily: 'sans-serif' ,
+                      }}
                     >
                       <option value={""} className="option">
                         Selecciona una opción
@@ -296,6 +334,18 @@ function FormCreateWorker() {
                       name="id_role"
                       as="select"
                       className="select"
+                      style={{
+                        // Estilos para el select
+                        padding: '8px',
+                        marginBottom: 10,
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                        backgroundColor: '#ebecf0',
+                        fontSize: '16px',
+                        width: '50%',
+                        boxSizing: 'border-box',
+                        fontFamily: 'sans-serif' ,
+                      }}
                     >
                       <option value={""} className="option">
                         Selecciona una opción

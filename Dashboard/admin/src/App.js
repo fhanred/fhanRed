@@ -6,7 +6,6 @@ import SignIn from './components/SignIn/SignIn';
 import { userInfo } from './Redux/Actions/actions';
 import Navbar from './components/Navbar/Navbar';
 import NavbarItems from './components/NavbarItems/NavbarItems'
-import Register from './components/Register/Register';
 import { links } from './data';
 import HomePage from './Pages/HomePage';
 import Vouchers from './Pages/Vouchers';
@@ -32,10 +31,9 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             <SignIn />
+            
           </Route>
-          <Route path="/signup">
-            <Register />
-          </Route>
+          
           <Route path="/tareas">
             <TaskPage />
           </Route>
