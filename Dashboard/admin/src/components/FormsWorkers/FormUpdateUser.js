@@ -13,6 +13,7 @@ function FormUpdateUser() {
   const [nDocumento, setNDocumento] = useState("")
   const [updateSuccess, setUpdateSuccess] = useState(false);
   
+
   //const [modifiedUser, setModifiedUser] = useState(null);
   
   console.log(usersData);
@@ -32,7 +33,6 @@ function FormUpdateUser() {
       const user = usersData.find(user => user.n_documento === n_documento);
       
       if (user) {
-
         console.log("Usuario encontrado:", user);
         setUserData(user);
       } else {
@@ -117,7 +117,10 @@ function FormUpdateUser() {
       {userData && (
         <div className="edit-fields">
           <div className="form-group">
+
             <label  htmlFor="newEmail">Email:</label>
+
+
             <Field
               type="email"
               className="form-control"
@@ -125,6 +128,7 @@ function FormUpdateUser() {
               name="newEmail"
               placeholder = {userData.email}
               
+
             />
           </div>
 
@@ -136,6 +140,7 @@ function FormUpdateUser() {
               id="newPassword"
               name="newPassword"
               placeholder={userData.password}
+
             />
           </div>
 
@@ -146,7 +151,6 @@ function FormUpdateUser() {
               className="form-control"
               id="newActive"
               name="newActive"
-              
             >
               <option value="true">Activo</option>
               <option value="false">Inactivo</option>
@@ -161,6 +165,7 @@ function FormUpdateUser() {
               id="newIdRole"
               name="newIdRole"
               placeholder={userData.id_role}
+
             />
           </div>
 
@@ -174,11 +179,13 @@ function FormUpdateUser() {
           </button>
         </div>
       )}
+
       {updateSuccess && (
               <div className="alert alert-success mt-3" role="alert">
                 ¡Usuario actualizado exitosamente!
               </div>
             )}
+ 
     </Form>
   )}
 </Formik>

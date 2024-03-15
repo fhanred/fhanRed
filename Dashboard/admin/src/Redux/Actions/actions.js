@@ -19,6 +19,9 @@ import {
   UPDATE_USER_FAILURE,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
+  GET_TASKS_REQUEST,
+  GET_TASKS_FAILURE,
+  GET_TASKS_SUCCESS
   
 } from "./actions-types";
 
@@ -164,7 +167,15 @@ export const assignTaskToUser = (taskId, n_documento, turno, taskDate) => async 
     dispatch({ type: ASSIGN_TASK_TO_USER_FAILURE, payload: error.message });
   }
 };
-
+export const getTasks = () => async (dispatch) => {
+  dispatch({ type: GET_TASKS_REQUEST });
+  try {
+    const response = await axios.get(`${BASE_URL}/task/`);
+    dispatch({ type: GET_TASKS_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: GET_TASKS_FAILURE, payload: error.message });
+  }
+};
 
 
 
