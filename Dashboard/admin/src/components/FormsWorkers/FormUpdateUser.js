@@ -139,13 +139,13 @@ function FormUpdateUser() {
               className="form-control"
               id="newPassword"
               name="newPassword"
-              placeholder={userData.password}
+              
 
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="newActive">Activo:</label>
+            <label htmlFor="newActive"></label>
             <Field
               as="select"
               className="form-control"
@@ -158,15 +158,17 @@ function FormUpdateUser() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="newIdRole">ID Rol:</label>
+            <label htmlFor="newIdRole"></label>
             <Field
-              type="text"
+              as="select"
               className="form-control"
               id="newIdRole"
               name="newIdRole"
-              placeholder={userData.id_role}
-
-            />
+            >
+             <option value="2">Técnico</option>
+              <option value="3">Caja</option>
+              <option value="4">Administrador</option>
+              </Field>
           </div>
 
           {/* Botón para guardar cambios */}
