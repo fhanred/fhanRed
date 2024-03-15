@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { getUsers, updateUser } from "../../Redux/Actions/actions";
 import {useHistory} from "react-router-dom";
-
+import './Forms.css'
 
 function FormUpdateUser() {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function FormUpdateUser() {
   const [userData, setUserData] = useState(null);
   const [nDocumento, setNDocumento] = useState("")
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  
+  const [submissionResult, setSubmissionResult] = useState(null);
 
   //const [modifiedUser, setModifiedUser] = useState(null);
   
@@ -64,17 +64,20 @@ function FormUpdateUser() {
     dispatch(updateUser(userData.n_documento, updatedUser))
     .then((response)=>{
       if(response.success){
+        setSubmissionResult("success");
         setTimeout(()=>{
           history.push("/homePage");
         },2000);
       }else{
+        setSubmissionResult("error");
+        console.error(response.errorMessage);
          // Maneja errores de actualización aquí si es necesario
       }
     })
   };
 
   return (
-    <div className="container">
+    <div>
 <Formik
   initialValues={{
     n_documento: "",
@@ -89,9 +92,17 @@ function FormUpdateUser() {
   }}
 >
   {({ isSubmitting, values }) => (
+    <div className="divForm">
     <Form className="container">
-      <div className="form-group">
-        <label htmlFor="n_documento">Número de Documento:</label>
+      <div className="divRegister">
+      <h2 className="tittle">ABM Empleados</h2>
+      <div>
+        <div className="item1">
+        <label htmlFor="n_documento">
+          Número de Documento:
+          </label>
+        </div>
+        <div>
         <Field
           type="text"
           className="form-control"
@@ -103,6 +114,10 @@ function FormUpdateUser() {
           component="div"
           className="text-danger"
         />
+        </div>
+      </div>
+        
+       
       </div>
 
       {/* Botón para buscar el usuario */}
@@ -113,12 +128,12 @@ function FormUpdateUser() {
       >
         Buscar
       </button>
-
+      
       {userData && (
         <div className="edit-fields">
-          <div className="form-group">
+          <div >
 
-            <label  htmlFor="newEmail">Email:</label>
+            <label  htmlFor="newEmail" className="label-reg">Email:</label>
 
 
             <Field
@@ -132,7 +147,7 @@ function FormUpdateUser() {
             />
           </div>
 
-          <div className="form-group">
+          <div >
             <label htmlFor="newPassword">Password:</label>
             <Field
               type="password"
@@ -144,33 +159,71 @@ function FormUpdateUser() {
             />
           </div>
 
-          <div className="form-group">
+          <div >
             <label htmlFor="newActive"></label>
             <Field
               as="select"
               className="form-control"
               id="newActive"
               name="newActive"
+              style={{
+                // Estilos para el select
+                padding: '8px',
+                marginBottom: 10,
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+                backgroundColor: '#ebecf0',
+                fontSize: '16px',
+                width: '50%',
+                boxSizing: 'border-box',
+                fontFamily: 'sans-serif' ,
+              }}
             >
               <option value="true">Activo</option>
               <option value="false">Inactivo</option>
             </Field>
           </div>
 
-          <div className="form-group">
+          <div >
             <label htmlFor="newIdRole"></label>
             <Field
               as="select"
               className="form-control"
               id="newIdRole"
               name="newIdRole"
+              style={{
+                // Estilos para el select
+                padding: '8px',
+                marginBottom: 10,
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+                backgroundColor: '#ebecf0',
+                fontSize: '16px',
+                width: '50%',
+                boxSizing: 'border-box',
+                fontFamily: 'sans-serif' ,
+              }}
             >
              <option value="2">Técnico</option>
               <option value="3">Caja</option>
               <option value="4">Administrador</option>
               </Field>
           </div>
-
+          {updateSuccess === "success"  && (
+              
+              <div className="message-container" >
+               <div className="success">
+                ¡Usuario actualizado exitosamente!
+                </div>
+              </div>
+            )}
+            {submissionResult === "error" && (
+                  <div className="message-container">
+                    <div className="error">
+                      No se pudo actualizar. Inténtelo nuevamente.
+                    </div>
+                  </div>
+                )}
           {/* Botón para guardar cambios */}
           <button
             type="submit"
@@ -179,16 +232,14 @@ function FormUpdateUser() {
           >
             Guardar cambios
           </button>
+          <button style={{ marginLeft: 10}}  type="button" onClick={() => history.push("/homePage")}>Volver</button>
         </div>
       )}
 
-      {updateSuccess && (
-              <div className="alert alert-success mt-3" role="alert">
-                ¡Usuario actualizado exitosamente!
-              </div>
-            )}
+    
  
     </Form>
+    </div>
   )}
 </Formik>
     </div>

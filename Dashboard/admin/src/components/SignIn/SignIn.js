@@ -11,12 +11,15 @@ import { userInfo } from '../../Redux/Actions/actions';
 import { handleChange, login } from './funcs';
 
 function SignIn() {
-  //const userRole = useSelector((state) => state.authentication.user.id_role);
+  
+  const userRole = useSelector((state) => state.authentication.user ? state.authentication.user.id_role : null);
+
   const history = useHistory();
   const dispatch = useDispatch();
   const credentials = useSelector((state) => state.userInfo);
   const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
 
   function handleClick1() {
@@ -47,18 +50,21 @@ function SignIn() {
     if (input.email && input.password) {
       try {
         await login(input, dispatch, credentials, userInfo);
-        if (isAuthenticated /* && userRole === 4 */ ) {
+        if (isAuthenticated  && userRole === 4 ) {
           history.push('/homePage');
+        }else{
+          setLoginError('No eres administrador.'); 
         }
       } catch (error) {
         console.error('Se produjo un error:', error.message);
+        setLoginError('Error al iniciar sesión. Por favor, inténtelo de nuevo.');
       }
     }
   };
 
   useEffect(() => {
     if (!isAuthenticated ) {
-      alert('Aún no eres usuario de Fhanred.');
+      alert('No eres administrador.');
       history.push('/');
     }
   }, [isAuthenticated,  history ]);
@@ -67,6 +73,8 @@ function SignIn() {
     <div className={style.container}>
       <div className={style.form}>
         <h1>Iniciar sesión</h1>
+        {loginError && <p className={style.error}>{loginError}</p>}
+
         <form onSubmit={submitHandler}>
           <label>
             <input
@@ -112,15 +120,7 @@ function SignIn() {
           </button>
         </form>
 
-        <div className={style.register}>
-          <label>
-            <span>¿Aún no estás registrado?</span>
-          </label>
-
-          <button className={style.red} onClick={handleClick1}>
-            <FaUser className={style.icon} /> Crear cuenta
-          </button>
-        </div>
+        
       </div>
     </div>
   );
