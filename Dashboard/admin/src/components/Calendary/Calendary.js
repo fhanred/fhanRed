@@ -25,12 +25,13 @@ function Calendary() {
     return user ? user.name_razonSocial : "";
   };
 
-  const events = assignedTasks.map(task => ({
-    id: task.id,
-    title: getNameRazonSocial(task.n_documento), 
-   
-  }));
-
+const assignedTasksData = assignedTasks.data || { assignments: [] }; 
+const events = assignedTasksData.assignments.map(task => ({
+  
+  id: task.id,
+  title: getNameRazonSocial(task.n_documento), 
+}));
+console.log(events)
   return (
     <div className="container">
       <Calendar
@@ -45,3 +46,30 @@ function Calendary() {
 }
 
 export default Calendary;
+
+
+// assign: {
+//   error: false,
+//   data: {
+//     assignments: [
+//       {
+//         id: 1,
+//         turno: 'Tarde',
+//         taskDate: '2024-03-24',
+//         createdAt: '2024-03-15T21:31:12.904Z',
+//         updatedAt: '2024-03-15T21:31:12.904Z',
+//         taskId: 2,
+//         n_documento: '51690062'
+//       },
+//       {
+//         id: 2,
+//         turno: 'Tarde',
+//         taskDate: '2024-03-12',
+//         createdAt: '2024-03-15T21:34:15.908Z',
+//         updatedAt: '2024-03-15T21:34:15.908Z',
+//         taskId: 3,
+//         n_documento: '111112'
+//       }
+//     ]
+//   }
+// },

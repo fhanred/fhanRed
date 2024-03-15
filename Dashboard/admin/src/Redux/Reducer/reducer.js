@@ -29,7 +29,7 @@ const initialState = {
   },
   userInfo: {},
   usersData: [],
-  assign: [], 
+  assign: {}, 
   tasks: [],
   loading: false,
   updating: false,
