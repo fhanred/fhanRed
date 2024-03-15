@@ -68,7 +68,7 @@ const App = () => {
                 <Route path='/altaEmpleado'>
                   <FormCreateWorker/>
                 </Route>
-                <Route path='/eliminarEmpleado'>
+                <Route path='/modificarEmpleado'>
                   <FormUpdateUser/>
                 </Route>
               </Switch>

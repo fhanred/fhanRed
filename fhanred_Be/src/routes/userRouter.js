@@ -8,6 +8,6 @@ router.get("/",  controllers.listUsers);
 router.get("/:n_documento", controllers.getUser);
 router.post("/forgotpassword", controllers.forgotPassword);
 //router.delete("/:n_documento", isAuth, controllers.deleteUser);
-router.put("/update/:n_documento", isAuth, controllers.updateUser);
+router.put("/update/:n_documento",controllers.updateUser);
 
 module.exports = router;

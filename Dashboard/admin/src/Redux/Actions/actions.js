@@ -92,20 +92,36 @@ export const createUser = (input) => async (dispatch) => {
 // };
 
 // Acción para actualizar un usuario
+// export const updateUser = (n_documento, user) => async (dispatch) => {
+//   try {
+//     dispatch({ type: UPDATE_USER_REQUEST });
+//     const { data } = await axios.put(`${BASE_URL}/user/update/${n_documento}`, user);
+   
+//     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
+//     dispatch(getUsers(n_documento));
+//     console.log(data,"probando updateAccion")
+//     return { success: true }; 
+//   } catch (error) {
+//     dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
+//     return { success: false, errorMessage: error.message };
+//   }
+// };
+
 export const updateUser = (n_documento, user) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
-    const { data } = await axios.put(`${BASE_URL}/user/${n_documento}`, user);
+    const { data } = await axios.put(`${BASE_URL}/user/update/${n_documento}`, user);
    
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
     dispatch(getUsers(n_documento));
-    console.log(data,"probando updateAccion")
+    console.log(data, "probando updateAccion");
     return { success: true }; 
   } catch (error) {
-    dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
+    dispatch({ type: UPDATE_USER_FAILURE, payload: error.response.data.message }); // Ajusta aquí para obtener el mensaje de error del objeto de respuesta
     return { success: false, errorMessage: error.message };
   }
 };
+
 
 
 export const cleanDetail = () => {
