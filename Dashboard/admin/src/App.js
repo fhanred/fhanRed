@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
 import SignIn from './components/SignIn/SignIn';
 import { userInfo } from './Redux/Actions/actions';
 import Navbar from './components/Navbar/Navbar';
 import NavbarItems from './components/NavbarItems/NavbarItems'
-import Register from './components/Register/Register';
 import { links } from './data';
 import HomePage from './Pages/HomePage';
 import Vouchers from './Pages/Vouchers';
@@ -17,12 +15,15 @@ import Calendary from './components/Calendary/Calendary';
 import FormCreateWorker from './components/FormsWorkers/FormCreateWorker.js';
 import FormUpdateUser from './components/FormsWorkers/FormUpdateUser.js';
 
+
 const App = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state) => state.authentication.isAuthenticated
+  );
 
   useEffect(() => {
-    localStorage.clear(); // Limpiar el almacenamiento local al cargar la aplicación
+    localStorage.clear();
   }, []);
 
   return (
@@ -32,16 +33,14 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             <SignIn />
+            
           </Route>
-          <Route path="/signup">
-            <Register />
-          </Route>
+
           <Route path="/tareas">
             <TaskPage />
           </Route>
           <Route path="/calendario">
             <Calendary />
-
           </Route>
           <Route path="/comprobantes">
             <Vouchers />
@@ -51,8 +50,7 @@ const App = () => {
             </Route>
           </Route>
           <Route>
-
-            <div style={{ flex: 1, display: 'flex' }}>
+            <div style={{ flex: 1, display: "flex" }}>
               <div>
                 <NavbarItems links={links} />
               </div>
@@ -65,15 +63,14 @@ const App = () => {
                 <Route path="/empleados">
                   <Worker />
                 </Route>
-                <Route path='/altaEmpleado'>
-                  <FormCreateWorker/>
+                <Route path="/altaEmpleado">
+                  <FormCreateWorker />
                 </Route>
-                <Route path='/eliminarEmpleado'>
-                  <FormUpdateUser/>
+                <Route path="/modificarEmpleado">
+                  <FormUpdateUser />
                 </Route>
               </Switch>
             </div>
-
           </Route>
         </Switch>
       </div>
@@ -82,8 +79,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-

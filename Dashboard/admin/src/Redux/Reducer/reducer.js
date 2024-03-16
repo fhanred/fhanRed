@@ -16,6 +16,9 @@ import {
   UPDATE_USER_FAILURE,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_REQUEST,
+  GET_TASKS_REQUEST,
+  GET_TASKS_SUCCESS,
+  GET_TASKS_FAILURE
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -26,7 +29,8 @@ const initialState = {
   },
   userInfo: {},
   usersData: [],
-  assign: [], 
+  assign: {}, 
+  tasks: [],
   loading: false,
   updating: false,
   error: null, 
@@ -101,18 +105,21 @@ const rootReducer = (state = initialState, action) => {
         loginError: false,
       };
       case FETCH_ASSIGNED_TASKS_REQUEST:
+        console.log("FETCH_ASSIGNED_TASKS_REQUEST");
       return {
         ...state,
         loading: true,
         error: null,
       };
     case FETCH_ASSIGNED_TASKS_SUCCESS:
+      console.log("FETCH_ASSIGNED_TASKS_SUCCESS", action.payload);
       return {
         ...state,
         assign: action.payload,
         loading: false,
       };
     case FETCH_ASSIGNED_TASKS_FAILURE:
+      console.log("FETCH_ASSIGNED_TASKS_FAILURE", action.payload);
       return {
         ...state,
         loading: false,
@@ -134,6 +141,24 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+      case GET_TASKS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case GET_TASKS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        tasks: action.payload // Actualiza el estado con las tareas obtenidas
+      };
+    case GET_TASKS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
       };
 
     default:

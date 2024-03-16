@@ -9,13 +9,19 @@ const localizer = dayjsLocalizer(dayjs);
 
 function Calendary() {
   const dispatch = useDispatch();
-  const assignedTasks = useSelector((state) => state.assign.data.assignments);;
+  const assignedTasks = useSelector((state) => {
+    console.log("State:", state);
+    console.log("Assign state:", state.assign);
+    console.log("Tasks state:", state.assign && state.assign.tasks);
+    console.log("Assignments:", state.assign && state.assign.tasks && state.assign.tasks.assignments);
+    return state.assign && state.assign.tasks && state.assign.tasks.assignments;
+  });
   const users = useSelector((state) => state.usersData); 
   
   const [n_documento, setNDocumento] = useState("");
   
-  
   useEffect(() => {
+    console.log("Assigned tasks:", assignedTasks);
     // Si no ingrasas un documento en el input te trae todas las tareas a todos los usuarios
     dispatch(fetchAssignedTasks(n_documento));
   }, [dispatch, n_documento]);
@@ -25,12 +31,13 @@ function Calendary() {
     return user ? user.name_razonSocial : "";
   };
 
-  const events = assignedTasks.map(task => ({
-    id: task.id,
-    title: getNameRazonSocial(task.n_documento), 
-   
-  }));
-
+  const assignedTasksData = (assignedTasks && assignedTasks.data) || { assignments: [] }; 
+const events = assignedTasksData.assignments.map(task => ({
+  id: task.id,
+  title: getNameRazonSocial(task.n_documento), 
+  start: new Date(task.taskDate), // Ajusta la fecha según sea necesario
+  end: new Date(task.taskDate), // Ajusta la fecha según sea necesario
+}));
   return (
     <div className="container">
       <Calendar
@@ -45,3 +52,32 @@ function Calendary() {
 }
 
 export default Calendary;
+
+
+
+// assign: {
+//   error: false,
+//   data: {
+//     assignments: [
+//       {
+//         id: 1,
+//         turno: 'Tarde',
+//         taskDate: '2024-03-24',
+//         createdAt: '2024-03-15T21:31:12.904Z',
+//         updatedAt: '2024-03-15T21:31:12.904Z',
+//         taskId: 2,
+//         n_documento: '51690062'
+//       },
+//       {
+//         id: 2,
+//         turno: 'Tarde',
+//         taskDate: '2024-03-12',
+//         createdAt: '2024-03-15T21:34:15.908Z',
+//         updatedAt: '2024-03-15T21:34:15.908Z',
+//         taskId: 3,
+//         n_documento: '111112'
+//       }
+//     ]
+//   }
+// },{
+    

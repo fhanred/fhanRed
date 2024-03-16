@@ -14,7 +14,6 @@ module.exports = async (req, res) => {
     user.name_razonSocial = user.razonSocial.toUpperCase().trim();
   }
 
-  
   user.email = user.email.toUpperCase().trim();
 
   

@@ -10,7 +10,7 @@ export default function Worker() {
         <Link to="/altaEmpleado" className="link">
           <Button>Crear Empleado</Button>
         </Link>
-        <Link to="/eliminarEmpleado" className="link">
+        <Link to="/modificarEmpleado" className="link">
           <Button>ABM Empleado</Button>
         </Link>
        
