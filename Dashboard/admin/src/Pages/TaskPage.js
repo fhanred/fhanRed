@@ -6,11 +6,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { TextField } from "@mui/material";
+import { TextField, Button, ButtonGroup } from "@mui/material";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, assignTaskToUser, getTasks } from "../Redux/Actions/actions";
 import "./Style/styles.css";
-
+import { useHistory } from "react-router-dom";
 
 export default function TaskPage() {
   const [nDocumento, setNDocumento] = useState("");
@@ -18,10 +19,13 @@ export default function TaskPage() {
   const [selectedTask, setSelectedTask] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedShift, setSelectedShift] = useState("");
-
+  const [alertMessage, setAlertMessage] = useState("");
+  const history = useHistory();
   const dispatch = useDispatch();
   const usersData = useSelector((state) => state.usersData);
   const tasks = useSelector((state) => state.tasks);
+// Filtrar usuarios con roles 2 y 3
+const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_role === 3);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -46,37 +50,72 @@ export default function TaskPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
 
     const selectedUserObject = usersData.find(user => user.n_documento === selectedUser);
-    
+
     if (!selectedUserObject) {
       console.error('Usuario no encontrado');
       return;
     }
-  
-    const formattedDate = selectedDate.toISOString().split('T')[0]; 
-  
+
+    const formattedDate = selectedDate.toISOString().split('T')[0];
+
     const formData = {
-      taskId: selectedTask, 
-      n_documento: selectedUserObject.n_documento, 
-      turno: selectedShift, 
-      taskDate: formattedDate 
+      taskId: selectedTask,
+      n_documento: selectedUserObject.n_documento,
+      turno: selectedShift,
+      taskDate: formattedDate
     };
-  
+
     console.log('Form Data:', formData);
     dispatch(assignTaskToUser(selectedTask, selectedUserObject.n_documento, selectedShift, formattedDate));
-  };
-  
+
+     // Mostrar la alerta
+     setAlertMessage("Tarea asignada");
+
+     // Limpiar los estados
+     setSelectedUser("");
+     setSelectedTask("");
+     setSelectedDate(null);
+     setSelectedShift("");
+
+   // Después de 3 segundos, ocultar la alerta
+   setTimeout(() => {
+    setAlertMessage("");
+  }, 2000);
+
+};
+
 
   return (
-   
+
     <Box className="container" sx={{ minWidth: 120 }}>
+     <ButtonGroup 
+  variant="contained" 
+  aria-label="Basic button group" 
+  style={{ 
+    position: "fixed", 
+    top: "calc(100px + 20px)", // Altura del navbar + espacio
+    right: "20px", 
+    zIndex: "999" // Asegura que el botón esté por encima de otros elementos
+  }}
+>
+  <Link to="/calendario" className="link">
+    <Button >Ver Calendario</Button>
+  </Link>
+</ButtonGroup>
+
+       {alertMessage && (
+        <div className="alert">
+          <span>{alertMessage}</span>
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         {usersData.length > 0 ? (
-          <FormControl fullWidth>
-            <InputLabel id="employee-label">Elegir empleado</InputLabel>
-            <Select
+          <FormControl fullWidth >
+            <InputLabel  id="employee-label">Elegir empleado</InputLabel>
+            <Select 
               labelId="employee-label"
               value={selectedUser}
               onChange={handleChangeUser}
@@ -95,7 +134,7 @@ export default function TaskPage() {
         )}
 
         {tasks.data && tasks.data.tasks.length > 0 ? (
-          <FormControl fullWidth>
+          <FormControl fullWidth className="imput-label">
             <InputLabel id="task-label">Elegir tarea</InputLabel>
             <Select
               labelId="task-label"
@@ -114,18 +153,19 @@ export default function TaskPage() {
         )}
 
         <div>
-    
-      <DatePicker
-        selected={selectedDate}
-        onChange={handleDateChange}
-        dateFormat="dd/MM/yyyy" // Formato de fecha
-        placeholderText="Selecciona una fecha" // Texto del placeholder
-      />
-    </div>
+
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            dateFormat="dd/MM/yyyy" // Formato de fecha
+            placeholderText="Selecciona una fecha" // Texto del placeholder
+           
+          />
+        </div>
 
 
-        <FormControl fullWidth>
-          <InputLabel id="shift-label">Turno</InputLabel>
+        <FormControl fullWidth className="imput-label">
+          <InputLabel  id="shift-label">Turno</InputLabel>
           <Select
             labelId="shift-label"
             value={selectedShift}
@@ -135,10 +175,47 @@ export default function TaskPage() {
             <MenuItem value="Tarde">Tarde</MenuItem>
           </Select>
         </FormControl>
-
-        <button type="submit">Asignar Tarea</button>
+        <ButtonGroup className="imput-label">
+          <div>
+            <Button type="submit">Asignar Tarea</Button>
+            <Button
+              style={{ marginLeft: 10 }}
+              type="button"
+              onClick={() => history.push("/homePage")}
+            >
+              Volver
+            </Button>
+          </div>
+        </ButtonGroup>
       </form>
+ {/* Renderizar la tabla de usuarios con roles 2 y 3 */}
+ <div className="user-table">
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre/Razón Social</th>
+              <th>Número de Documento</th>
+              <th>Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map(user => (
+              <tr key={user.n_documento}>
+                <td>{user.name_razonSocial}</td>
+                <td>{user.n_documento}</td>
+                <td>{user.id_role === 2 ? "Rol 2" : "Rol 3"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+
     </Box>
-    
+
   );
 }

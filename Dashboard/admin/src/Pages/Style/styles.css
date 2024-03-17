@@ -12,3 +12,19 @@
   .link {
     margin: 10px; /* Ajusta el margen entre los botones según sea necesario */
   }
+ .imput-label{
+  margin-top: 10px;
+ }
+ .alert {
+  background-color: #bc859b; /* Color de fondo */
+  color: #ffffff; /* Color del texto */
+  padding: 10px 15px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  margin-bottom: 20px; /* Espaciado inferior */
+  border: 1px solid transparent; /* Borde sólido transparente */
+}
+
+.alert span {
+  font-weight: bold; /* Texto en negrita */
+}
+  
