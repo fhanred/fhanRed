@@ -145,10 +145,10 @@ export const fetchAssignedTasks = (n_documento = null) => async (dispatch) => {
       url = `${BASE_URL}/task/listarTareas/${n_documento}`;
     }
     const response = await axios.get(url);
-    console.log("Response from fetchAssignedTasks:", response.data);
-    dispatch({ type: FETCH_ASSIGNED_TASKS_SUCCESS, payload: response.data });
+    console.log("Response from fetchAssignedTasks:", response.data); // Aquí está el console.log
+    dispatch({ type: FETCH_ASSIGNED_TASKS_SUCCESS, payload: response.data.data }); // Modificamos aquí para pasar solo response.data.data como payload
   } catch (error) {
-    console.error("Error in fetchAssignedTasks:", error);
+    console.error("Error in fetchAssignedTasks:", error); // Aquí está el console.error
     dispatch({ type: FETCH_ASSIGNED_TASKS_FAILURE, payload: error.message });
   }
 };

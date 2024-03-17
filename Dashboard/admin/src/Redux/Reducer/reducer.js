@@ -105,18 +105,21 @@ const rootReducer = (state = initialState, action) => {
         loginError: false,
       };
       case FETCH_ASSIGNED_TASKS_REQUEST:
+        console.log("FETCH_ASSIGNED_TASKS_REQUEST");
       return {
         ...state,
         loading: true,
         error: null,
       };
     case FETCH_ASSIGNED_TASKS_SUCCESS:
+      console.log("FETCH_ASSIGNED_TASKS_SUCCESS", action.payload);
       return {
         ...state,
         assign: action.payload,
         loading: false,
       };
     case FETCH_ASSIGNED_TASKS_FAILURE:
+      console.log("FETCH_ASSIGNED_TASKS_FAILURE", action.payload);
       return {
         ...state,
         loading: false,

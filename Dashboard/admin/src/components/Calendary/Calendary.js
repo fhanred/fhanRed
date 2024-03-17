@@ -11,6 +11,7 @@ const localizer = dayjsLocalizer(dayjs);
 
 function Calendary() {
   const dispatch = useDispatch();
+
   const assignedTasks = useSelector((state) => state.assign.data?.assignments);
   const users = useSelector((state) => state.usersData);
 
@@ -20,6 +21,7 @@ function Calendary() {
   const [n_documento, setNDocumento] = useState("");
 
   useEffect(() => {
+
     dispatch(fetchAssignedTasks(n_documento));
   }, [dispatch, n_documento]);
 
@@ -67,6 +69,8 @@ function Calendary() {
   const handleEventClick = (event) => {
     setSelectedTask(event);
   };
+
+
 
   return (
     <div className="container">
