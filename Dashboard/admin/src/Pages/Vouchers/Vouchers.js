@@ -46,6 +46,12 @@ export default function Vouchers() {
     onSubmit: handleSubmit,
   });
 
+  const emailFormik = useFormik({
+   initialValues:{
+    actualizarEmail: '',
+   } 
+  })
+
   return (
     <div className='container'>
             <ButtonGroup
@@ -191,6 +197,25 @@ export default function Vouchers() {
           type="text"
           onChange={recibosFormik.handleChange}
           value={recibosFormik.values.numeracionRecibos}
+        />
+
+<ButtonGroup>
+          
+          <div className='button-container'>
+          <Button type="submit">Actualizar</Button>
+          </div>
+          </ButtonGroup>
+      </form>
+       {/* Formulario para Email */}
+       <form className='form-container' onSubmit={emailFormik.handleSubmit}>
+        <h3 className='form-title'>Email</h3>
+        <label className='label' htmlFor="actualizarEmail">Actualizar Correo </label>
+        <input className='imput-label'
+          id="actualizarEmail"
+          name="actualizarEmail"
+          type="email"
+          onChange={emailFormik.handleChange}
+          value={emailFormik.values.actualizarEmail}
         />
 
 <ButtonGroup>

@@ -15,6 +15,7 @@ import Calendary from './components/Calendary/Calendary';
 import FormCreateWorker from './components/FormsWorkers/FormCreateWorker.js';
 import FormUpdateUser from './components/FormsWorkers/FormUpdateUser.js';
 import '../src/global.css'
+import ClientDetail from './components/ClientDetail/ClientDetail.js';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,9 @@ const App = () => {
                 </Route>
                 <Route path="/empleados">
                   <Worker />
+                </Route>
+                <Route path='/clientes'>
+                  <ClientDetail/>
                 </Route>
                 <Route path="/altaEmpleado">
                   <FormCreateWorker />
