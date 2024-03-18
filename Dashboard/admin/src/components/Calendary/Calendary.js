@@ -34,11 +34,11 @@ function Calendary() {
     let startHour, endHour;
 
     if (task.turno === "Mañana") {
-      startHour = 9; // 9am
-      endHour = 16; // 4pm
+      startHour = 8; 
+      endHour = 12;  
     } else if (task.turno === "Tarde") {
-      startHour = 16; // 4pm
-      endHour = 23; // 11pm
+      startHour = 12;  
+      endHour = 17; 
     } else {
       // Manejo de otro caso o error si es necesario
       startHour = 0;

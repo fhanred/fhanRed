@@ -90,8 +90,9 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
 
   return (
 
-    <Box className="container"  sx={{ minWidth: 120 }}>
-     <ButtonGroup 
+    <Box className="container"  sx={{ minWidth: 120 }}> 
+     <ButtonGroup
+     className='button-group-container' 
   variant="contained" 
   aria-label="Basic button group" 
   style={{ 

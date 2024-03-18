@@ -1,146 +1,312 @@
 .container {
-    margin: 120px auto 20px; /* Agregamos margen inferior */
+    margin: 120px auto 20px;
+    /* Agregamos margen inferior */
     padding: 20px;
     font-family: 'Montserrat', sans-serif;
     letter-spacing: -0.2px;
     display: flex;
-    flex-direction: column; /* Alinear elementos en columna */
-    align-items: center; /* Centrar elementos horizontalmente */
-    flex-grow: 1; /* El contenedor ocupa todo el espacio vertical disponible */
+    flex-direction: column;
+    /* Alinear elementos en columna */
+    align-items: center;
+    /* Centrar elementos horizontalmente */
+    flex-grow: 1;
+    /* El contenedor ocupa todo el espacio vertical disponible */
 }
+
 .form-container {
-    background-color: #f9f9f9; /* Color de fondo del contenedor del formulario */
-    padding: 20px; /* Ajusta según tu diseño */
-    border-radius: 8px; /* Ajusta según tu diseño */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra alrededor del contenedor */
-    
-  }
-  .formulario {
+    background-color: #f9f9f9;
+    /* Color de fondo del contenedor del formulario */
+    padding: 20px;
+    /* Ajusta según tu diseño */
+    border-radius: 8px;
+    /* Ajusta según tu diseño */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Sombra alrededor del contenedor */
+
+}
+
+.formulario {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     max-width: 100%;
     padding: 20px;
     box-sizing: border-box;
-  }
-  .form-title{
-    color:white;
-    background-color:#106fbd; /* Color de fondo del título */
-    padding: 10px; /* Ajusta según tu diseño */
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:larger;
-  }
-    .form-group {
-        display: flex;
-        align-items: center; /* Alinea verticalmente los elementos */
-        margin-bottom: 20px; /* Ajusta según tu diseño */
-      }
-      .register {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px; 
-        width: 280px; /* ancho del formulario  */
-        text-align: center; /* Opcional, para centrar el texto dentro de los elementos */
-      }
-      label {
-        width: 150px; /* Ajusta el ancho según tu diseño */
-        font-weight: bold;
-        font-size: 16px; /* Tamaño de la fuente */
-        font-family: 'Montserrat', sans-serif; /* Aplica la fuente Montserrat o sans-serif */
-        margin-bottom: 8px; /* Agrega espacio entre la etiqueta y el siguiente elemento */
-      }
-        /* Estilos para el enlace dentro de la etiqueta label */
-  label a {
-    text-decoration: none; /* Elimina el subrayado */
-    color: #1f2852
-  }
-  
+}
 
-  
-  .error {
+.form-title {
+    color: white;
+    background-color: #106fbd;
+    /* Color de fondo del título */
+    padding: 10px;
+    /* Ajusta según tu diseño */
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    /* Alinea verticalmente los elementos */
+    margin-bottom: 20px;
+    /* Ajusta según tu diseño */
+}
+
+.register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 280px;
+    /* ancho del formulario  */
+    text-align: center;
+    /* Opcional, para centrar el texto dentro de los elementos */
+}
+
+label {
+    width: 150px;
+    /* Ajusta el ancho según tu diseño */
+    font-weight: bold;
+    font-size: 16px;
+    /* Tamaño de la fuente */
+    font-family: 'Montserrat', sans-serif;
+    /* Aplica la fuente Montserrat o sans-serif */
+    margin-bottom: 8px;
+    /* Agrega espacio entre la etiqueta y el siguiente elemento */
+}
+
+/* Estilos para el enlace dentro de la etiqueta label */
+label a {
+    text-decoration: none;
+    /* Elimina el subrayado */
+    color: #1f2852
+}
+
+
+
+.error {
     color: #cf151f;
     font-size: 16px;
-  }
-  
-  /* Estilos para el campo de contraseña y el ícono */
-  .passwordInput {
+}
+
+/* Estilos para el campo de contraseña y el ícono */
+.passwordInput {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: 1px solid #ccc;
     padding: 5px;
     border-radius: 16px;
-  }
-  
-  .passwordInput input {
+}
+
+.passwordInput input {
     flex: 1;
     border: none;
-  }
-  
-  .passwordInput .eyeIcon {
+}
+
+.passwordInput .eyeIcon {
     cursor: pointer;
     font-size: 20px;
-  }
-      
-      .imput-label {
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
-      
-      input,
-      textarea,
-      select {
-        flex: 1; /* El campo de entrada ocupará todo el espacio restante */
-        padding: 8px;
-        font-size: 16px; /* Tamaño de la fuente */
-        font-family: 'Montserrat', sans-serif; /* Aplica la fuente Montserrat o sans-serif */
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-      
-      .user-table {
-        margin-top: 20px;
-      }
-      
-      .user-table h2 {
-        margin-bottom: 10px;
-      }
-      
-      .user-table table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-      }
-      
-      .user-table th, .user-table td {
-        padding: 8px;
-        border: 1px solid #ddd;
-        text-align: center;
-      }
-      
-      .user-table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-      }
-      
-      .user-table tr:nth-child(even) {
-        background-color: #f2f2f2;
-      }
-      
-      .user-table tr:hover {
-        background-color: #ddd;
-      }
-      .user-table h2 {
-        margin-bottom: 10px;
-        text-align: center;
-        font-size: 24px;
-        color: #333;
-      }
-      .button-container{
-        margin-top: 10px;
-      }
- 
+}
 
+.imput-label {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input,
+textarea,
+select {
+    flex: 1;
+    /* El campo de entrada ocupará todo el espacio restante */
+    padding: 8px;
+    font-size: 16px;
+    /* Tamaño de la fuente */
+    font-family: 'Montserrat', sans-serif;
+    /* Aplica la fuente Montserrat o sans-serif */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.user-table {
+    margin-top: 20px;
+}
+
+.user-table h2 {
+    margin-bottom: 10px;
+}
+
+.user-table table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.user-table th,
+.user-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.user-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.user-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.user-table tr:hover {
+    background-color: #ddd;
+}
+
+.user-table h2 {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+.button-group-container {
+    text-align: center;
+    /* Centrar los botones en pantallas pequeñas */
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Asegura que solo haya una columna en pantallas pequeñas */
+    gap: 10px;
+    /* Agrega espacio entre los botones */
+    margin-top: 10%;
+
+}
+
+
+.link {
+    text-decoration: none;
+}
+/* Estilos para el efecto de botón en hover */
+.client-item:hover {
+    background-color: #22c4cf;
+    color: white;
+    transform: scale(1.03);
+  }
   
+  .client-item:hover td {
+    color: white;
+  }
+  
+  /* Estilos para el efecto de botón en click */
+  .client-item:active {
+    background-color: #22c4cf;
+  }
+  
+  .client-item:active td {
+    color: white;
+  }
+  
+  /* Estilo para la clase "asc" */
+  .asc {
+    background-color: #f0ed46; /* Cambia el color de fondo para ascendente */
+    color: #22c4cf;
+  }
+  
+  .asc:hover {
+    background-color: #f0ed46;
+  }
+  
+  /* Estilo para la clase "desc" */
+  .desc {
+    background-color: #d25037; /* Cambia el color de fondo para descendente */
+  }
+  
+  .desc:hover {
+    background-color: #d25037;
+  }
+  
+  .pagination-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    gap: 5px; /* Espacio entre los botones de paginación */
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .pagination-container button {
+   
+    margin: 0 2px; /* Espacio entre botones */
+    
+  }
+  
+  .paginate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    padding: 10px 10px;
+    height: 1px;
+    
+    border: none;
+    background-color: #106fbd;
+    color: white;
+    cursor: pointer;
+  }
+  .paginate:hover {
+    background-color: #9481b2;
+  }
+  
+  .paginate.active {
+    background-color: #100645; /* Cambia el color cuando esté activo */
+  }
+  
+  .page-number {
+    margin-left: 0.5%; /* Espacio entre el ícono y el número */
+  }
+  
+  .asc-icon {
+    font-size: 20px;
+    padding-left: 2.5%;
+    margin-top: 0.2%;
+  }
+  
+  .desc-icon {
+    font-size: 20px;
+    padding-left: 2.5%;
+    margin-top: 0.2%;
+  }
+  
+
+/* Estilos adicionales para hacer el componente responsive */
+@media screen and (max-width: 768px) {
+    .formulario {
+        display: block;
+        /* Cambiar a bloque para que cada formulario ocupe una línea completa */
+    }
+
+    .form-container {
+        margin-bottom: 20px;
+        /* Agregar espacio entre formularios */
+    }
+
+
+    .container {
+        align-items: flex-start;
+        /* Alinea los botones a la izquierda en pantallas pequeñas */
+    }
+
+    .link {
+        display: block;
+        /* Hace que los enlaces ocupen todo el ancho disponible */
+        width: 100%;
+        /* Asegura que los enlaces ocupen todo el ancho disponible */
+    }
+    .button-group-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position:static;
+      }
+    
+}
