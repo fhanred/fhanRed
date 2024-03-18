@@ -10,8 +10,8 @@ import { TextField, Button, ButtonGroup } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, assignTaskToUser, getTasks } from "../Redux/Actions/actions";
-
 import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export default function TaskPage() {
   const [nDocumento, setNDocumento] = useState("");
@@ -51,6 +51,16 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    if (!selectedUser || !selectedTask || !selectedDate || !selectedShift) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Para continuar debe llenar todas las casillas",
+      });
+      return;
+    }
+
+
 
     const selectedUserObject = usersData.find(user => user.n_documento === selectedUser);
 
@@ -73,6 +83,12 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
 
      // Mostrar la alerta
      setAlertMessage("Tarea asignada");
+
+     Swal.fire({
+      icon: "success",
+      title: "Tarea asignada correctamente",
+      text: "La tarea ha sido asignada al empleado exitosamente.",
+    });
 
      // Limpiar los estados
      setSelectedUser("");
