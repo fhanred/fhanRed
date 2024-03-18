@@ -7,14 +7,14 @@ import Navbar from './components/Navbar/Navbar';
 import NavbarItems from './components/NavbarItems/NavbarItems'
 import { links } from './data';
 import HomePage from './Pages/HomePage';
-import Vouchers from './Pages/Vouchers';
+import Vouchers from './Pages/Vouchers/Vouchers';
 import MovementsCash from './Pages/MovementsCash';
 import TaskPage from './Pages/TaskPage';
 import Worker from './Pages/Worker.js';
 import Calendary from './components/Calendary/Calendary';
 import FormCreateWorker from './components/FormsWorkers/FormCreateWorker.js';
 import FormUpdateUser from './components/FormsWorkers/FormUpdateUser.js';
-
+import '../src/global.css'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div>
+      <div className='container'>
         <Navbar />
         <Switch>
           <Route exact path="/">

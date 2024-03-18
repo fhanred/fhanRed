@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Pages/Style/styles.css';
+
 import {Button, ButtonGroup} from '@mui/material';
 import {Link} from 'react-router-dom'
 
@@ -8,10 +8,10 @@ export default function Worker() {
     <div className='container'>
       <ButtonGroup variant="contained" aria-label="Basic button group">
         <Link to="/altaEmpleado" className="link">
-          <Button>Crear Empleado</Button>
+          <Button style={{margin: '10px'}}>Crear Empleado</Button>
         </Link>
         <Link to="/modificarEmpleado" className="link">
-          <Button>ABM Empleado</Button>
+          <Button style={{margin: '10px'}}>ABM Empleado</Button>
         </Link>
        
       </ButtonGroup>

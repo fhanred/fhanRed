@@ -9,17 +9,15 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../../Redux/Actions/actions';
 import { handleChange, login } from './funcs';
+import { Button } from '@mui/material';
 
 function SignIn() {
-  
-  const userRole = useSelector((state) => state.authentication.user ? state.authentication.user.id_role : null);
-
+  //const userRole = useSelector((state) => state.authentication.user.id_role);
   const history = useHistory();
   const dispatch = useDispatch();
   const credentials = useSelector((state) => state.userInfo);
   const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
   const [showPassword, setShowPassword] = useState(false);
-  const [loginError, setLoginError] = useState(null);
 
 
   function handleClick1() {
@@ -50,43 +48,39 @@ function SignIn() {
     if (input.email && input.password) {
       try {
         await login(input, dispatch, credentials, userInfo);
-        if (isAuthenticated  && userRole === 4 ) {
+        if (isAuthenticated /* && userRole === 4 */ ) {
           history.push('/homePage');
-        }else{
-          setLoginError('No eres administrador.'); 
         }
       } catch (error) {
         console.error('Se produjo un error:', error.message);
-        setLoginError('Error al iniciar sesión. Por favor, inténtelo de nuevo.');
       }
     }
   };
 
   useEffect(() => {
     if (!isAuthenticated ) {
-      alert('No eres administrador.');
+      alert('Aún no eres usuario de Fhanred.');
       history.push('/');
     }
   }, [isAuthenticated,  history ]);
 
   return (
-    <div className={style.container}>
-      <div className={style.form}>
-        <h1>Iniciar sesión</h1>
-        {loginError && <p className={style.error}>{loginError}</p>}
-
-        <form onSubmit={submitHandler}>
-          <label>
+    <div  style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <div >
+        
+        <form className="form-container" onSubmit={submitHandler}>
+        <h2 className='form-title'>Iniciar sesión</h2>
+          <label style={{ marginBottom: '16px' }}>
             <input
               type="email"
               value={input.email}
               name="email"
               placeholder="Correo electrónico"
-              onChange={(e) => handleInputChange(e)}
+        ct    onChange={(e) => handleInputChange(e)}
             />
             <p className={style.error}>{errors.email}</p>
           </label>
-          <label>
+          <label style={{ marginBottom: '16px' }}>
             <div className={style.passwordInput}>
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -111,13 +105,13 @@ function SignIn() {
           </label>
           <label>
             <NavLink to="/forgotPassword">
-              <span>¿Has olvidado tu contraseña?</span>
+              <span className='label'>¿Has olvidado tu contraseña?</span>
             </NavLink>
           </label>
 
-          <button className={style.red} type="submit">
-            <BsLock className={style.icon} /> Ingresar
-          </button>
+          <Button   type="submit" variant="contained" style={{ marginTop: '20px', display:"flex" }}>
+             Ingresar
+          </Button>
         </form>
 
         

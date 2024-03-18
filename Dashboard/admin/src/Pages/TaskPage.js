@@ -10,7 +10,7 @@ import { TextField, Button, ButtonGroup } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, assignTaskToUser, getTasks } from "../Redux/Actions/actions";
-import "./Style/styles.css";
+
 import { useHistory } from "react-router-dom";
 
 export default function TaskPage() {
@@ -90,7 +90,7 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
 
   return (
 
-    <Box className="container" sx={{ minWidth: 120 }}>
+    <Box className="container"  sx={{ minWidth: 120 }}>
      <ButtonGroup 
   variant="contained" 
   aria-label="Basic button group" 
@@ -98,12 +98,18 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
     position: "fixed", 
     top: "calc(100px + 20px)", // Altura del navbar + espacio
     right: "20px", 
-    zIndex: "999" // Asegura que el botón esté por encima de otros elementos
+    zIndex: "999", // Asegura que el botón esté por encima de otros elementos
+    margin:"20px",
+    
   }}
 >
-  <Link to="/calendario" className="link">
-    <Button >Ver Calendario</Button>
+  <Link to="/calendario" >
+    <Button style={{margin: '10px'}}>Ver Calendario</Button>
   </Link>
+  <Link to="/homePage">
+  <Button style={{margin: '10px'}}>Volver </Button>
+  </Link>
+ 
 </ButtonGroup>
 
        {alertMessage && (
@@ -111,11 +117,13 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
           <span>{alertMessage}</span>
         </div>
       )}
-      <form onSubmit={handleSubmit}>
+    
+      <form className="form-container" onSubmit={handleSubmit} style={{width:"100%"}}>
+      <h3 className="form-title">Asignar tareas</h3>
         {usersData.length > 0 ? (
           <FormControl fullWidth >
-            <InputLabel  id="employee-label">Elegir empleado</InputLabel>
-            <Select 
+            <InputLabel className='imput-label' id="employee-label">Elegir empleado</InputLabel>
+            <Select className='imput-label'
               labelId="employee-label"
               value={selectedUser}
               onChange={handleChangeUser}
@@ -135,8 +143,8 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
 
         {tasks.data && tasks.data.tasks.length > 0 ? (
           <FormControl fullWidth className="imput-label">
-            <InputLabel id="task-label">Elegir tarea</InputLabel>
-            <Select
+            <InputLabel className='imput-label' id="task-label">Elegir tarea</InputLabel>
+            <Select className='imput-label'
               labelId="task-label"
               value={selectedTask}
               onChange={handleChangeTask}
@@ -154,7 +162,7 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
 
         <div>
 
-          <DatePicker
+          <DatePicker className='imput-label'
             selected={selectedDate}
             onChange={handleDateChange}
             dateFormat="dd/MM/yyyy" // Formato de fecha
@@ -165,8 +173,8 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
 
 
         <FormControl fullWidth className="imput-label">
-          <InputLabel  id="shift-label">Turno</InputLabel>
-          <Select
+          <InputLabel className='imput-label'  id="shift-label">Turno</InputLabel>
+          <Select className='imput-label'
             labelId="shift-label"
             value={selectedShift}
             onChange={handleChangeShift}
@@ -176,16 +184,10 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
           </Select>
         </FormControl>
         <ButtonGroup className="imput-label">
-          <div>
+        
             <Button type="submit">Asignar Tarea</Button>
-            <Button
-              style={{ marginLeft: 10 }}
-              type="button"
-              onClick={() => history.push("/homePage")}
-            >
-              Volver
-            </Button>
-          </div>
+           
+         
         </ButtonGroup>
       </form>
  {/* Renderizar la tabla de usuarios con roles 2 y 3 */}
@@ -204,7 +206,8 @@ const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_rol
               <tr key={user.n_documento}>
                 <td>{user.name_razonSocial}</td>
                 <td>{user.n_documento}</td>
-                <td>{user.id_role === 2 ? "Rol 2" : "Rol 3"}</td>
+                <td>{user.id_role === 2 ? "Técnico" : user.id_role === 3 ? "Ventas" : "Otro Rol"}</td>
+
               </tr>
             ))}
           </tbody>

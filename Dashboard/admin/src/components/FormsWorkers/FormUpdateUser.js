@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { getUsers, updateUser } from "../../Redux/Actions/actions";
 import { useHistory } from "react-router-dom";
-import './Forms.css'
 import { ButtonGroup, Button } from "@mui/material";
 
 function FormUpdateUser() {
@@ -14,6 +13,7 @@ function FormUpdateUser() {
   const [nDocumento, setNDocumento] = useState("")
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [submissionResult, setSubmissionResult] = useState(null);
+  const [showSearchButton, setShowSearchButton] = useState(true); // Estado para mostrar/ocultar el botón de búsqueda
 
 
   useEffect(() => {
@@ -32,6 +32,7 @@ function FormUpdateUser() {
       if (user) {
         console.log("Usuario encontrado:", user);
         setUserData(user);
+        setShowSearchButton(false); // Oculta el botón de búsqueda cuando se muestra la información del usuario
       } else {
         alert("Usuario no encontrado");
         setUserData(null);
@@ -74,7 +75,7 @@ function FormUpdateUser() {
   };
 
   return (
-    <div className="form-container">
+    <div >
       <Formik
         initialValues={{
           n_documento: "",
@@ -94,7 +95,8 @@ function FormUpdateUser() {
         }}
       >
         {({ errors, values, isSubmitting }) => (
-          <Form className="form">
+          <Form >
+            <div className="form-container" >
             <h2 className="form-title">ABM Empleados</h2>
 
             <div className="form-group">
@@ -102,22 +104,30 @@ function FormUpdateUser() {
               <Field type="text" className="form-control" id="n_documento" name="n_documento" />
               <ErrorMessage name="n_documento" component="div" className="error-message" />
             </div>
+            {showSearchButton && ( // Mostrar el botón de búsqueda si showSearchButton es true
             <ButtonGroup>
               <div className="buttons-container">
                 <Button type="button"
                   onClick={() => handleSearch(values.n_documento)}>Buscar</Button>
+                  <Button
+                   style={{ marginLeft: 10 }}
+                   type="button"  
+                   onClick={() => history.push("/homePage")}>
+                    Volver
+                    </Button>
               </div>
             </ButtonGroup>
+)}
             {userData && (
               <div className="edit-fields">
                 <div className="form-group">
-                  <label htmlFor="newEmail" className="label-reg">Email:</label>
-                  <Field type="email" className="form-control" id="newEmail" name="newEmail" placeholder={userData.email} />
+                  <label htmlFor="newEmail" >Email:</label>
+                  <Field type="email"  id="newEmail" name="newEmail" placeholder={userData.email} />
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="newPassword">Password:</label>
-                  <Field type="password" className="form-control" id="newPassword" name="newPassword" />
+                  <Field type="password"  id="newPassword" name="newPassword" />
                 </div>
 
                 <div className="form-group">
@@ -159,6 +169,7 @@ function FormUpdateUser() {
                 </ButtonGroup>
              </div>
             )}
+            </div>
           </Form>
         )}
       </Formik>

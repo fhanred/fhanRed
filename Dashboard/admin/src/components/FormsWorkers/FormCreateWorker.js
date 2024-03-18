@@ -6,7 +6,6 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../Redux/Actions/actions";
-import './Forms.css'
 import { ButtonGroup, Button } from "@mui/material";
 
 function FormCreateWorker() {
@@ -18,7 +17,7 @@ function FormCreateWorker() {
 
 
   return (
-    <div className="form-container">
+    <div className="">
       <Formik
         initialValues={{
           tipo_persona: "",
@@ -60,11 +59,12 @@ function FormCreateWorker() {
         }}
       >
         {({ errors, values, isSubmitting }) => (
-          <Form className="form">
+          <Form >
+              <div className="form-container" >
             <h2 className="form-title">Crear Usuario</h2>
 
             <div className="form-group">
-              <label htmlFor="tipo_persona" className="label-reg">
+              <label htmlFor="tipo_persona">
                 Tipo de persona
               </label>
               <Field
@@ -81,7 +81,7 @@ function FormCreateWorker() {
 
             {values.tipo_persona === "P.JURIDICA" && (
               <div className="form-group">
-                <label htmlFor="razonSocial" className="label-reg">
+                <label htmlFor="razonSocial" >
                   Razón social
                 </label>
                 <Field type="text" id="razonSocial" name="razonSocial" />
@@ -90,7 +90,7 @@ function FormCreateWorker() {
 
             {values.tipo_persona === "P.NATURAL" && (
               <div className="form-group">
-                <label htmlFor="apellidos" className="label-reg">
+                <label htmlFor="apellidos" >
                   Apellidos
                 </label>
                 <Field type="text" id="apellidos" name="apellidos" />
@@ -99,7 +99,7 @@ function FormCreateWorker() {
 
             {values.tipo_persona === "P.NATURAL" && (
               <div className="form-group">
-                <label htmlFor="nombres" className="label-reg">
+                <label htmlFor="nombres" >
                   Nombres
                 </label>
                 <Field type="text" id="nombres" name="nombres" />
@@ -107,7 +107,7 @@ function FormCreateWorker() {
             )}
 
             <div className="form-group">
-              <label htmlFor="tipo_documento" className="label-reg">
+              <label htmlFor="tipo_documento" >
                 Tipo de documento
               </label>
               <Field
@@ -125,14 +125,14 @@ function FormCreateWorker() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="n_documento" className="label-reg">
-                Documento número
+              <label htmlFor="n_documento" >
+                Documento N°
               </label>
               <Field type="text" id="n_documento" name="n_documento" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="fecha_cumple" className="label-reg">
+              <label htmlFor="fecha_cumple" >
                 Fecha de nacimiento
               </label>
               <Field
@@ -144,7 +144,7 @@ function FormCreateWorker() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="sexo" className="label-reg">
+              <label htmlFor="sexo" >
                 Sexo
               </label>
               <Field
@@ -160,14 +160,14 @@ function FormCreateWorker() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email" className="label-reg">
+              <label htmlFor="email" >
                 Correo electrónico
               </label>
               <Field type="text" id="email" name="email" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="password" className="label-reg">
+              <label htmlFor="password" >
                 Contraseña
               </label>
               <Field
@@ -189,7 +189,7 @@ function FormCreateWorker() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="id_role" className="label-reg">
+              <label htmlFor="id_role" >
                 Rol
               </label>
               <Field
@@ -228,6 +228,7 @@ function FormCreateWorker() {
 
               </div>
             </ButtonGroup>
+            </div>
           </Form>
         )}
       </Formik>

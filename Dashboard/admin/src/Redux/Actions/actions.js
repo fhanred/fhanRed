@@ -155,7 +155,7 @@ export const fetchAssignedTasks = (n_documento = null) => async (dispatch) => {
 export const assignTaskToUser = (taskId, n_documento, turno, taskDate) => async (dispatch) => {
   dispatch({ type: ASSIGN_TASK_TO_USER_REQUEST });
   try {
-    const response = await axios.post(`${BASE_URL}/tasks/asignar`, {
+    const response = await axios.post(`${BASE_URL}/task/asignar`, {
       taskId,
       n_documento,
       turno,

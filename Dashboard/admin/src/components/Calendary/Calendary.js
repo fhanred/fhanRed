@@ -11,8 +11,9 @@ const localizer = dayjsLocalizer(dayjs);
 
 function Calendary() {
   const dispatch = useDispatch();
-
   const assignedTasks = useSelector((state) => state.assign.data?.assignments);
+  const tasks = useSelector((state) => state.tasks);
+
   const users = useSelector((state) => state.usersData);
 
   const [selectedDay, setSelectedDay] = useState(null);
@@ -21,7 +22,6 @@ function Calendary() {
   const [n_documento, setNDocumento] = useState("");
 
   useEffect(() => {
-
     dispatch(fetchAssignedTasks(n_documento));
   }, [dispatch, n_documento]);
 
@@ -51,13 +51,18 @@ function Calendary() {
     const end = new Date(task.taskDate);
     end.setHours(endHour, 0, 0, 0);
 
+    // Obtener el nombre de la tarea
+    const selectedTaskObject = tasks.data.tasks.find((t) => t.taskId === task.taskId);
+    const tareaName = selectedTaskObject ? selectedTaskObject.nameTask : "Tarea desconocida";
+
     return {
       id: task.id,
       title: getNameRazonSocial(task.n_documento),
       start,
       end,
       turno: task.turno,
-      tarea: task.taskId
+      tarea: task.taskId,
+      tareaName: tareaName // Agregar el nombre de la tarea al evento
     };
   }) || [];
 
@@ -69,8 +74,6 @@ function Calendary() {
   const handleEventClick = (event) => {
     setSelectedTask(event);
   };
-
-
 
   return (
     <div className="container">
@@ -85,10 +88,10 @@ function Calendary() {
         }}
       >
         <Link to="/homePage" className="link">
-          <Button>Volver</Button>
+          <Button style={{margin: '10px'}}>Volver</Button>
         </Link>
       </ButtonGroup>
-      <Calendar
+      <Calendar className="form-container"
         localizer={localizer}
         events={events}
         startAccessor="start"
@@ -96,7 +99,7 @@ function Calendary() {
         style={{ height: 500, width: "auto" }}
         eventContent={({ event }) => (
           <div>
-            <b>{event.title}</b> ({event.turno})
+            <b>{event.title}</b> ({event.turno}) - {event.tareaName}
           </div>
         )}
         onSelectSlot={handleSelectSlot}
@@ -108,34 +111,34 @@ function Calendary() {
           month: { eventHeight: 50 }
         }}
         messages={{
-          today: 'Hoy',
-          month: 'Mes',
-          week: 'Semana',
-          day: 'Día',
-          next:'Siguiente',
-          back:'Anterior'
+          today: "Hoy",
+          month: "Mes",
+          week: "Semana",
+          day: "Día",
+          next: "Siguiente",
+          back: "Anterior"
         }}
       />
       {selectedTask && (
-        <div className="task-details">
-          <h2>Detalle de la tarea:</h2>
+        <div className="user-table">
+
           <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Turno</th>
+                <th>Fecha</th>
+                <th>Tarea</th>
+
+              </tr>
+            </thead>
             <tbody>
               <tr>
-                <td>Nombre:</td>
                 <td>{selectedTask.title}</td>
-              </tr>
-              <tr>
-                <td>Turno:</td>
                 <td>{selectedTask.turno}</td>
-              </tr>
-              <tr>
-                <td>Fecha:</td>
+
                 <td>{selectedTask.start.toLocaleDateString()}</td>
-              </tr>
-              <tr>
-                <td>Tarea:</td>
-                <td>{selectedTask.tarea}</td>
+                <td>{selectedTask.tareaName}</td>
               </tr>
             </tbody>
           </table>
@@ -146,3 +149,4 @@ function Calendary() {
 }
 
 export default Calendary;
+
