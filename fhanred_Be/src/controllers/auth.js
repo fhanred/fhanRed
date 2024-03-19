@@ -20,6 +20,10 @@ module.exports = async (req, res) => {
         n_documento: user.n_documento,
         email: user.email,
         fecha_cumple: user.fecha_cumple,
+        sexo:user.sexo,
+        tipo_documento: user.tipo_documento,
+        tipo_persona:user.tipo_persona,
+        tipo_documento:user.tipo_documento
       };
       const token = jwt.sign(payload, `${JWT_SECRET_KEY}`, {
         expiresIn: "1d",

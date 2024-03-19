@@ -33,8 +33,7 @@ let contratos = [
     id_vivienda: '1',
     municipio: 'CUMARAL',
     barrio_vereda: 'MONSERRATE',
-    direccion:
-      'CARRERA 16 .10-12 APT 2 USUARIO SOLICITA TRASLADO PARA EL BARRIO MONSERRATE',
+    direccion:'CARRERA 16 .10-12 APT 2 USUARIO SOLICITA TRASLADO PARA EL BARRIO MONSERRATE',
     idStratus: '2',
     tel1: '3172456372',
     tel2: '3143034687',

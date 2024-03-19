@@ -19,6 +19,9 @@ import {
   UPDATE_USER_FAILURE,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
+  GET_TASKS_REQUEST,
+  GET_TASKS_FAILURE,
+  GET_TASKS_SUCCESS
   
 } from "./actions-types";
 
@@ -92,20 +95,36 @@ export const createUser = (input) => async (dispatch) => {
 // };
 
 // Acción para actualizar un usuario
+// export const updateUser = (n_documento, user) => async (dispatch) => {
+//   try {
+//     dispatch({ type: UPDATE_USER_REQUEST });
+//     const { data } = await axios.put(`${BASE_URL}/user/update/${n_documento}`, user);
+   
+//     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
+//     dispatch(getUsers(n_documento));
+//     console.log(data,"probando updateAccion")
+//     return { success: true }; 
+//   } catch (error) {
+//     dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
+//     return { success: false, errorMessage: error.message };
+//   }
+// };
+
 export const updateUser = (n_documento, user) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
-    const { data } = await axios.put(`${BASE_URL}/user/${n_documento}`, user);
+    const { data } = await axios.put(`${BASE_URL}/user/update/${n_documento}`, user);
    
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
     dispatch(getUsers(n_documento));
-    console.log(data,"probando updateAccion")
+    console.log(data, "probando updateAccion");
     return { success: true }; 
   } catch (error) {
-    dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
+    dispatch({ type: UPDATE_USER_FAILURE, payload: error.response.data.message }); // Ajusta aquí para obtener el mensaje de error del objeto de respuesta
     return { success: false, errorMessage: error.message };
   }
 };
+
 
 
 export const cleanDetail = () => {
@@ -136,7 +155,7 @@ export const fetchAssignedTasks = (n_documento = null) => async (dispatch) => {
 export const assignTaskToUser = (taskId, n_documento, turno, taskDate) => async (dispatch) => {
   dispatch({ type: ASSIGN_TASK_TO_USER_REQUEST });
   try {
-    const response = await axios.post(`${BASE_URL}/tasks/asignar`, {
+    const response = await axios.post(`${BASE_URL}/task/asignar`, {
       taskId,
       n_documento,
       turno,
@@ -149,6 +168,15 @@ export const assignTaskToUser = (taskId, n_documento, turno, taskDate) => async 
   }
 };
 
+export const getTasks = () => async (dispatch) => {
+  dispatch({ type: GET_TASKS_REQUEST });
+  try {
+    const response = await axios.get(`${BASE_URL}/task/`);
+    dispatch({ type: GET_TASKS_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: GET_TASKS_FAILURE, payload: error.message });
+  }
+};
 
 
 

@@ -1,0 +1,26 @@
+.client-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px; /* Ajusta el espacio desde arriba */
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Espacio entre el input de búsqueda y la tabla */
+  }
+  
+  .search-input {
+    margin-right: 10px; /* Espacio entre el input de búsqueda y los iconos */
+    width: 300px; /* Ajusta el ancho del input de búsqueda según tus necesidades */
+  }
+  
+  .table-container {
+    width: 80%; /* Ajusta el ancho de la tabla según tus necesidades */
+  }
+  .th-table-title{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #106fbd;
+  }
+  

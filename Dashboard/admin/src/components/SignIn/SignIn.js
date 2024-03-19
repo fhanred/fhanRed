@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import style from './SignIn.module.css';
-import { BsLock } from 'react-icons/bs';
-import { FaUser } from 'react-icons/fa';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../../Redux/Actions/actions';
 import { handleChange, login } from './funcs';
+import { Button } from '@mui/material';
 
 function SignIn() {
   //const userRole = useSelector((state) => state.authentication.user.id_role);
@@ -64,21 +63,22 @@ function SignIn() {
   }, [isAuthenticated,  history ]);
 
   return (
-    <div className={style.container}>
-      <div className={style.form}>
-        <h1>Iniciar sesión</h1>
-        <form onSubmit={submitHandler}>
-          <label>
+    <div  style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <div >
+        
+        <form className="form-container" onSubmit={submitHandler}>
+        <h2 className='form-title'>Iniciar sesión</h2>
+          <label style={{ marginBottom: '16px' }}>
             <input
               type="email"
               value={input.email}
               name="email"
               placeholder="Correo electrónico"
-              onChange={(e) => handleInputChange(e)}
+        ct    onChange={(e) => handleInputChange(e)}
             />
             <p className={style.error}>{errors.email}</p>
           </label>
-          <label>
+          <label style={{ marginBottom: '16px' }}>
             <div className={style.passwordInput}>
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -103,24 +103,16 @@ function SignIn() {
           </label>
           <label>
             <NavLink to="/forgotPassword">
-              <span>¿Has olvidado tu contraseña?</span>
+              <span className='label'>¿Has olvidado tu contraseña?</span>
             </NavLink>
           </label>
 
-          <button className={style.red} type="submit">
-            <BsLock className={style.icon} /> Ingresar
-          </button>
+          <Button   type="submit" variant="contained" style={{ marginTop: '20px', display:"flex" }}>
+             Ingresar
+          </Button>
         </form>
 
-        <div className={style.register}>
-          <label>
-            <span>¿Aún no estás registrado?</span>
-          </label>
-
-          <button className={style.red} onClick={handleClick1}>
-            <FaUser className={style.icon} /> Crear cuenta
-          </button>
-        </div>
+        
       </div>
     </div>
   );

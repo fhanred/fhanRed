@@ -6,7 +6,7 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../Redux/Actions/actions";
-
+import { ButtonGroup, Button } from "@mui/material";
 
 function FormCreateWorker() {
   const dispatch = useDispatch();
@@ -14,8 +14,10 @@ function FormCreateWorker() {
   const [submissionResult, setSubmissionResult] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
+
+
   return (
-    <div >
+    <div className="">
       <Formik
         initialValues={{
           tipo_persona: "",
@@ -32,19 +34,17 @@ function FormCreateWorker() {
         }}
         validate={(values) => {
           let errors = {};
-          // agrega validaciones
+          // Agrega tus validaciones aquí si es necesario
           return errors;
         }}
         onSubmit={async (values, { resetForm, setSubmitting }) => {
           try {
             const response = await dispatch(createUser(values));
-            console.log(values);
             if (response.success) {
               setSubmissionResult("success");
               resetForm();
               setTimeout(() => {
                 setSubmissionResult(null);
-                // Redireccionar a la página de inicio después de crear el usuario
                 history.push("/homepage");
               }, 2000);
             } else {
@@ -57,284 +57,179 @@ function FormCreateWorker() {
             setSubmitting(false);
           }
         }}
-
       >
         {({ errors, values, isSubmitting }) => (
-          <div className="divForm">
-            <Form className="container" >
-              <div className="divRegister">
-                <h2 className="tittle">Crear Usuario</h2>
-                {/* Tipo de persona */}
-                <div className="reg-div">
-                  <div className="item1">
-                    <label htmlFor="tipo_persona" className="label-reg">
-                      Tipo de persona
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      id="tipo_persona"
-                      name="tipo_persona"
-                      as="select"
-                      className="select"
-                    >
-                      <option value={""} className="option">
-                        Selecciona una opción
-                      </option>
-                      <option value={"P.JURIDICA"} className="option">
-                        Jurídica
-                      </option>
-                      <option value={"P.NATURAL"} className="option">
-                        Natural
-                      </option>
-                    </Field>
-                  </div>
-                </div>
-                {/* Razón Social */}
-                {values.tipo_persona === "P.JURIDICA" && (
-                  <div className="reg-div">
-                    <div className="item3">
-                      <label htmlFor="razonSocial" className="label-reg">
-                        Razón social
-                      </label>
-                    </div>
-                    <div>
-                      <Field
-                        type="text"
-                        id="razonSocial"
-                        name="razonSocial"
-                        placeholder=""
-                        className="labelInput"
-                      />
-                    </div>
-                  </div>
-                )}
+          <Form >
+              <div className="form-container" >
+            <h2 className="form-title">Crear Usuario</h2>
 
-                {values.tipo_persona === "P.NATURAL" && (
-                  <div className="reg-div">
-                    <div className="item9">
-                      <label htmlFor="apellidos" className="label-reg">
-                        Apellidos
-                      </label>
-                    </div>
-                    <div>
-                      <Field
-                        type="text"
-                        id="apellidos"
-                        name="apellidos"
-                        placeholder=""
-                        className="labelInput"
-                      />
-                    </div>
-                  </div>
-                )}
+            <div className="form-group">
+              <label htmlFor="tipo_persona">
+                Tipo de persona
+              </label>
+              <Field
+                id="tipo_persona"
+                name="tipo_persona"
+                as="select"
+                className="select"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="P.JURIDICA">Jurídica</option>
+                <option value="P.NATURAL">Natural</option>
+              </Field>
+            </div>
 
-                {values.tipo_persona === "P.NATURAL" && (
-                  <div className="reg-div">
-                    <div className="item9">
-                      <label htmlFor="nombres" className="label-reg">
-                        Nombres
-                      </label>
-                    </div>
-                    <div>
-                      <Field
-                        type="text"
-                        id="nombres"
-                        name="nombres"
-                        placeholder=""
-                        className="labelInput"
-                      />
-                    </div>
-                  </div>
-                )}
-                {/* Tipo de documento */}
-                <div className="reg-div">
-                  <div className="item4">
-                    <label htmlFor="tipo_documento" className="label-reg">
-                      Tipo de documento
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      id="tipo_documento"
-                      name="tipo_documento"
-                      as="select"
-                      className="select"
-                    >
-                      <option value={""} className="option">
-                        Selecciona una opción
-                      </option>
-                      <option value={"CC"} className="option">
-                        CC
-                      </option>
-                      <option value={"CE"} className="option">
-                        CE
-                      </option>
-                      <option value={"NIT"} className="option">
-                        NIT
-                      </option>
-                      <option value={"PP"} className="option">
-                        PP
-                      </option>
-                    </Field>
-                  </div>
-                </div>
-                {/* Número de documento */}
-                <div className="reg-div">
-                  <div className="item4">
-                    <label htmlFor="n_documento" className="label-reg">
-                      Documento número
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      type="text"
-                      id="n_documento"
-                      name="n_documento"
-                      className="labelInput"
-                    />
-                  </div>
-                </div>
-                {/* Fecha de nacimiento */}
-                <div className="reg-div">
-                  <div className="item2">
-                    <label htmlFor="fecha_cumple" className="label-reg">
-                      Fecha de nacimiento
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      type="text"
-                      id="fecha_cumple"
-                      name="fecha_cumple"
-                      placeholder="YYYY-MM-DD"
-                      className="labelInput"
-                    />
-                  </div>
-                </div>
-                {/* Sexo */}
-                <div className="reg-div">
-                  <div className="item5">
-                    <label htmlFor="sexo" className="label-reg">
-                      Sexo
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      id="sexo"
-                      name="sexo"
-                      as="select"
-                      className="select"
-                    >
-                      <option value={""} className="option">
-                        Selecciona una opción
-                      </option>
-                      <option value={"M"} className="option">
-                        Masculino
-                      </option>
-                      <option value={"F"} className="option">
-                        Femenino
-                      </option>
-                    </Field>
-                  </div>
-                </div>
-                {/* Correo electrónico */}
-                <div className="reg-div">
-                  <div className="item7">
-                    <label placeholder="email" className="label-reg">
-                      Correo electrónico
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      type="text"
-                      id="email"
-                      name="email"
-                      placeholder="Email"
-                      className="labelInput"
-                    />
-                  </div>
-                </div>
-                {/* Contraseña */}
-                <div className="reg-div">
-                  <div className="item8">
-                    <label placeholder="password" className="label-reg">
-                      Contraseña
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      type={showPassword ? "text" : "password"}
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      className="passwordInput"
-                    />
-                  </div>
-                  {showPassword ? (
-                    <MdOutlineRemoveRedEye
-                      className="passwordInput-eyeIcon"
-                      onClick={() => setShowPassword(false)}
-                    />
-                  ) : (
-                    <RiEyeCloseLine
-                      className="passwordInput-eyeIcon"
-                      onClick={() => setShowPassword(true)}
-                    />
-                  )}
-                </div>
-                {/* Rol */}
-                <div className="reg-div">
-                  <div className="item4">
-                    <label htmlFor="id_role" className="label-reg">
-                      Rol
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      id="id_role"
-                      name="id_role"
-                      as="select"
-                      className="select"
-                    >
-                      <option value={""} className="option">
-                        Selecciona una opción
-                      </option>
-                      <option value={"2"} className="option">
-                        Tecnico
-                      </option>
-                      <option value={"3"} className="option">
-                        Caja
-                      </option>
-                      <option value={"4"} className="option">
-                        Admin
-                      </option>
-                    </Field>
-                  </div>
-                </div>
-                {/* Mensaje de éxito o error */}
-                {submissionResult === "success" && (
-                  <div className="message-container">
-                    <div className="success">El registro fue exitoso!.</div>
-                  </div>
-                )}
-                {submissionResult === "error" && (
-                  <div className="message-container">
-                    <div className="error">
-                      El registro NO fue exitoso. Inténtelo nuevamente.
-                    </div>
-                  </div>
-                )}
+            {values.tipo_persona === "P.JURIDICA" && (
+              <div className="form-group">
+                <label htmlFor="razonSocial" >
+                  Razón social
+                </label>
+                <Field type="text" id="razonSocial" name="razonSocial" />
               </div>
-              {/* Botón de enviar */}
-              <div className="cuenta">
-                <button type="submit" disabled={isSubmitting}>
+            )}
+
+            {values.tipo_persona === "P.NATURAL" && (
+              <div className="form-group">
+                <label htmlFor="apellidos" >
+                  Apellidos
+                </label>
+                <Field type="text" id="apellidos" name="apellidos" />
+              </div>
+            )}
+
+            {values.tipo_persona === "P.NATURAL" && (
+              <div className="form-group">
+                <label htmlFor="nombres" >
+                  Nombres
+                </label>
+                <Field type="text" id="nombres" name="nombres" />
+              </div>
+            )}
+
+            <div className="form-group">
+              <label htmlFor="tipo_documento" >
+                Tipo de documento
+              </label>
+              <Field
+                id="tipo_documento"
+                name="tipo_documento"
+                as="select"
+                className="select"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="CC">CC</option>
+                <option value="CE">CE</option>
+                <option value="NIT">NIT</option>
+                <option value="PP">PP</option>
+              </Field>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="n_documento" >
+                Documento N°
+              </label>
+              <Field type="text" id="n_documento" name="n_documento" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="fecha_cumple" >
+                Fecha de nacimiento
+              </label>
+              <Field
+                type="text"
+                id="fecha_cumple"
+                name="fecha_cumple"
+                placeholder="YYYY-MM-DD"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="sexo" >
+                Sexo
+              </label>
+              <Field
+                id="sexo"
+                name="sexo"
+                as="select"
+                className="select"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+              </Field>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email" >
+                Correo electrónico
+              </label>
+              <Field type="text" id="email" name="email" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password" >
+                Contraseña
+              </label>
+              <Field
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+              />
+              {showPassword ? (
+                <MdOutlineRemoveRedEye
+                  className="password-eye-icon"
+                  onClick={() => setShowPassword(false)}
+                />
+              ) : (
+                <RiEyeCloseLine
+                  className="password-eye-icon"
+                  onClick={() => setShowPassword(true)}
+                />
+              )}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="id_role" >
+                Rol
+              </label>
+              <Field
+                id="id_role"
+                name="id_role"
+                as="select"
+                className="select"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="2">Técnico</option>
+                <option value="3">Caja</option>
+                <option value="4">Admin</option>
+              </Field>
+            </div>
+
+            {submissionResult === "success" && (
+              <div className="message success">El registro fue exitoso!.</div>
+            )}
+            {submissionResult === "error" && (
+              <div className="message error">
+                El registro NO fue exitoso. Inténtelo nuevamente.
+              </div>
+            )}
+            <ButtonGroup>
+              <div className="buttons-container">
+                <Button type="submit" disabled={isSubmitting}>
                   <FaUser /> Crear usuario
-                </button>
-                <button style={{ marginLeft: 10}}  type="button" onClick={() => history.push("/homePage")}>Volver</button>
+                </Button>
+                <Button
+                  style={{ marginLeft: 10 }}
+                  type="button"
+                  onClick={() => history.push("/homePage")}
+                >
+                  Volver
+                </Button>
+
               </div>
-            </Form>
-          </div>
+            </ButtonGroup>
+            </div>
+          </Form>
         )}
       </Formik>
     </div>

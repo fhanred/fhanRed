@@ -59,7 +59,7 @@ function Invoice() {
 
   const handleGenerateAddress = () => {
     const address = `${streetType} ${streetNumber} ${orientation} # ${addressNumber}, ${details}`;
-    setCombinedAddress(address); // Actualiza el estado de la dirección combinada
+    setCombinedAddress(address); 
   };
 
   // Función para borrar la firma
