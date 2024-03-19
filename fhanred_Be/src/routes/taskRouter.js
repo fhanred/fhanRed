@@ -10,5 +10,6 @@ router.post('/',taskController.createTask);
 router.post('/asignar',taskController.assignTask);
 router.get('/listarTareas/:n_documento',taskController.getTasksForUser)
 router.get('/listarTareas', taskController.getAllAssignments)
+router.delete('/eliminar/:id', taskController.deletedAssignment);
 
 module.exports = router;
