@@ -29,6 +29,7 @@ module.exports = {
   getByPaymentMethod:catchedAsync(require("./cashControllers/getByPaymentMethod")),
   //deleteUser:catchedAsync(require("./deleteUser")),
   updateUser:catchedAsync(require("./updatedUser")),
+  deletedAssignment:catchedAsync(require("./dashboardControllers/deletedAssignment"))
 };
 
 //exportamos como una propiedad de lo que exporta  modulo  indexjs
