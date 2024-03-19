@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
-import { fetchAssignedTasks } from "../../Redux/Actions/actions";
+import { fetchAssignedTasks, deleteTask } from "../../Redux/Actions/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, ButtonGroup } from "@mui/material";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const localizer = dayjsLocalizer(dayjs);
 
@@ -18,12 +19,11 @@ function Calendary() {
 
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTask, setSelectedTask] = useState(null);
-
-  const [n_documento, setNDocumento] = useState("");
+  const [deleteTaskId, setDeleteTaskId] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchAssignedTasks(n_documento));
-  }, [dispatch, n_documento]);
+    dispatch(fetchAssignedTasks());
+  }, [dispatch]);
 
   const getNameRazonSocial = (n_documento) => {
     const user = users.find((user) => user.n_documento === n_documento);
@@ -40,7 +40,6 @@ function Calendary() {
       startHour = 12;  
       endHour = 17; 
     } else {
-      // Manejo de otro caso o error si es necesario
       startHour = 0;
       endHour = 0;
     }
@@ -51,7 +50,6 @@ function Calendary() {
     const end = new Date(task.taskDate);
     end.setHours(endHour, 0, 0, 0);
 
-    // Obtener el nombre de la tarea
     const selectedTaskObject = tasks.data.tasks.find((t) => t.taskId === task.taskId);
     const tareaName = selectedTaskObject ? selectedTaskObject.nameTask : "Tarea desconocida";
 
@@ -62,7 +60,7 @@ function Calendary() {
       end,
       turno: task.turno,
       tarea: task.taskId,
-      tareaName: tareaName // Agregar el nombre de la tarea al evento
+      tareaName: tareaName
     };
   }) || [];
 
@@ -73,6 +71,19 @@ function Calendary() {
 
   const handleEventClick = (event) => {
     setSelectedTask(event);
+  };
+
+  const handleDeleteTask = async () => {
+    if (deleteTaskId) {
+      try {
+        await dispatch(deleteTask(deleteTaskId));
+        setDeleteTaskId(null);
+        setSelectedTask(null);
+        Swal.fire('Tarea eliminada', '', 'success');
+      } catch (error) {
+        console.error('Error deleting task:', error);
+      }
+    }
   };
 
   return (
@@ -91,37 +102,38 @@ function Calendary() {
           <Button style={{margin: '10px'}}>Volver</Button>
         </Link>
       </ButtonGroup>
-      <Calendar className="form-container"
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500, width: "auto" }}
-        eventContent={({ event }) => (
-          <div>
-            <b>{event.title}</b> ({event.turno}) - {event.tareaName}
-          </div>
-        )}
-        onSelectSlot={handleSelectSlot}
-        onSelectEvent={handleEventClick}
-        toolbar={{
-          agenda: { eventHeight: 50 },
-          day: { eventHeight: 50 },
-          week: { eventHeight: 50 },
-          month: { eventHeight: 50 }
-        }}
-        messages={{
-          today: "Hoy",
-          month: "Mes",
-          week: "Semana",
-          day: "Día",
-          next: "Siguiente",
-          back: "Anterior"
-        }}
-      />
+      / Dentro del componente Calendary
+<Calendar
+  key={assignedTasks.length} // Agregar una clave única basada en la longitud de las tareas asignadas
+  localizer={localizer}
+  events={events}
+  startAccessor="start"
+  endAccessor="end"
+  style={{ height: 500, width: "auto" }}
+  eventContent={({ event }) => (
+    <div>
+      <b>{event.title}</b> ({event.turno}) - {event.tareaName}
+    </div>
+  )}
+  onSelectSlot={handleSelectSlot}
+  onSelectEvent={handleEventClick}
+  toolbar={{
+    agenda: { eventHeight: 50 },
+    day: { eventHeight: 50 },
+    week: { eventHeight: 50 },
+    month: { eventHeight: 50 }
+  }}
+  messages={{
+    today: "Hoy",
+    month: "Mes",
+    week: "Semana",
+    day: "Día",
+    next: "Siguiente",
+    back: "Anterior"
+  }}
+/>
       {selectedTask && (
         <div className="user-table">
-
           <table>
             <thead>
               <tr>
@@ -129,19 +141,28 @@ function Calendary() {
                 <th>Turno</th>
                 <th>Fecha</th>
                 <th>Tarea</th>
-
+                <th>Acciones</th> 
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{selectedTask.title}</td>
                 <td>{selectedTask.turno}</td>
-
                 <td>{selectedTask.start.toLocaleDateString()}</td>
                 <td>{selectedTask.tareaName}</td>
+                <td>
+                  <Button onClick={() => setDeleteTaskId(selectedTask.id)}>Eliminar</Button>
+                </td>
               </tr>
             </tbody>
           </table>
+        </div>
+      )}
+      {deleteTaskId && (
+        <div>
+          <p>¿Estás seguro de que deseas eliminar esta tarea?</p>
+          <Button onClick={handleDeleteTask}>Confirmar Eliminación</Button>
+          <Button onClick={() => setDeleteTaskId(null)}>Cancelar</Button>
         </div>
       )}
     </div>
@@ -149,4 +170,3 @@ function Calendary() {
 }
 
 export default Calendary;
-

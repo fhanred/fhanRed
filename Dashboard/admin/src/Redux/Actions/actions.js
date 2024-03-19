@@ -13,9 +13,9 @@ import {
   ASSIGN_TASK_TO_USER_REQUEST,
   ASSIGN_TASK_TO_USER_SUCCESS,
   ASSIGN_TASK_TO_USER_FAILURE,
-  // DELETE_USER_FAILURE,
-  // DELETE_USER_SUCCESS,
-  // DELETE_USER_REQUEST,
+  DELETE_TASK_FAILURE,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_REQUEST,
   UPDATE_USER_FAILURE,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
@@ -81,34 +81,23 @@ export const createUser = (input) => async (dispatch) => {
   }
 };
 
-// Acción para eliminar un usuario
-// export const deleteUser = (n_documento) => async (dispatch) => {
-//   try {
-//     dispatch({ type: DELETE_USER_REQUEST });
-//     await axios.delete(`${BASE_URL}/user/${n_documento}`);
-//     dispatch({ type: DELETE_USER_SUCCESS });
-//     return { success: true }; 
-//   } catch (error) {
-//     dispatch({ type: DELETE_USER_FAILURE, payload: error.message });
-//     return { success: false, errorMessage: error.message };
-//   }
-// };
-
-// Acción para actualizar un usuario
-// export const updateUser = (n_documento, user) => async (dispatch) => {
-//   try {
-//     dispatch({ type: UPDATE_USER_REQUEST });
-//     const { data } = await axios.put(`${BASE_URL}/user/update/${n_documento}`, user);
+export const deleteTask = (id) => async (dispatch) => {
+  try {
+    console.log('ID de tarea a eliminar:', id);
+    dispatch({ type: DELETE_TASK_REQUEST });
+    await axios.delete(`${BASE_URL}/task/eliminar/${id}`);
    
-//     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
-//     dispatch(getUsers(n_documento));
-//     console.log(data,"probando updateAccion")
-//     return { success: true }; 
-//   } catch (error) {
-//     dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
-//     return { success: false, errorMessage: error.message };
-//   }
-// };
+    dispatch({ type: DELETE_TASK_SUCCESS });
+    dispatch(fetchAssignedTasks());
+    return { success: true }; 
+   
+  } catch (error) {
+    dispatch({ type: DELETE_TASK_FAILURE, payload: error.message });
+    return { success: false, errorMessage: error.message };
+  }
+};
+
+
 
 export const updateUser = (n_documento, user) => async (dispatch) => {
   try {
