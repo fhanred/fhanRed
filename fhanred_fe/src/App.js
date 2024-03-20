@@ -23,6 +23,7 @@ import ReceiptNumberForm from './Views/Admin/Encashment/ReceiptNumberForm';
 import Summary from "./Views/Admin/Summary/Summary"
 import MovementsDetail  from './Views/Admin/MovementsDetails/MovementsDetail';
 import ContractForm from './components/Contratos2/ContractForm';
+import TicketManager from './Views/Admin/TicketManager/TicketManager';
 
 
 
