@@ -12,11 +12,11 @@ conn.sync({ alter: true }).then(async () => {
   app.listen(PORT, () => {
     console.log(`🚀 listening on port: ${PORT} 🚀`);
   });
-//   await helpers.chargeRol();
-//   await helpers.chargePlan();
-//   await helpers.chargeVivienda();
-//   await helpers.chargeUsers();
-//   await helpers.chargeVivienda();
+  await helpers.chargeRol();
+  await helpers.chargePlan();
+  await helpers.chargeVivienda();
+  await helpers.chargeUsers();
+  await helpers.chargeVivienda();
 //  await helpers.chargeContratos();
 //  await helpers.chargeTickets();
 
