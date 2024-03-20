@@ -4,7 +4,9 @@ const controllers = require("../controllers");
 
 const router = Router();
 
-router.post("/charge-ticket-test", controllers.chargeTicket);
+router.post("/create-ticket-test", controllers.createTicket);
+
+router.get("/get-all-tickets-test", controllers.getAllTickets);
 
 
 module.exports = router;

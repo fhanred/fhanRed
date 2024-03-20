@@ -23,7 +23,6 @@ module.exports = async (req, res) => {
     "closing_datetime",
     "used_materials",
     "collected_materials",
-    "debt",
     "n_contrato"
   ];
   for (const field of ticketProperties) {

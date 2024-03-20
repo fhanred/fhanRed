@@ -18,7 +18,7 @@ conn.sync({ alter: true }).then(async () => {
 //   await helpers.chargeUsers();
 //   await helpers.chargeVivienda();
 //  await helpers.chargeContratos();
-    await helpers.chargeTickets();
+//  await helpers.chargeTickets();
 
   // await sendNotifications(); CUIDADO NO DESCOMENTAR HASTA QUE SE ENVIEN LOS DATOS
 });

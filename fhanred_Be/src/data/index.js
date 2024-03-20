@@ -99,15 +99,11 @@ Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
 
 //TODO: Ticket - Crear relaciones: Contrato, User(tecnico), Vivienda?
 // Contract ------> Ticket
-Contract.hasMany(Ticket, { foreignKey: "id_Contract"});
-Ticket.belongsTo(Contract, { foreignKey: "id_Contract" } );
-
-//Ticket -----------> Delivery ---> Direccion
-Delivery.hasMany(Ticket, { foreignKey: "id_Delivery" } )
-Ticket.belongsTo(Delivery, { foreignKey: "id_Delivery"})
+Contract.hasMany(Ticket, { foreignKey: "n_ticket"});
+Ticket.belongsTo(Contract, { foreignKey: "n_contrato" } );
 
 //Ticket -----------> User
-User.hasMany(Ticket, { foreignKey: "n_documento" } )
+User.hasMany(Ticket, { foreignKey: "n_ticket" } )
 Ticket.belongsTo(User, { foreignKey: "n_documento"})
 
 

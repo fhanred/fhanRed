@@ -1,18 +1,14 @@
-const createTicketLogic = require('../controllers/chargeTicket.js');
+const { default: axios } = require('axios');
 const data = require('./tickets.js');
+//const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_DEPLOY } = require("../config/envs");
 
 module.exports = async (req, res) => {
   function normalizeTicket(ticket) {
-    /* console.log({
-      fr: ticket['FECHA CERRO OS'],
-      hr: ticket['HORA CERRO OS']
-    }) */
     return {
       ticket_type: ticket.TIPO || '',
       reception_datetime:new Date(Date.parse(`${ticket.FECHARECEPCION} ${ticket.HORARECEPCION}`)) || '',
       served_by: ticket["NOMBRES VENDEDOR"] || '',
       observations: ticket.OBSERVACIONES || '',
-      tech_observations: ticket.OBSERVACIONESTECNICO || '',
       phone: ticket.TELEFONO.toString() || '',
       poste: ticket.POSTE || '',
       field_39: ticket.FIELD39 || '',
@@ -23,16 +19,13 @@ module.exports = async (req, res) => {
       closing_datetime: new Date(),           //(Date.parse(`${ticket["FECHA CERRO OS"]} ${ticket["HORA CERRO OS"]}`)) || '',
       used_materials: ticket["MATERIALES UTILIZADOS"] || '',
       collected_materials: ticket["MATERIALES RECOGIDOS"] || '',
-      debt: ticket.DEUDA || '',
+      n_contrato: 1
     };
   }
 
   try {
     for (const ticket of data) {
-      console.log(normalizeTicket(ticket));
-      await createTicketLogic({
-        body: normalizeTicket(ticket),
-      });
+      await axios.post(`http://localhost:${process.env.PORT}/tickets/create-ticket-test`, normalizeTicket(ticket))
     }
   } catch (error) {
     console.error('Error al cargar ticket:', error);
