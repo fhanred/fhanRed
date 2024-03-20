@@ -52,7 +52,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash, Task, TaskAsign, Ticket} =
+const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash, Task, TaskAsign, ContractStage, Ticket} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -86,6 +86,10 @@ Inventory.hasOne(Contract, { foreignKey: "id_inventory" });
 Delivery.belongsTo(Vivienda, { foreignKey: "id_vivienda"});
 Vivienda.hasMany(Delivery, { foreignKey: "id_vivienda"});
 
+//contract ----> stage
+Contract.hasMany(ContractStage, { foreignKey: 'contractId' });
+ContractStage.belongsTo(Contract, { foreignKey: 'contractId' });
+
 // user ----> documentation
 User.hasMany(Documentation, { foreignKey: "n_documento" });
 Documentation.belongsTo(User, { foreignKey: 'n_documento' });
@@ -111,10 +115,7 @@ Ticket.belongsTo(User, { foreignKey: "n_documento"})
 // Relaciones  Summary
 Summary.belongsTo(User, { foreignKey: 'n_documento', targetKey: 'n_documento', as: 'user' });
 Summary.belongsTo(Contract, { foreignKey: 'n_contrato', targetKey: 'n_contrato', as: 'contract' });
-// Summary.hasMany(Bill, { foreignKey: 'summaryId', as: 'bills' });
-// Summary.hasMany(DebitN, { foreignKey: 'summaryId', as: 'debitNotes' });
-// Summary.hasMany(CreditN, { foreignKey: 'summaryId', as: 'creditNotes' });
-// Summary.hasMany(Cash, { foreignKey: 'summaryId', as: 'cashReceipts' });
+
 Bill.belongsTo(User, { foreignKey: 'party_identification', targetKey: 'n_documento'});
 User.hasMany(Cash, { foreignKey: 'n_documento' }); 
 Bill.hasOne(CreditN, { foreignKey: 'billId', as: 'creditNote' });

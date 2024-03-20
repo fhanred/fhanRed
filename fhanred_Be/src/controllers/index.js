@@ -28,7 +28,9 @@ module.exports = {
   assignTask:catchedAsync(require("./dashboardControllers/assignTask")),
   getTasksForUser:catchedAsync(require("./dashboardControllers/getTasksForUser")),
   getByPaymentMethod:catchedAsync(require("./cashControllers/getByPaymentMethod")),
-
+  //deleteUser:catchedAsync(require("./deleteUser")),
+  updateUser:catchedAsync(require("./updatedUser")),
+  deletedAssignment:catchedAsync(require("./dashboardControllers/deletedAssignment"))
 };
 
 //exportamos como una propiedad de lo que exporta  modulo  indexjs

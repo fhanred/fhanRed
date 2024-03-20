@@ -19,8 +19,7 @@ module.exports = async () => {
       id: 4,
       name: 'admin' 
     },
-    { id: 5, 
-      name: "Usuario" },
+ 
   ];
 
   if (roles.length <= 0) {
