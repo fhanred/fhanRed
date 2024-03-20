@@ -56,6 +56,8 @@ module.exports = (sequelize) => {
       },
       estado_contrato: {
         type: DataTypes.ENUM(
+          'ESPERANDO DATOS TECNICOS',
+          'ESPERANDO FIRMA DIGITAL',
           'ACTIVO',
           'ACTIVO CONGELADO',
           'RETIRADO',
