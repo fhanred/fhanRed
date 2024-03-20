@@ -102,7 +102,7 @@ function Calendary() {
           <Button style={{margin: '10px'}}>Volver</Button>
         </Link>
       </ButtonGroup>
-      / Dentro del componente Calendary
+     
 <Calendar
   key={assignedTasks.length} // Agregar una clave única basada en la longitud de las tareas asignadas
   localizer={localizer}
