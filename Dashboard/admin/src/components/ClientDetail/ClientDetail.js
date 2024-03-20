@@ -40,18 +40,48 @@ export default function ClientDetail() {
   };
 
   const handleSearch = () => {
-    const filtered = clientes.filter(
-      (cliente) =>
+    const filteredExactMatch = clientes.filter((cliente) => {
+      // Verifica si hay alguna coincidencia exacta en id_Contract
+      const contractMatches = cliente.Contracts && cliente.Contracts.find(contract => contract.id_Contract === parseInt(searchText));
+  
+      // Si hay coincidencia exacta en id_Contract, devuelve true y se incluye el cliente en los resultados filtrados
+      return contractMatches;
+    });
+  
+    const filtered = clientes.filter((cliente) => {
+      // Verifica si hay alguna coincidencia exacta en id_Contract
+      const contractMatches = cliente.Contracts && cliente.Contracts.find(contract => contract.id_Contract === parseInt(searchText));
+  
+      // Si hay coincidencia exacta en id_Contract, ya se ha incluido en los resultados filtrados, por lo que se excluye aquí
+      if (contractMatches) {
+        return false;
+      }
+  
+      // Si no hay coincidencia en id_Contract, se realiza la búsqueda en otros campos
+      return (
         cliente.name_razonSocial.toLowerCase().includes(searchText.toLowerCase()) ||
         cliente.n_documento.includes(searchText) ||
-        (cliente.Contracts[0] &&
+        (cliente.Contracts && cliente.Contracts[0] &&
           (cliente.Contracts[0].name_plan.toLowerCase().includes(searchText.toLowerCase()) ||
           cliente.Contracts[0].estado_contrato.toLowerCase().includes(searchText.toLowerCase())))
-    );
-    setFilteredClientes(filtered);
+      );
+    });
+  
+    const filteredResults = [...filteredExactMatch, ...filtered];
+  
+    setFilteredClientes(filteredResults);
     setCurrentPage(1);
-    setUserNotFound(filtered.length === 0);
+    setUserNotFound(filteredResults.length === 0);
   };
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   const handleResetSearch = () => {
     setClientes(clientesData);
@@ -83,7 +113,7 @@ export default function ClientDetail() {
       <div className="search-container">
         <input
           type="text"
-          placeholder="Buscar por usuario, cédula, plan, estado contrato"
+          placeholder="Buscar por usuario, cédula, estado contrato"
           value={searchText}
           className="search-input"
           onChange={(e) => setSearchText(e.target.value)}
