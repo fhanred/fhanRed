@@ -6,17 +6,15 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_DEPLOY } = require("
 
 
 //-------------------------------- CONFIGURACION PARA TRABAJAR LOCALMENTE-----------------------------------
-  const sequelize = new Sequelize(
-    `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
-   {
-     logging: false, // set to console.log to see the raw SQL queries
-     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-   }
-  );
-// // -------------------------------------CONFIGURACION PARA EL DEPLOY---------------------------------------------------------------------
- 
-/* const sequelize = new Sequelize(DB_DEPLOY, {
-
+const sequelize = new Sequelize(
+  `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+  {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  }
+);
+// -------------------------------------CONFIGURACION PARA EL DEPLOY---------------------------------------------------------------------
+/* const sequelize = new Sequelize(DB_DEPLOY , {
       logging: false, // set to console.log to see the raw SQL queries
       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
       dialectOptions: {
@@ -26,8 +24,8 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_DEPLOY } = require("
         }
       },
     }
-); */
- 
+  );
+ */
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -54,7 +52,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash, Task, TaskAsign, ContractStage} =
+const { User, Summary, CreditN, DebitN, Receipt, Bill, Role, Inventory, Contract, Delivery, Facturacion, Plan, Vivienda, Documentation, Cash, Task, TaskAsign, ContractStage, Ticket} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -96,6 +94,17 @@ Documentation.belongsTo(User, { foreignKey: 'n_documento' });
 
 // contract ----> documentation
 Contract.hasOne(Documentation, { foreignKey: "id_Contract" });
+
+//TODO: Ticket - Crear relaciones: Contrato, User(tecnico), Vivienda?
+// Contract ------> Ticket
+Contract.hasMany(Ticket, { foreignKey: "n_ticket"});
+Ticket.belongsTo(Contract, { foreignKey: "n_contrato" } );
+
+//Ticket -----------> User
+User.hasMany(Ticket, { foreignKey: "n_ticket" } )
+Ticket.belongsTo(User, { foreignKey: "n_documento"})
+
+
 
 // Relaciones  Summary
 Summary.belongsTo(User, { foreignKey: 'n_documento', targetKey: 'n_documento', as: 'user' });

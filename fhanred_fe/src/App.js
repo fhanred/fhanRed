@@ -28,7 +28,9 @@ import ContractForm from './components/Contratos2/ContractForm';
 
 function App() {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state) => state.authentication.isAuthenticated
+  );
 
   useEffect(() => {
     localStorage.clear(); // Limpiar el almacenamiento local al cargar la aplicación
@@ -49,7 +51,7 @@ function App() {
             <Register />
           </Route>
           <Route path="">
-            <div style={{ flex: 1, display: 'flex' }}>
+            <div style={{ flex: 1, display: "flex" }}>
               <div>
                 <NavbarItems links={links} />
               </div>
@@ -80,15 +82,18 @@ function App() {
                 <Route path="/facturacion">
                   <Billing />
                 </Route>
+                <Route path="/tickets-manager">
+                  <TicketManager />
+                </Route>
                 <Route path="/changePassword">
                   <ChangePassword />
                 </Route>
                 <Route path="/caja">
-                  <Encashment/>
-                  </Route>
-                  <Route path="/movements">
-                  <MovementsDetail/>
-                  </Route>
+                  <Encashment />
+                </Route>
+                <Route path="/movements">
+                  <MovementsDetail />
+                </Route>
                 <Route path="/resumen">
                   <Summary />
                 </Route>
@@ -96,7 +101,7 @@ function App() {
                   <ReceiptNumberForm />
                 </Route>
                 <Route path="/contracts">
-                    <Contract/>
+                  <Contract />
                 </Route>
           
               </Switch>

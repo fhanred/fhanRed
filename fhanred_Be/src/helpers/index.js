@@ -5,4 +5,5 @@ module.exports = {
   chargeVivienda: require('./chargeVivienda'),
   chargeUsers: require('./chargeUsers'),
   chargeContratos: require("./chargeContratos"),
+  chargeTickets: require('./chargeTickets'),
 };

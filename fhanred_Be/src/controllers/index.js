@@ -12,6 +12,8 @@ module.exports = {
   forgotPassword: catchedAsync(require("./forgotPassword")),
   chargeDocumentation: catchedAsync(require("./chargeDocumentation")),
   getDocumentation: catchedAsync(require("./getDocumentation")),
+  createTicket: catchedAsync(require("./ticketControllers/createTicket")),
+  getAllTickets: catchedAsync(require("./ticketControllers/getAllTickets")),
   getBillsByRange:catchedAsync(require("./dataicoControllers/getBillsByRange")),
   getDebitNByRange:catchedAsync(require("./dataicoControllers/getDebitNByRange")),
   getCreditNByRange:catchedAsync(require("./dataicoControllers/getCreditNByRange")),
