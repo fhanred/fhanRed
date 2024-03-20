@@ -88,9 +88,7 @@ Inventory.hasOne(Contract, { foreignKey: "id_inventory" });
 Delivery.belongsTo(Vivienda, { foreignKey: "id_vivienda"});
 Vivienda.hasMany(Delivery, { foreignKey: "id_vivienda"});
 
-//contract ----> stage
-Contract.hasMany(ContractStage, { foreignKey: 'contractId' });
-ContractStage.belongsTo(Contract, { foreignKey: 'contractId' });
+
 
 // user ----> documentation
 User.hasMany(Documentation, { foreignKey: "n_documento" });
