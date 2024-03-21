@@ -1,100 +1,91 @@
 /* Estilos generales */
-.clients {
+
+.client-detail-container {
   display: flex;
-  margin-top: 7%; /* Añade margen en la parte superior para separar de la Navbar superior */
-  margin-left: 15%;
   flex-direction: column;
-  font-family: 'Montserrat', sans-serif;
-  letter-spacing: -0.2px;
-  font-size: 14px;
+  align-items: center;
+  padding-top: 20px; /* Ajusta el espacio desde arriba */
 }
 
-.table {
-  margin-top: 2%;
-  margin-left: 3%; /* Añade margen en la parte superior para separar de los elementos anteriores */
-  margin-right: 3%;
-  overflow-x: auto; /* Agrega una barra de desplazamiento horizontal si la tabla es más ancha que la pantalla */
-}
-
-.input {
+.search-container {
   display: flex;
-  align-items:flex-start;
-  margin-left: 3%;
+  align-items: center;
+  margin-bottom: 20px; /* Espacio entre el input de búsqueda y la tabla */
 }
 
-/* Estilos para la entrada de búsqueda */
-.special-input {
-  width: 30%;
-  padding: 0.7%;
-  margin-right: 1%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.search-input {
+  margin-right: 10px; /* Espacio entre el input de búsqueda y los iconos */
+  width: 300px; /* Ajusta el ancho del input de búsqueda según tus necesidades */
 }
 
-/* Estilos para los botones de búsqueda y restauración */
-.button-clients {
-  
-  margin-top: 5px;
-  margin-right: 5px;
-  color: #1f2852;
-  padding: 5px 10px;
-  font-size: 16px;
-  cursor: pointer;
+.table-container {
+  width: 80%; /* Ajusta el ancho de la tabla según tus necesidades */
+}
+.th-table-title{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #106fbd;
+}
+.user-table {
+  margin-top: 20px;
 }
 
-.button-clients:hover {
-  color: #22c4cf;
+.user-table h2 {
+  margin-bottom: 10px;
 }
 
-/* Estilos para la tabla */
-table {
+.user-table table {
   width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
 }
 
-.table th {
-  background-color: #1f2852;
-  color: white;
-  border:  rgb(233, 228, 228) 6px outset;
-  cursor: pointer;
-  padding: 0.5%;
+.user-table th,
+.user-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
 }
 
-.table th:hover {
-  background-color: #22c4cf;
+.user-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+.user-table td{
+  font-family:'Trebuchet MS';
+  color:#343131bf;
 }
 
-.table th:active {
-  background-color: #ebecf0;
+.user-table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-.table th:focus {
-  outline: none;
+.user-table tr:hover {
+  background-color: #ddd;
 }
 
-.table th:focus:not(:focus-visible) {
-  outline: none;
+.user-table h2 {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
 }
 
-.table tr {
-  border: 1px solid #ccc;
+.button-group-container {
+  text-align: center;
+  /* Centrar los botones en pantallas pequeñas */
+  display: grid;
+  grid-template-columns: 1fr;
+  /* Asegura que solo haya una columna en pantallas pequeñas */
+  gap: 10px;
+  /* Agrega espacio entre los botones */
+  margin-top: 10%;
+
 }
 
-.table td {
-  border:  rgb(233, 228, 228) 3px outset;
-  padding: 0.3%;
-}
 
-/* Estilos para la celda de ordenamiento activa */
-.table th[aria-sort]::before {
-  content: attr(aria-sort);
-  padding-left: 0.5%
+.link {
+  text-decoration: none;
 }
-
-/* Estilos para el resaltado de búsqueda */
-.table tr.highlight {
-  background-color: #f4eb4d;
-}
-
 /* Estilos para el efecto de botón en hover */
 .client-item:hover {
   background-color: #22c4cf;
@@ -113,6 +104,7 @@ table {
 
 .client-item:active td {
   color: white;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 /* Estilo para la clase "asc" */
@@ -144,7 +136,7 @@ table {
 }
 
 .pagination-container button {
-  border:  rgb(233, 228, 228) 4px outset;
+ 
   margin: 0 2px; /* Espacio entre botones */
   
 }
@@ -153,21 +145,21 @@ table {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
-  padding: 10px 18px;
-  height: 2px;
-  margin-bottom: 2px;
+  font-size: 10px;
+  padding: 10px 10px;
+  height: 1px;
+  
   border: none;
-  background-color: #1f2852;
+  background-color: #106fbd;
   color: white;
   cursor: pointer;
 }
 .paginate:hover {
-  background-color: #22c4cf;
+  background-color: #9481b2;
 }
 
 .paginate.active {
-  background-color: #d25037; /* Cambia el color cuando esté activo */
+  background-color: #100645; /* Cambia el color cuando esté activo */
 }
 
 .page-number {
@@ -184,84 +176,4 @@ table {
   font-size: 20px;
   padding-left: 2.5%;
   margin-top: 0.2%;
-}
-
-.error-message-clients {
-  background-color: #cf151f;
-  margin-left: 3%;
-  width: 40%;
-  color: #fff;
-  padding: 2px;
-  margin-bottom: 1px;
-  border-radius: 4px;
-}
-
-/*------------------------------------------------responsive-------------------------------*/
-@media (max-width: 1300px) {
- .clients {
-  margin-top: 20%;
- }
-}
-/* Estilos para pantallas medianas (tabletas) */
-@media (max-width: 1024px) {
-  .clients {
-   font-size: 12px;
-  }
-  .paginate {
-    font-size: 12px;
-  }
- }
-
-/* Estilos para pantallas pequeñas (teléfonos móviles) */
-@media (max-width: 768px) {
-  .clients {
-    font-size: 10px;
-   }
-   .input {
-    flex-direction: column;
-   }
-   .special-input {
-    width: 50%;
-    font-size: 10px;
-   }
-   .button-clients {
-    font-size: 10px;
-   }
-   .paginate {
-    font-size: 10px;
-   }
-}
-
-@media (max-width: 600px) {
-
-  .pagination-container {
-    flex-direction: column; /* Cambia la dirección a column para pantallas más pequeñas */
-    align-items: center; /* Centra los elementos verticalmente */
-  }
-}
-
-/* Estilos para celulares (pantallas muy pequeñas) */
-@media (max-width: 480px) {
-  .clients {
-    margin-left: 18%;
-    font-size: 8px;
-   }
-   .special-input {
-    width: 50%;
-   }
-   .paginate {
-    font-size: 8px;
-   }
-}
-
-@media (max-width: 380px) {
-  .clients {
-    margin-top: 20%;
-    font-size: 6.5px;
-    font-weight: bold;
-   }
-   .paginate {
-    font-size: 6.5px;
-   }
-
 }
