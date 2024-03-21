@@ -1,51 +1,76 @@
 .profile-container-all {
-    width: 80%;
-    margin-left: 10rem;
-    font-family: "Montserrat", sans-serif;
-    letter-spacing: -0.2px;
-    font-size: 16px;
-  }
-  
-  
-  
-  .profile-container-1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    /* gap: 30px; */
-    /* border: rgb(194, 7, 7) 8px solid; */
-    margin-top: 100px;
-    height: 20rem;
-  }
-  
-  .profile-container-2 {
-    display: flex;
-  
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    /* border: rgb(24, 16, 16) 8px solid; */
-    height: 8rem;
-  }
-  
-  
-  .profile-container-img {
-    
-    /*  max-width: 620px;
-        
-       /*  margin-left: 350px; 
-        margin-bottom: 20px; 
-        padding: 50px; */
-    
-    border: rgb(233, 228, 228) 8px ;
-    height: 18rem;
-    width: 18rem;
-    border-radius: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  letter-spacing: -0.2px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 253, 0.89);
+  max-width: 600px;
+  margin: 160px auto 0;
+  padding: 20px;
+  border: 2px solid #1f2852;
+  border-radius: 5px;
+}
+
+.profile-container-1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Agrega un espacio entre los contenedores */
+}
+
+.profile-container-img {
+  width: 150px; /* Ancho de la imagen */
+    height: 150px; /* Altura de la imagen */
+    background-color: #1f2852; /* Color de fondo del recuadro de la imagen */
+    border-radius: 50%; /* Para hacer la imagen redonda */
+    overflow: hidden; /* Para ocultar partes de la imagen que puedan exceder el tamaño del contenedor */
+   ;
+ 
     background-image: url("https://cdn.sanity.io/images/xmpcmhrn/production/f363771ad3c072ec71f1ea5e8f3868d18de231a6-1200x800.jpg");
     background-position:center;
     background-size:cover;
     background-repeat: no-repeat;
-  }
+    
+        margin-right: 50px; /* Espacio entre la imagen y el texto */
+}
+
+.profile-container-img img {
+  width: 100%;
+  height: auto;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+ 
+}
+.profile-data{
+  margin-right: 20px;
+}
+
+.profile-data h3 {
+  margin: 10px 0;
+  font-size: 16px; /* Tamaño del texto */
+  font-weight: normal; /* Peso de la fuente (normal) */
+  text-transform: uppercase; /* Convertir todo el texto a mayúsculas */
+  letter-spacing: 0; /* Espaciado entre caracteres */
+}
+
+
+.profile-container-2 {
+  display: flex;
   
+  align-items: center;
+}
+
+.profile-container-2 button {
+ 
   
+  padding: 8px 16px; /* Ajusta el tamaño del botón */
+  font-size: 14px; /* Ajusta el tamaño del texto del botón */
+  background-color:#878aab ;
+  margin-bottom: 10px; /* Agrega un espacio entre los botones */
+}
+
+

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Perfil.css";
 import { NavLink, Redirect } from "react-router-dom";
+import Avatar from '@mui/material/Avatar';
 import { useSelector, useDispatch } from "react-redux";
-import { showNoContractsModal } from "../../../Redux/Actions/actions"; 
+import { getUsers, showNoContractsModal, userInfo } from "../../../Redux/Actions/actions";
 import Swal from "sweetalert2";
 
 function Perfil() {
@@ -22,22 +23,19 @@ function Perfil() {
     <div className="profile-container-all">
       <div className="profile-container-1">
         <div className="profile-container-img"></div>
-        <div className="profile-data">
-          <h3>{user.name_razonSocial}</h3>
-          <h3>{getRolName(userRole)}</h3>
-          <h3>{user.email}</h3>
+        <div class="profile-container" >
+          <div class="profile-data">
+            <h2>{user.razon_social}</h2>
+            <h3>{getRolName(userRole)}</h3>
+            <h3 style={{textTransform:"lowercase"}}>{user.email}</h3>
+
+          </div>
         </div>
-        <div className="profile-button-tarea">
-          {(userRole === 0 || userRole === 1) ? (
-            null // No renderizar el botón "Tareas" si el usuario no tiene permisos
-          ) : (
-            <button onClick={handleTasksButtonClick}>Tareas</button>
-          )}
-        </div>
+
       </div>
 
       <div className="profile-container-2">
-       
+
         {userRole === 0 && (
           <p>Aun no eres cliente. Por favor, contacta con el administrador.</p>
         )}
@@ -52,6 +50,13 @@ function Perfil() {
             <NavLink to={`/changePassword`} className={({ isActive }) => isActive ? "ActiveOption" : "Option"}>
               <button>Cambiar contraseña</button>{" "}
             </NavLink>
+            <div className="profile-button-tarea">
+              {(userRole === 0 || userRole === 1) ? (
+                null // No renderizar el botón "Tareas" si el usuario no tiene permisos
+              ) : (
+                <button onClick={handleTasksButtonClick}>Tareas</button>
+              )}
+            </div>
           </>
         )}
       </div>

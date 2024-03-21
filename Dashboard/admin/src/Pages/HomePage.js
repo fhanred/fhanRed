@@ -21,7 +21,7 @@ const HomePage = () => {
           <Button style={{margin: '10px'}}>CAJA</Button>
         </Link>
         <Link to="/comprobantes" className="link">
-          <Button style={{margin: '10px'}}>COMPROBANTES</Button>
+          <Button style={{margin: '10px'}}>ACTUALIZACIONES</Button>
         </Link>
       </ButtonGroup>
     
