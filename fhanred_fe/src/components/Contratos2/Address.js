@@ -1,22 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
-const Address = ({ nextStep, onSubmit, previousStep }) => {
-  const [combinedAddress, setCombinedAddress] = useState('');
-  const [serviceRequestSent, setServiceRequestSent] = useState(false);
-
-  const handleGenerateAddress = (values) => {
-    const address = `${values.streetType} ${values.streetNumber} ${values.orientation} # ${values.addressNumber}, ${values.details}`;
-    setCombinedAddress(address);
-    console.log('Dirección generada:', address);
-    setServiceRequestSent(true); 
-  
-    // Llama a la función onSubmit pasando los datos
-    onSubmit({
-      combinedAddress: address
-    });
-  };
-
+const Address = ({ onSubmit }) => {
   const validate = (values) => {
     const errors = {};
   
@@ -41,12 +26,6 @@ const Address = ({ nextStep, onSubmit, previousStep }) => {
 
   return (
     <div className="container">
-    {serviceRequestSent && (
-      <div className="alert alert-success" role="alert">
-        Solicitud de Servicio recibida, en breve recibirás un email
-      </div>
-    )}
-    
       <h2>Ingresa los detalles de la dirección:</h2>
       <Formik
         initialValues={{
@@ -56,7 +35,15 @@ const Address = ({ nextStep, onSubmit, previousStep }) => {
           addressNumber: '',
           details: ''
         }}
-        onSubmit={handleGenerateAddress} 
+        onSubmit={(values, { setSubmitting }) => {
+          const address = `${values.streetType} ${values.streetNumber} ${values.orientation} # ${values.addressNumber} # ${values.details}`;
+          // Llama a la función onSubmit pasando los datos
+          onSubmit({
+            ...values,
+            direccion: address
+          });
+          setSubmitting(false);
+        }} 
         validate={validate}
       >
         {({ isSubmitting }) => (
@@ -100,5 +87,6 @@ const Address = ({ nextStep, onSubmit, previousStep }) => {
 };
 
 export default Address;
+
 
 
