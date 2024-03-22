@@ -141,13 +141,14 @@ export const fetchAssignedTasks = (n_documento = null) => async (dispatch) => {
     dispatch({ type: FETCH_ASSIGNED_TASKS_FAILURE, payload: error.message });
   }
 };
-export const assignTaskToUser = (taskId, n_documento, turno, taskDate) => async (dispatch) => {
+export const assignTaskToUser = (taskId, n_documento, startTurno, endTurno, taskDate) => async (dispatch) => {
   dispatch({ type: ASSIGN_TASK_TO_USER_REQUEST });
   try {
     const response = await axios.post(`${BASE_URL}/task/asignar`, {
       taskId,
       n_documento,
-      turno,
+      startTurno ,
+      endTurno,
       taskDate,
     });
     console.log("Response from assignTaskToUser:", response.data);
