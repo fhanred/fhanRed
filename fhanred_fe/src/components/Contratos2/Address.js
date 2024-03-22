@@ -1,5 +1,8 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import {
+  optionsCalle
+} from "./arrayOptions";
 
 const Address = ({ onSubmit }) => {
   const validate = (values) => {
@@ -33,7 +36,8 @@ const Address = ({ onSubmit }) => {
           streetNumber: '',
           orientation: '',
           addressNumber: '',
-          details: ''
+          details: '',
+         
         }}
         onSubmit={(values, { setSubmitting }) => {
           const address = `${values.streetType} ${values.streetNumber} ${values.orientation} # ${values.addressNumber} # ${values.details}`;
@@ -46,17 +50,24 @@ const Address = ({ onSubmit }) => {
         }} 
         validate={validate}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, handleChange, handleBlur }) => (
           <div className="formDiv">
             <Form>
-              <div>
-                <label htmlFor="streetType">Tipo de calle:</label>
-                <Field type="text" name="streetType" />
-                <ErrorMessage name="streetType" component="div" className="error" />
-              </div>
+            <div>
+  <label htmlFor="streetType">Tipo de calle:</label>
+  <Field as="select" name="streetType" onChange={handleChange} onBlur={handleBlur}>
+    <option value="">Selecciona un tipo de calle</option>
+    <option value="Calle">Calle</option>
+    <option value="Avenida">Avenida</option>
+    <option value="Carrera">Carrera</option>
+    <option value="Callejón">Finca</option>
+    <option value="Vereda">Finca</option>
+  </Field>
+  <ErrorMessage name="streetType" component="div" className="error" />
+</div>
 
               <div>
-                <label htmlFor="streetNumber">Número de calle:</label>
+                <label htmlFor="streetNumber">Nombre o Numero de Calle:</label>
                 <Field type="text" name="streetNumber" />
               </div>
 

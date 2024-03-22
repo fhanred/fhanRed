@@ -371,7 +371,7 @@ export const createContract = (contractData) => {
     console.log('Datos del contrato que se van a enviar al backend:', contractData);
     dispatch(createContractRequest());
     try {
-      const response = await axios.post(`http://localhost:3001/contract/create`, contractData);
+      const response = await axios.post(`${BASE_URL}/contract/create`, contractData);
       const contractId = response.data.n_contrato; // Suponiendo que el servidor devuelve el ID del contrato
       const contractRoute = `/contract/${contractId}`; // Suponiendo que la ruta del contrato se forma así
       dispatch(createContractSuccess(contractRoute));

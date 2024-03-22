@@ -6,7 +6,7 @@ import {
   optionsZona,
   optionsVivienda,
   optionsMunicipio,
-  optionsFacturaDigital
+  optionsFacturaDigital,
 } from "./arrayOptions";
 
 function SelectPlan({ onSubmit, nextStep, previousStep }) {
@@ -14,27 +14,33 @@ function SelectPlan({ onSubmit, nextStep, previousStep }) {
     <div className="container">
       <Formik
         initialValues={{
-          estrato: "estrato",
+          idStratus: "idStratus",
           zona: "zona",
           tipoVivienda: "tipoVivienda",
           municipio: "municipio",
           barrio: "barrio",
           facturaDigital: "facturaDigital",
           name_plan: "200 MG - DEDICADO",
-          barrio_vereda: "Uno"
+          barrio_vereda: "Uno",
         }}
         validate={(values) => {
           const errors = {};
 
-          const selectFields = ["estrato", "zona", "tipoVivienda", "municipio", "facturaDigital"];
-          selectFields.forEach(field => {
+          const selectFields = [
+            "idStratus",
+            "zona",
+            "tipoVivienda",
+            "municipio",
+            "facturaDigital",
+          ];
+          selectFields.forEach((field) => {
             if (!values[field]) {
-              errors[field] = 'Selecciona una opción';
+              errors[field] = "Selecciona una opción";
             }
           });
 
           if (!values.barrio) {
-            errors.barrio = 'Campo requerido';
+            errors.barrio = "Campo requerido";
           }
 
           return errors;
@@ -53,7 +59,12 @@ function SelectPlan({ onSubmit, nextStep, previousStep }) {
           <Form>
             <div>
               <label htmlFor="name_plan">Plan:</label>
-              <Field as="select" name="name_plan" onChange={handleChange} onBlur={handleBlur}>
+              <Field
+                as="select"
+                name="name_plan"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
                 <option value="">Selecciona una opción</option>
                 {optionsPlan.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -64,8 +75,13 @@ function SelectPlan({ onSubmit, nextStep, previousStep }) {
             </div>
 
             <div>
-              <label htmlFor="estrato">Estrato:</label>
-              <Field as="select" name="estrato" onChange={handleChange} onBlur={handleBlur}>
+              <label htmlFor="idStratus">idStratus:</label>
+              <Field
+                as="select"
+                name="idStratus"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
                 <option value="">Selecciona una opción</option>
                 {optionsEstrato.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -73,11 +89,16 @@ function SelectPlan({ onSubmit, nextStep, previousStep }) {
                   </option>
                 ))}
               </Field>
-            </div> 
+            </div>
 
             <div>
               <label htmlFor="zona">Zona:</label>
-              <Field as="select" name="zona" onChange={handleChange} onBlur={handleBlur}>
+              <Field
+                as="select"
+                name="zona"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
                 <option value="">Selecciona una zona</option>
                 {optionsZona.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -86,10 +107,15 @@ function SelectPlan({ onSubmit, nextStep, previousStep }) {
                 ))}
               </Field>
             </div>
-            
+
             <div>
               <label htmlFor="tipoVivienda">Tipo de vivienda:</label>
-              <Field as="select" name="tipoVivienda" onChange={handleChange} onBlur={handleBlur}>
+              <Field
+                as="select"
+                name="tipoVivienda"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
                 <option value="">Selecciona un tipo de vivienda</option>
                 {optionsVivienda.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -101,7 +127,12 @@ function SelectPlan({ onSubmit, nextStep, previousStep }) {
 
             <div>
               <label htmlFor="municipio">Municipio:</label>
-              <Field as="select" name="municipio" onChange={handleChange} onBlur={handleBlur}>
+              <Field
+                as="select"
+                name="municipio"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
                 <option value="">Selecciona un municipio</option>
                 {optionsMunicipio.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -110,15 +141,25 @@ function SelectPlan({ onSubmit, nextStep, previousStep }) {
                 ))}
               </Field>
             </div>
-            
+
             <div>
               <label htmlFor="barrio_vereda">Barrio:</label>
-              <Field type="text" name="barrio_vereda" onChange={handleChange} onBlur={handleBlur} />
+              <Field
+                type="text"
+                name="barrio_vereda"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
             </div>
 
             <div>
               <label htmlFor="facturaDigital">Factura Digital?</label>
-              <Field as="select" name="facturaDigital" onChange={handleChange} onBlur={handleBlur}>
+              <Field
+                as="select"
+                name="facturaDigital"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
                 <option value="">Selecciona una opción</option>
                 {optionsFacturaDigital.map((option) => (
                   <option key={option.value} value={option.value}>

@@ -50,7 +50,7 @@ const initialState = {
   movements: {
     cashierName: null,
     paymentMethod: null,
-    data: [],  // Cambia 'data' a 'movements'
+    data: [],  
     loading: false,
     error: null,
   },

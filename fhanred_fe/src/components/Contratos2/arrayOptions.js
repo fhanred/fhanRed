@@ -52,4 +52,12 @@ export const optionsPlan = [
   export const optionsFacturaDigital =[
     {value: true , label : "Si" },
     {value: false , label : "No" },
-  ]
+  ];
+  export const optionsCalle = [
+    { value: '1', label: 'Vereda' },
+    { value: '2', label: 'Avenida' },
+    { value: '3', label: 'Calle' },
+    { value: '4', label: 'Carrera' },
+    { value: '5', label: 'Finca' },
+    { value: '6', label: 'Otro' },
+  ];
