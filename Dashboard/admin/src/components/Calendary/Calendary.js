@@ -31,25 +31,8 @@ function Calendary() {
   };
 
   const events = assignedTasks?.map((task) => {
-    let startHour, endHour;
-
-    if (task.turno === "Mañana") {
-      startHour = 8; 
-      endHour = 12;  
-    } else if (task.turno === "Tarde") {
-      startHour = 12;  
-      endHour = 17; 
-    } else {
-      startHour = 0;
-      endHour = 0;
-    }
-
-    const start = new Date(task.taskDate);
-    start.setHours(startHour, 0, 0, 0);
-
-    const end = new Date(task.taskDate);
-    end.setHours(endHour, 0, 0, 0);
-
+    const start = new Date(`${task.taskDate}T${task.startTurno}`);
+    const end = new Date(`${task.taskDate}T${task.endTurno}`);
     const selectedTaskObject = tasks.data.tasks.find((t) => t.taskId === task.taskId);
     const tareaName = selectedTaskObject ? selectedTaskObject.nameTask : "Tarea desconocida";
 
@@ -59,7 +42,6 @@ function Calendary() {
       start,
       end,
       turno: task.turno,
-      tarea: task.taskId,
       tareaName: tareaName
     };
   }) || [];
@@ -99,55 +81,58 @@ function Calendary() {
         }}
       >
         <Link to="/homePage" className="link">
-          <Button style={{margin: '10px'}}>Volver</Button>
+          <Button style={{ margin: '10px' }}>Volver</Button>
         </Link>
       </ButtonGroup>
-     
-<Calendar
-  key={assignedTasks.length} // Agregar una clave única basada en la longitud de las tareas asignadas
-  localizer={localizer}
-  events={events}
-  startAccessor="start"
-  endAccessor="end"
-  style={{ height: 500, width: "auto" }}
-  eventContent={({ event }) => (
-    <div>
-      <b>{event.title}</b> ({event.turno}) - {event.tareaName}
-    </div>
-  )}
-  onSelectSlot={handleSelectSlot}
-  onSelectEvent={handleEventClick}
-  toolbar={{
-    agenda: { eventHeight: 50 },
-    day: { eventHeight: 50 },
-    week: { eventHeight: 50 },
-    month: { eventHeight: 50 }
-  }}
-  messages={{
-    today: "Hoy",
-    month: "Mes",
-    week: "Semana",
-    day: "Día",
-    next: "Siguiente",
-    back: "Anterior"
-  }}
-/>
+
+      <Calendar
+        key={assignedTasks.length} // Agregar una clave única basada en la longitud de las tareas asignadas
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500, width: "auto" }}
+        eventContent={({ event }) => (
+          <div>
+            <b>{event.title}</b> ({event.turno})-  - {event.tareaName}
+          </div>
+        )}
+        onSelectSlot={handleSelectSlot}
+        onSelectEvent={handleEventClick}
+        toolbar={{
+          agenda: { eventHeight: 50 },
+          hoy: { eventHeight: 50 },
+          semana: { eventHeight: 50 },
+          mes: { eventHeight: 50 },
+          
+        }}
+        messages={{
+          today: "Hoy",
+          month: "Mes",
+          week: "Semana",
+          day: "Día",
+          next: "Siguiente",
+        
+        }}
+      />
       {selectedTask && (
         <div className="user-table">
           <table>
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Turno</th>
+                <th>Horario Inicial</th>
+                <th>Horario Final</th>
                 <th>Fecha</th>
-                <th>Tarea</th>
-                <th>Acciones</th> 
+                <th>Tarea asignada</th>
+                <th>Eliminar tarea</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{selectedTask.title}</td>
-                <td>{selectedTask.turno}</td>
+                <td>{selectedTask.start.toLocaleTimeString()}</td>
+                <td>{selectedTask.end.toLocaleTimeString()}</td>
                 <td>{selectedTask.start.toLocaleDateString()}</td>
                 <td>{selectedTask.tareaName}</td>
                 <td>

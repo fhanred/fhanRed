@@ -12,8 +12,12 @@ module.exports = (sequelize) => {
             },
         
          
-            turno: {
-                type: DataTypes.ENUM('Mañana', 'Tarde'),
+            startTurno: {
+                type: DataTypes.TIME,
+                allowNull: false
+            },
+            endTurno: {
+                type: DataTypes.TIME,
                 allowNull: false
             },
             taskDate: {
@@ -21,6 +25,11 @@ module.exports = (sequelize) => {
                 allowNull: false,
               }, 
 
-        }
+        },
+        {
+            dialectOptions: {
+              timezone: "Etc/GMT-5",
+            },
+          }
     );
 };
