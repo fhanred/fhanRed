@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SignIn from './components/SignIn/SignIn';
 import { userInfo } from './Redux/Actions/actions';
 import Navbar from './components/Navbar/Navbar';
-import NavbarItems from './components/NavbarItems/NavbarItems'
 import { links } from './data';
 import HomePage from './Pages/HomePage';
 import Vouchers from './Pages/Vouchers/Vouchers';
@@ -51,11 +50,7 @@ const App = () => {
             </Route>
           </Route>
           <Route>
-            <div style={{ flex: 1, display: "flex" }}>
-              <div>
-                <NavbarItems links={links} />
-              </div>
-            </div>
+           
             <div style={{ flex: 3 }}>
               <Switch>
                 <Route path="/homePage">
