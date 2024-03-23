@@ -24,6 +24,7 @@ import Summary from "./Views/Admin/Summary/Summary"
 import MovementsDetail  from './Views/Admin/MovementsDetails/MovementsDetail';
 import ContractForm from './components/Contratos2/ContractForm';
 import TicketManager from './Views/Admin/TicketManager/TicketManager';
+import Firma from './components/Contratos2/Firma'
 
 
 
@@ -79,6 +80,9 @@ function App() {
                 </Route>
                 <Route path="/generarContrato">
                   <ContractForm />
+                </Route>
+                <Route path="/firma">
+                  <Firma />
                 </Route>
                 <Route path="/facturacion">
                   <Billing />
