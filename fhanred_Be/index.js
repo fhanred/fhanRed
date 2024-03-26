@@ -8,7 +8,7 @@ const sendNotifications = require('./src/controllers/sendNotifications.js')
 
 
 // Syncing all the models at once.
-conn.sync({ alter: true }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   app.listen(PORT, () => {
     console.log(`🚀 listening on port: ${PORT} 🚀`);
   });
