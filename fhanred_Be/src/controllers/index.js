@@ -33,6 +33,7 @@ module.exports = {
   updateUser:catchedAsync(require("./updatedUser")),
   deletedAssignment:catchedAsync(require("./dashboardControllers/deletedAssignment")),
   initContract:catchedAsync(require("./initContract")),
+  getAllContract:catchedAsync(require('./getAllContract'))
 };
 
 //exportamos como una propiedad de lo que exporta  modulo  indexjs

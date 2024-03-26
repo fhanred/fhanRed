@@ -14,6 +14,8 @@ function Calendary() {
   const dispatch = useDispatch();
   const assignedTasks = useSelector((state) => state.assign.data?.assignments);
   const tasks = useSelector((state) => state.tasks);
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
+  const userRole = useSelector((state) => state.authentication.user.id_role);
 
   const users = useSelector((state) => state.usersData);
 
@@ -70,6 +72,7 @@ function Calendary() {
 
   return (
     <div className="container">
+    
       <ButtonGroup
         variant="contained"
         aria-label="Basic button group"
@@ -86,7 +89,7 @@ function Calendary() {
       </ButtonGroup>
 
       <Calendar
-        key={assignedTasks.length} // Agregar una clave única basada en la longitud de las tareas asignadas
+        
         localizer={localizer}
         events={events}
         startAccessor="start"

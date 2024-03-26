@@ -51,11 +51,16 @@ const rootReducer = (state = initialState, action) => {
         },
         cashierName: action.payload.user.cashierName,
       };
-    case LOGOUT_USER:
-      return {
-        ...state,
-        userInfo: {}, 
-      };
+      case LOGOUT_USER:
+        return {
+          ...state,
+          authentication: {
+            token: null,
+            user: null,
+            isAuthenticated: false,
+          },
+          userInfo: {}, 
+        };
     case GET_USERS:
       return {
         ...state,

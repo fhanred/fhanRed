@@ -36,7 +36,7 @@ import {
 } from "./actions-types";
 
 export const signInUser = (token, user) => ({
-  type: "SIGNIN_USER",
+  type: SIGNIN_USER,
   payload: { token, user },
 });
 
