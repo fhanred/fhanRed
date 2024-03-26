@@ -28,12 +28,15 @@ import {
   FETCH_MOVEMENTS_BY_CASHIER_REQUEST,
   FETCH_MOVEMENTS_BY_CASHIER_SUCCESS,
   FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
+  CREATE_CONTRACT_REQUEST,
+  CREATE_CONTRACT_SUCCESS,
+  CREATE_CONTRACT_FAILURE,
 
 
 } from "./actions-types";
 
 export const signInUser = (token, user) => ({
-  type: "SIGNIN_USER",
+  type: SIGNIN_USER,
   payload: { token, user },
 });
 
@@ -346,6 +349,34 @@ export const fetchMovementsByCashier = (cashierName) => {
         type: FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
         payload: error.message,
       });
+    }
+  };
+};
+export const createContractRequest = () => ({
+  type: CREATE_CONTRACT_REQUEST,
+});
+
+export const createContractSuccess = (contractRoute) => ({
+  type: CREATE_CONTRACT_SUCCESS,
+  payload: contractRoute,
+});
+
+export const createContractFailure = (error) => ({
+  type: CREATE_CONTRACT_FAILURE,
+  payload: error,
+});
+
+export const createContract = (contractData) => {
+  return async (dispatch) => {
+    console.log('Datos del contrato que se van a enviar al backend:', contractData);
+    dispatch(createContractRequest());
+    try {
+      const response = await axios.post(`${BASE_URL}/contract/create`, contractData);
+      const contractId = response.data.n_contrato; // Suponiendo que el servidor devuelve el ID del contrato
+      const contractRoute = `/contract/${contractId}`; // Suponiendo que la ruta del contrato se forma así
+      dispatch(createContractSuccess(contractRoute));
+    } catch (error) {
+      dispatch(createContractFailure(error.message));
     }
   };
 };

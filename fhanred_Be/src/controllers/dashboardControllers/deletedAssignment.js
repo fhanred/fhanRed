@@ -3,7 +3,7 @@ const { TaskAsign } = require('../../data');
 
 module.exports = async (req, res) => {
     try {
-        const { id } = req.body; // Recibir el id de la tarea asignada a eliminar desde el cuerpo de la solicitud
+        const { id } = req.params; // Recibir el id de la tarea asignada a eliminar desde el cuerpo de la solicitud
         
         // Buscar y eliminar la tarea asignada por su id
         const deletedAssignment = await TaskAsign.destroy({ where: { id } });

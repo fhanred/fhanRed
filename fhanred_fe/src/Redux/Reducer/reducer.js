@@ -25,6 +25,9 @@ import {
   FETCH_MOVEMENTS_BY_CASHIER_REQUEST,
   FETCH_MOVEMENTS_BY_CASHIER_SUCCESS,
   FETCH_MOVEMENTS_BY_CASHIER_FAILURE,
+  CREATE_CONTRACT_REQUEST,
+  CREATE_CONTRACT_SUCCESS,
+  CREATE_CONTRACT_FAILURE,
 
 } from "../Actions/actions-types";
 
@@ -33,7 +36,9 @@ const initialState = {
     token: null,
     user: null,
     isAuthenticated: false,
+    
   },
+  contractRoute: null,
   userInfo: {},
   usersData: [],
   numberFact: 1,
@@ -45,7 +50,7 @@ const initialState = {
   movements: {
     cashierName: null,
     paymentMethod: null,
-    data: [],  // Cambia 'data' a 'movements'
+    data: [],  
     loading: false,
     error: null,
   },
@@ -225,6 +230,25 @@ const rootReducer = (state = initialState, action) => {
       loading: false, 
       error: action.payload,
     };
+    case CREATE_CONTRACT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_CONTRACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        contractRoute: action.payload,
+        error: '',
+      };
+    case CREATE_CONTRACT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        contractRoute: null,
+        error: action.payload,
+      };
 
    
         default:

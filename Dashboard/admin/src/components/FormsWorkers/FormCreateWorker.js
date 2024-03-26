@@ -7,6 +7,7 @@ import { FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../Redux/Actions/actions";
 import { ButtonGroup, Button } from "@mui/material";
+import Swal from "sweetalert2";
 
 function FormCreateWorker() {
   const dispatch = useDispatch();
@@ -33,14 +34,53 @@ function FormCreateWorker() {
           id_role: "",
         }}
         validate={(values) => {
-          let errors = {};
-          // Agrega tus validaciones aquí si es necesario
+          const errors = {};
+          if (!values.tipo_persona) {
+            errors.tipo_persona = "Selecciona un tipo de persona";
+          }
+          if (values.tipo_persona === "P.JURIDICA" && !values.razonSocial) {
+            errors.razonSocial = "La razón social es requerida";
+          }
+          if (values.tipo_persona === "P.NATURAL" && !values.apellidos) {
+            errors.apellidos = "Los apellidos son requeridos";
+          }
+          if (values.tipo_persona === "P.NATURAL" && !values.nombres) {
+            errors.nombres = "Los nombres son requeridos";
+          }
+          if (!values.tipo_documento) {
+            errors.tipo_documento = "Selecciona un tipo de documento";
+          }
+          if (!values.n_documento) {
+            errors.n_documento = "El número de documento es requerido";
+          }
+          if (!values.fecha_cumple) {
+            errors.fecha_cumple = "La fecha de nacimiento es requerida";
+          }
+          if (!values.sexo) {
+            errors.sexo = "Selecciona un sexo";
+          }
+          if (!values.email) {
+            errors.email = "El correo electrónico es requerido";
+          } else if (!/^\S+@\S+\.\S+$/.test(values.email)) {
+            errors.email = "Formato de correo electrónico inválido";
+          }
+          if (!values.password) {
+            errors.password = "La contraseña es requerida";
+          }
+          if (!values.id_role) {
+            errors.id_role = "Selecciona un rol";
+          }
           return errors;
         }}
         onSubmit={async (values, { resetForm, setSubmitting }) => {
           try {
             const response = await dispatch(createUser(values));
             if (response.success) {
+              Swal.fire({
+                icon: "success",
+                title: "Registro exitoso",
+                text: "El usuario fue creado correctamente.",
+              });
               setSubmissionResult("success");
               resetForm();
               setTimeout(() => {
@@ -48,6 +88,12 @@ function FormCreateWorker() {
                 history.push("/homepage");
               }, 2000);
             } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text:
+                  "Hubo un problema al crear el usuario. Por favor, inténtelo nuevamente.",
+              });
               setSubmissionResult("error");
               console.error(response.errorMessage);
             }

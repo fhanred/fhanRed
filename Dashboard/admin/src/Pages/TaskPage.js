@@ -4,30 +4,33 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { TextField, Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, assignTaskToUser, getTasks } from "../Redux/Actions/actions";
-import { useHistory } from "react-router-dom";
+
 import Swal from 'sweetalert2';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
+
 
 export default function TaskPage() {
-  const [nDocumento, setNDocumento] = useState("");
+
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedTask, setSelectedTask] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedShift, setSelectedShift] = useState("");
+  const [selectedStart, setSelectedStart] = useState(null);
+  const [selectedEnd, setSelectedEnd] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
-  const history = useHistory();
+
+
   const dispatch = useDispatch();
   const usersData = useSelector((state) => state.usersData);
   const tasks = useSelector((state) => state.tasks);
-  // Filtrar usuarios con roles 2 y 3
   const filteredUsers = usersData.filter(user => user.id_role === 2 || user.id_role === 3);
 
   useEffect(() => {
@@ -47,14 +50,19 @@ export default function TaskPage() {
     setSelectedDate(date);
   };
 
-  const handleChangeShift = (event) => {
-    setSelectedShift(event.target.value);
+  const handleChangeStart = (value) => {
+    setSelectedStart(dayjs(value)); // Convertir a objeto Time
   };
+
+  const handleChangeEnd = (value) => {
+    setSelectedEnd(dayjs(value)); // Convertir a objeto Time
+  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!selectedUser || !selectedTask || !selectedDate || !selectedShift) {
+    if (!selectedUser || !selectedTask || !selectedDate || !selectedStart || !selectedEnd) {
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -62,8 +70,6 @@ export default function TaskPage() {
       });
       return;
     }
-
-
 
     const selectedUserObject = usersData.find(user => user.n_documento === selectedUser);
 
@@ -73,18 +79,20 @@ export default function TaskPage() {
     }
 
     const formattedDate = selectedDate.toISOString().split('T')[0];
+    const formattedStartTime = selectedStart.format('HH:mm');
+    const formattedEndTime = selectedEnd.format('HH:mm');
 
     const formData = {
       taskId: selectedTask,
       n_documento: selectedUserObject.n_documento,
-      turno: selectedShift,
+      startTurno: formattedStartTime,
+      endTurno: formattedEndTime,
       taskDate: formattedDate
     };
 
     console.log('Form Data:', formData);
-    dispatch(assignTaskToUser(selectedTask, selectedUserObject.n_documento, selectedShift, formattedDate));
+    dispatch(assignTaskToUser(selectedTask, selectedUserObject.n_documento, formattedStartTime, formattedEndTime, formattedDate));
 
-    // Mostrar la alerta
     setAlertMessage("Tarea asignada");
 
     Swal.fire({
@@ -93,22 +101,19 @@ export default function TaskPage() {
       text: "La tarea ha sido asignada al empleado exitosamente.",
     });
 
-    // Limpiar los estados
     setSelectedUser("");
     setSelectedTask("");
     setSelectedDate(null);
-    setSelectedShift("");
+    setSelectedStart(null);
+    setSelectedEnd(null);
 
-    // Después de 3 segundos, ocultar la alerta
     setTimeout(() => {
       setAlertMessage("");
     }, 2000);
 
   };
 
-
   return (
-
     <Box className="container" sx={{ minWidth: 120 }}>
       <ButtonGroup
         className='button-group-container'
@@ -116,9 +121,9 @@ export default function TaskPage() {
         aria-label="Basic button group"
         style={{
           position: "fixed",
-          top: "calc(100px + 20px)", // Altura del navbar + espacio
+          top: "calc(100px + 20px)",
           right: "20px",
-          zIndex: "999", // Asegura que el botón esté por encima de otros elementos
+          zIndex: "999",
           margin: "20px",
 
         }}
@@ -129,7 +134,6 @@ export default function TaskPage() {
         <Link to="/homePage">
           <Button style={{ margin: '10px' }}>Volver </Button>
         </Link>
-
       </ButtonGroup>
 
       {alertMessage && (
@@ -180,27 +184,35 @@ export default function TaskPage() {
           <p>No hay tareas disponibles</p>
         )}
 
-<div>
-  <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DateCalendar
-      selected={selectedDate}
-      onChange={handleDateChange}
-      format="dd/MM/yyyy" // Formato de fecha
-      placeholder="Selecciona una fecha" // Texto del placeholder 
-    />
-  </LocalizationProvider>
-</div>
-        <FormControl fullWidth className="imput-label">
-          <InputLabel className='imput-label' id="shift-label">Turno</InputLabel>
-          <Select className='imput-label'
-            labelId="shift-label"
-            value={selectedShift}
-            onChange={handleChangeShift}
-          >
-            <MenuItem value="Mañana">Mañana</MenuItem>
-            <MenuItem value="Tarde">Tarde</MenuItem>
-          </Select>
-        </FormControl>
+        <div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateCalendar
+              selected={selectedDate}
+              onChange={handleDateChange}
+              format="dd/MM/yyyy" // Formato de fecha
+              placeholder="Selecciona una fecha" // Texto del placeholder 
+            />
+            <div>
+              <TimePicker
+                label="Horario de ingreso"
+                value={selectedStart}
+                format="HH:mm"
+                onChange={handleChangeStart}
+              />
+            </div>
+            <div>
+              <TimePicker
+                label="Horario de egreso"
+                value={selectedEnd}
+                format="HH:mm"
+                onChange={handleChangeEnd}
+              />
+            </div>
+
+
+          </LocalizationProvider>
+        </div>
+
         <ButtonGroup className="imput-label">
 
           <Button type="submit">Asignar Tarea</Button>

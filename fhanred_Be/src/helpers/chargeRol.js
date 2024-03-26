@@ -17,8 +17,13 @@ module.exports = async () => {
     },
     {
       id: 4,
-      name: 'admin' 
+      name: 'administrador' 
     },
+    {
+      id: 5,
+      name: 'Asesor' 
+    },
+
  
   ];
 

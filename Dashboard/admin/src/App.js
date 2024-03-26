@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch,Redirect } from 'react-router-dom';
 import SignIn from './components/SignIn/SignIn';
 import { userInfo } from './Redux/Actions/actions';
 import Navbar from './components/Navbar/Navbar';
-import NavbarItems from './components/NavbarItems/NavbarItems'
 import { links } from './data';
 import HomePage from './Pages/HomePage';
 import Vouchers from './Pages/Vouchers/Vouchers';
@@ -17,11 +16,22 @@ import FormUpdateUser from './components/FormsWorkers/FormUpdateUser.js';
 import '../src/global.css'
 import ClientDetail from './components/ClientDetail/ClientDetail.js';
 
+const PrivateRoute = ({ children, ...rest }) => {
+  const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
+  const userRole = useSelector((state) => state.authentication.user?.id_role);
+
+  
+  if (!isAuthenticated || userRole !== 4) {
+    return <Redirect to="/" />;
+  }
+
+ 
+  return <Route {...rest}>{children}</Route>;
+};
+
+
 const App = () => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state) => state.authentication.isAuthenticated
-  );
+  
 
   useEffect(() => {
     localStorage.clear();
@@ -37,45 +47,42 @@ const App = () => {
             
           </Route>
 
-          <Route path="/tareas">
+          <PrivateRoute path="/tareas">
             <TaskPage />
-          </Route>
-          <Route path="/calendario">
+          </PrivateRoute>
+          <PrivateRoute path="/calendario">
             <Calendary />
-          </Route>
-          <Route path="/comprobantes">
+          </PrivateRoute>
+          <PrivateRoute path="/comprobantes">
             <Vouchers />
 
-            <Route path="/caja">
+            <PrivateRoute path="/caja">
               <MovementsCash />
-            </Route>
-          </Route>
-          <Route>
-            <div style={{ flex: 1, display: "flex" }}>
-              <div>
-                <NavbarItems links={links} />
-              </div>
-            </div>
+
+            </PrivateRoute>
+          </PrivateRoute>
+          <PrivateRoute>
+
             <div style={{ flex: 3 }}>
               <Switch>
-                <Route path="/homePage">
+                <PrivateRoute path="/homePage">
                   <HomePage />
-                </Route>
-                <Route path="/empleados">
+                </PrivateRoute>
+                <PrivateRoute path="/empleados">
                   <Worker />
-                </Route>
-                <Route path='/clientes'>
+                </PrivateRoute>
+                <PrivateRoute path='/clientes'>
                   <ClientDetail/>
-                </Route>
-                <Route path="/altaEmpleado">
+                </PrivateRoute>
+                <PrivateRoute path="/altaEmpleado">
                   <FormCreateWorker />
-                </Route>
-                <Route path="/modificarEmpleado">
+                </PrivateRoute>
+                <PrivateRoute path="/modificarEmpleado">
                   <FormUpdateUser />
-                </Route>
+                </PrivateRoute>
               </Switch>
             </div>
-          </Route>
+          </PrivateRoute>
         </Switch>
       </div>
     </BrowserRouter>

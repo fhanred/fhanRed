@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     'tipo_persona',
     'email',
     'fecha_cumple',
-  ]; // Campos del modelo User
+  ]; 
   const contractFields = [
     'init_date',
     'caja_nap',
@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
     'estado_contrato',
     'idStratus',
   ]; // Campos del modelo Contract
-  const planFields = ['name_plan']; // campo modelo Plan
+  const planFields = ['name_plan']; 
   const viviendaFields = ['id_vivienda']; // campo modelo Vivienda
   const deliveryFields = ['municipio', 'barrio_vereda', 'direccion']; // campos modelo Delivery
 

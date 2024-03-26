@@ -12,6 +12,8 @@ module.exports = {
   forgotPassword: catchedAsync(require("./forgotPassword")),
   chargeDocumentation: catchedAsync(require("./chargeDocumentation")),
   getDocumentation: catchedAsync(require("./getDocumentation")),
+  createTicket: catchedAsync(require("./ticketControllers/createTicket")),
+  getAllTickets: catchedAsync(require("./ticketControllers/getAllTickets")),
   getBillsByRange:catchedAsync(require("./dataicoControllers/getBillsByRange")),
   getDebitNByRange:catchedAsync(require("./dataicoControllers/getDebitNByRange")),
   getCreditNByRange:catchedAsync(require("./dataicoControllers/getCreditNByRange")),
@@ -29,7 +31,9 @@ module.exports = {
   getByPaymentMethod:catchedAsync(require("./cashControllers/getByPaymentMethod")),
   //deleteUser:catchedAsync(require("./deleteUser")),
   updateUser:catchedAsync(require("./updatedUser")),
-  deletedAssignment:catchedAsync(require("./dashboardControllers/deletedAssignment"))
+  deletedAssignment:catchedAsync(require("./dashboardControllers/deletedAssignment")),
+  initContract:catchedAsync(require("./initContract")),
+  getAllContract:catchedAsync(require('./getAllContract'))
 };
 
 //exportamos como una propiedad de lo que exporta  modulo  indexjs
