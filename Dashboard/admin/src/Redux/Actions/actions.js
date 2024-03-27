@@ -1,6 +1,6 @@
 import BASE_URL from "../../Config";
-
 import axios from "axios";
+
 import {
   SIGNIN_USER,
   LOGOUT_USER,
@@ -21,8 +21,12 @@ import {
   UPDATE_USER_SUCCESS,
   GET_TASKS_REQUEST,
   GET_TASKS_FAILURE,
-  GET_TASKS_SUCCESS
-  
+  GET_TASKS_SUCCESS,
+  FETCH_CONTRACT_DETAILS_REQUEST,
+  FETCH_CONTRACT_DETAILS_SUCCESS,
+  FETCH_CONTRACT_DETAILS_FAILURE,
+  CLEAN_CONTRACT_DETAILS,
+
 } from "./actions-types";
 
 export const signInUser = (token, user) => ({
@@ -36,16 +40,16 @@ export const userInfo = (input) => async (dispatch) => {
 
     if (response.data.data && response.data.data.token) {
       const { token, user } = response.data.data;
-      
+
       // Almacenar el token en el estado global de Redux
       dispatch(signInUser(token, user));
     } else {
-      
+
     }
     console.log('Resultado de la solicitud:', response.data);
   } catch (error) {
     console.error('Error en la solicitud:', error);
-    
+
     return dispatch(cleanDetail());
   }
 };
@@ -64,9 +68,9 @@ export const logout = () => async (dispatch) => {
 export const getUsers = () => async (dispatch) => {
   try {
     const { data } = await axios.get(`${BASE_URL}/user`);
-    
+
     dispatch({ type: GET_USERS, payload: data.data.users });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 
@@ -75,7 +79,7 @@ export const createUser = (input) => async (dispatch) => {
   try {
     const { data } = await axios.post(`${BASE_URL}/auth/signup`, input);
     dispatch({ type: CREATE_USER, payload: data });
-    return { success: true }; 
+    return { success: true };
   } catch (error) {
     return { success: false, errorMessage: error.message };
   }
@@ -86,11 +90,11 @@ export const deleteTask = (id) => async (dispatch) => {
     console.log('ID de tarea a eliminar:', id);
     dispatch({ type: DELETE_TASK_REQUEST });
     await axios.delete(`${BASE_URL}/task/eliminar/${id}`);
-   
+
     dispatch({ type: DELETE_TASK_SUCCESS });
     dispatch(fetchAssignedTasks());
-    return { success: true }; 
-   
+    return { success: true };
+
   } catch (error) {
     dispatch({ type: DELETE_TASK_FAILURE, payload: error.message });
     return { success: false, errorMessage: error.message };
@@ -103,11 +107,11 @@ export const updateUser = (n_documento, user) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
     const { data } = await axios.put(`${BASE_URL}/user/update/${n_documento}`, user);
-   
+
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
     dispatch(getUsers(n_documento));
     console.log(data, "probando updateAccion");
-    return { success: true }; 
+    return { success: true };
   } catch (error) {
     dispatch({ type: UPDATE_USER_FAILURE, payload: error.response.data.message }); // Ajusta aquí para obtener el mensaje de error del objeto de respuesta
     return { success: false, errorMessage: error.message };
@@ -147,7 +151,7 @@ export const assignTaskToUser = (taskId, n_documento, startTurno, endTurno, task
     const response = await axios.post(`${BASE_URL}/task/asignar`, {
       taskId,
       n_documento,
-      startTurno ,
+      startTurno,
       endTurno,
       taskDate,
     });
@@ -167,7 +171,65 @@ export const getTasks = () => async (dispatch) => {
     dispatch({ type: GET_TASKS_FAILURE, payload: error.message });
   }
 };
+// para contract
+export const fetchContractDetails = (id_Contract) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: FETCH_CONTRACT_DETAILS_REQUEST });
+
+      const response = await axios.get(`${BASE_URL}/contract/${id_Contract}`);
+      const { n_contrato, init_date, Plan,
+        Delivery, Vivienda, n_documento, estado_contrato, ultimo_pago,
+        descuento, deuda, idStratus, caja_nap, retefuente,
+        marca_onu,
+        mac, reporte_c_riesgo,
+        estado_cp_correo,
+        id_inventory,
+      } = response.data.data;
+
+      // Realiza más solicitudes de información aquí si es necesario
+
+      dispatch({
+        type: FETCH_CONTRACT_DETAILS_SUCCESS,
+        payload: {
+          n_contrato,
+          init_date,
+          Plan,
+          municipio: Delivery.municipio,
+          barrio_vereda: Delivery.barrio_vereda,
+          direccion: Delivery.direccion,
+          Vivienda,
+          n_documento,
+          estado_contrato,
+          ultimo_pago,
+          descuento,
+          deuda,
+          idStratus,
+          caja_nap,
+          retefuente,
+          marca_onu,
+          mac,
+          reporte_c_riesgo,
+          estado_cp_correo,
+          id_inventory,
+
+          // Agrega más datos aquí si es necesario
+        },
+      });
+    } catch (error) {
+      console.error("Error al obtener los detalles del contrato:", error);
+      dispatch({ type: FETCH_CONTRACT_DETAILS_FAILURE, payload: error.message });
+    }
+  };
+};
 
 
 
- 
+export const cleanContract = () => ({
+  type: CLEAN_CONTRACT_DETAILS,
+});
+
+
+
+
+

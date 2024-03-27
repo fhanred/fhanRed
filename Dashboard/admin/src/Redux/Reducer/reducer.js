@@ -18,7 +18,11 @@ import {
   UPDATE_USER_REQUEST,
   GET_TASKS_REQUEST,
   GET_TASKS_SUCCESS,
-  GET_TASKS_FAILURE
+  GET_TASKS_FAILURE,
+  FETCH_CONTRACT_DETAILS_FAILURE,
+  FETCH_CONTRACT_DETAILS_REQUEST,
+  FETCH_CONTRACT_DETAILS_SUCCESS,
+  CLEAN_CONTRACT_DETAILS
 } from "../Actions/actions-types";
 
 const initialState = {
@@ -31,6 +35,9 @@ const initialState = {
   usersData: [],
   assign: {}, 
   tasks: [],
+  
+  contractDetails:null,
+ 
   loading: false,
   deleting:false,
   
@@ -168,6 +175,29 @@ const rootReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload
       };
+      case FETCH_CONTRACT_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_CONTRACT_DETAILS_SUCCESS:
+      return {
+        ...state,
+        contractDetails: action.payload,
+        loading: false,
+      };
+    case FETCH_CONTRACT_DETAILS_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+          case CLEAN_CONTRACT_DETAILS:
+            return {
+              ...state,
+              contractDetails: null,
+            };     
 
     default:
       return state;

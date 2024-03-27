@@ -159,12 +159,14 @@ export default function ClientDetail() {
                 <td>
                   {cliente.Contracts && cliente.Contracts.length > 0 ? (
                     cliente.Contracts.length === 1 ? (
-                      <Link to={`/ruta/nuevo-componente/${cliente.Contracts[0].id_Contract}`}>{cliente.Contracts[0].id_Contract}</Link>
+                     
+
+                      <Link to={`/contract/${cliente.Contracts[0].id_Contract}`}>{cliente.Contracts[0].id_Contract}</Link>
                     ) : (
                       <ul>
                         {cliente.Contracts.map((contract, index) => (
                           <li key={`${contract.id_Contract}-${index}`}>
-                            <Link to={`/ruta/nuevo-componente/${contract.id_Contract}`}>{contract.id_Contract}</Link>
+                            <Link to={`/contract/${contract.id_Contract}`}>{contract.id_Contract}</Link>
                           </li>
                         ))}
                       </ul>

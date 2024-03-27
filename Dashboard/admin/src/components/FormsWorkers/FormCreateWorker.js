@@ -38,9 +38,9 @@ function FormCreateWorker() {
           if (!values.tipo_persona) {
             errors.tipo_persona = "Selecciona un tipo de persona";
           }
-          if (values.tipo_persona === "P.JURIDICA" && !values.razonSocial) {
-            errors.razonSocial = "La razón social es requerida";
-          }
+          // if (values.tipo_persona === "P.JURIDICA" && !values.razonSocial) {
+          //   errors.razonSocial = "La razón social es requerida";
+          // }
           if (values.tipo_persona === "P.NATURAL" && !values.apellidos) {
             errors.apellidos = "Los apellidos son requeridos";
           }
@@ -120,19 +120,12 @@ function FormCreateWorker() {
                 className="select"
               >
                 <option value="">Selecciona una opción</option>
-                <option value="P.JURIDICA">Jurídica</option>
+                
                 <option value="P.NATURAL">Natural</option>
               </Field>
             </div>
 
-            {values.tipo_persona === "P.JURIDICA" && (
-              <div className="form-group">
-                <label htmlFor="razonSocial" >
-                  Razón social
-                </label>
-                <Field type="text" id="razonSocial" name="razonSocial" />
-              </div>
-            )}
+           
 
             {values.tipo_persona === "P.NATURAL" && (
               <div className="form-group">

@@ -153,7 +153,7 @@ export default function TaskPage() {
               onChange={handleChangeUser}
             >
               {usersData
-                .filter((user) => user.id_role === 2 || user.id_role === 3)
+                .filter((user) => user.id_role === 2 || user.id_role === 3 || user.id_role === 5)
                 .map((user) => (
                   <MenuItem key={user.n_documento} value={user.n_documento}>
                     {user.name_razonSocial}

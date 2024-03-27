@@ -15,6 +15,7 @@ import FormCreateWorker from './components/FormsWorkers/FormCreateWorker.js';
 import FormUpdateUser from './components/FormsWorkers/FormUpdateUser.js';
 import '../src/global.css'
 import ClientDetail from './components/ClientDetail/ClientDetail.js';
+import ContractDetail from './components/ClientDetail/ContractDetail.js';
 
 const PrivateRoute = ({ children, ...rest }) => {
   const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
@@ -73,6 +74,10 @@ const App = () => {
                 </PrivateRoute>
                 <PrivateRoute path='/clientes'>
                   <ClientDetail/>
+                </PrivateRoute>
+                <PrivateRoute path="/contract/:id_Contract" component={ContractDetail} >
+
+    
                 </PrivateRoute>
                 <PrivateRoute path="/altaEmpleado">
                   <FormCreateWorker />
