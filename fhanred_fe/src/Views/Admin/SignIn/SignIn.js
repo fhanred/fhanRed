@@ -9,6 +9,7 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfo } from '../../../Redux/Actions/actions';
 import { handleChange, login } from './funcs';
+import Swal from 'sweetalert2';
 
 function SignIn() {
   const history = useHistory();
@@ -19,6 +20,14 @@ function SignIn() {
 
   function handleClick1() {
     history.push('/signup');
+
+    //creado por carla
+    Swal.fire({
+      icon: 'success',
+      title: 'Éxito',
+      text: 'Cuenta creada!',
+    });
+
   }
 
   const [errors, setErrors] = useState({
@@ -50,6 +59,13 @@ function SignIn() {
       } catch (error) {
         console.error('Se produjo un error:', error.message);
       }
+    }else {
+      // Mostrar Sweet Alert con el mensaje deseado
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor completa todos los campos antes de continuar.',
+      });
     }
   };
 

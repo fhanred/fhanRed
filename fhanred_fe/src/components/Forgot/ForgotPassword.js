@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import style from './ForgotPassword.module.css';
+import Swal from 'sweetalert2';
 
 const ForgotPassword = () => {
   const history = useHistory();
@@ -23,6 +24,16 @@ const ForgotPassword = () => {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           // const { data } = await axios.post(`password/forgot`, values);
           console.log(values);
+
+           // Mostrar SweetAlert
+
+  Swal.fire({
+    icon: 'success',
+    title: '¡Éxito!',
+    text: 'Enviamos un mensaje a su correo',
+  });
+
+
           setIsSent(true);
           setSubmitting(false);
           resetForm();

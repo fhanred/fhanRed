@@ -8,6 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import "./Register.css";
 import { createUser } from "../../Redux/Actions/actions";
+import Swal from 'sweetalert2';
 
 function Register() {
   const dispatch = useDispatch();
@@ -164,18 +165,50 @@ function Register() {
             const response = await dispatch(createUser(values));
             console.log(values);
             if (response.success) {
+
+           
+            
               setSubmissionResult("success");
               resetForm();
               setTimeout(() => {
                 setSubmissionResult(null); // Reinicia el estado después de un cierto tiempo
                 history.push("/");
               }, 2000); // Tiempo en milisegundos
+
+              {submissionResult === "success" && (
+               
+
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Registro exitoso',
+                  text: 'El registro fue exitoso.',
+                })
+
+              )}
             } else {
               setSubmissionResult("error");
               console.error(response.errorMessage);
             }
           } catch (error) {
             console.error("Hubo un error al enviar el formulario:", error);
+            {submissionResult === "error" && (
+              /*  <div className="message-container">
+                 <div className="error">
+                   'El registro NO fue exitoso. Inténtelo nuevamente.'
+                 </div>
+               </div> */
+
+               Swal.fire({
+                 icon: 'error',
+                 title: 'Registro no exitoso',
+                 text: 'El registro NO fue exitoso. Inténtelo nuevamente.',
+               })
+
+
+
+             )}
+
+
             // Manejo adicional de errores si es necesario
           } finally {
             setSubmitting(false);
@@ -525,17 +558,31 @@ function Register() {
                 </div>
               </div>
               {submissionResult === "success" && (
-                <div className="message-container">
-                  <div className="success">El registro fue exitoso!.</div>
-                </div>
-              )}
-              {submissionResult === "error" && (
-                <div className="message-container">
-                  <div className="error">
-                    'El registro NO fue exitoso. Inténtelo nuevamente.'
-                  </div>
-                </div>
-              )}
+               
+
+               Swal.fire({
+                 icon: 'success',
+                 title: 'Registro exitoso',
+                 text: 'El registro fue exitoso.',
+               })
+
+             )}
+             {submissionResult === "error" && (
+              /*  <div className="message-container">
+                 <div className="error">
+                   'El registro NO fue exitoso. Inténtelo nuevamente.'
+                 </div>
+               </div> */
+
+               Swal.fire({
+                 icon: 'error',
+                 title: 'Registro no exitoso',
+                 text: 'El registro NO fue exitoso. Inténtelo nuevamente.',
+               })
+
+
+
+             )}
             </Form>
           </div>
         )}

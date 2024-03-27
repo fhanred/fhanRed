@@ -8,13 +8,14 @@ import * as Yup from "yup";
 import { format } from "date-fns";
 import BASE_URL from "../../../Config";
 import './Encashment.css';
-
+import Swal from 'sweetalert2';
 import {
   fetchContractDetails,
   fetchUserContracts,
   fetchLastReceiptNumber,
   sendPayment, addReceipt
 } from "../../../Redux/Actions/actions";
+import { values } from "lodash";
 
 function Encashment() {
   const userRole = useSelector((state) => state.authentication.user.id_role);
@@ -90,6 +91,11 @@ function Encashment() {
       console.log("name_razonSocial actualizado:", name_razonSocial);
     } catch (error) {
       console.error("Error al obtener los contratos del usuario:", error);
+      /* Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pueden obtener los datos'
+    }); */
     }
   };
   const handleContractChange = async (e, formikProps) => {
@@ -111,10 +117,27 @@ function Encashment() {
       formikProps.setFieldValue("direccion", contractDetails.direccion);
     } catch (error) {
       console.error("Error al obtener los detalles del contrato:", error);
+      /* Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pueden obtener los datos'
+    }); */
     }
   };
 
+  const handleValidateMandatoryFields = (values) => {
+
+     if(values.n_documento == ""  ){
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Debe completar todos los campos obligatorios para enviar el pago'
+      });
+  }
+  }
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    console.log({values})
     try {
       values.cashierName = userName;
       console.log("Fecha de pago enviada:", values.paymentDate);
@@ -150,10 +173,21 @@ function Encashment() {
           "No se encontró 'newIngreso' en la respuesta del backend."
         );
       }
+
+ 
+
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-    }
+
+    } 
     setSubmitting(false);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Éxito',
+      text: 'Su formulario fue enviado con éxito!',
+    });
+
   };
   console.log('Valor de initialValues.cashierName antes de pasar como prop:', initialValues.cashierName);
   return (
@@ -405,7 +439,9 @@ function Encashment() {
                 </>
               )}
               <div className="submit-button">
-                <button type="submit">Enviar Pago</button>
+                <button type="submit" onClick={() => handleValidateMandatoryFields(formikProps.values)}>Enviar Pago</button>
+                
+                
                 <button onClick={() => history.push("/movements")}>
                 Cierre de Caja
               </button>

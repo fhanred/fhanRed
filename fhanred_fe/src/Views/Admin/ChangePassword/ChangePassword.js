@@ -8,6 +8,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { userInfo } from "../../../Redux/Actions/actions";
+import Swal from "sweetalert2";
 
 const ChangePassword = () => {
   const history = useHistory();
@@ -31,19 +32,21 @@ const ChangePassword = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      setMessage({
-        success: false,
+      Swal.fire({
+        icon: "error",
+        title: "Error",
         text: "La nueva contraseña y la confirmación no coinciden.",
       });
-      return;
     }
 
-    if(newPassword.length < 8){
-      setMessage({
-        success:false,
-        text:"La contraseña nueva debe tener al menos 8 caracteres"
-      })
-      return
+    if (newPassword.length < 8) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "La contraseña nueva debe tener al menos 8 caracteres.",
+      });
+
+      return;
     }
 
     let changePasswordPayload = {
@@ -51,16 +54,9 @@ const ChangePassword = () => {
       newPassword,
     };
     try {
-      /* const response = await fetch(
-        'https://api.cloudinary.com/v1_1/dwejoiefk/image/upload',
-        {
-          method: 'POST',
-          body: data,
-        }
-      ); */
-
-      setMessage({
-        success: true,
+      Swal.fire({
+        icon: "success",
+        title: "Éxito",
         text: "La contraseña fue cambiada exitosamente.",
       });
     } catch (error) {}
@@ -71,23 +67,25 @@ const ChangePassword = () => {
   };
 
   const validatePassword = () => {
-    console.log("hola")
+    console.log("hola");
     if (newPassword !== confirmPassword) {
-      setMessage({
-        success: false,
+      console.log("las contraseñas no coinciden");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
         text: "La nueva contraseña y la confirmación no coinciden.",
       });
       return;
     }
 
-    if(newPassword.length < 8){
+    if (newPassword.length < 8) {
       setMessage({
-        success:false,
-        text:"La contraseña nueva debe tener al menos 8 caracteres"
-      })
-      return
+        success: false,
+        text: "La contraseña nueva debe tener al menos 8 caracteres",
+      });
+      return;
     }
-  }
+  };
 
   return (
     <div className={style.container}>
